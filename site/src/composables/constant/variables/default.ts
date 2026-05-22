@@ -27,8 +27,8 @@ header:
     newLine: true
   - text: <span class="iconify" data-icon="tabler:mail"></span> icancook@email.com
     link: mailto:icancook@email.com
-  - text: <span class="iconify" data-icon="tabler:brand-github"></span> Renovamen
-    link: https://github.com/Renovamen
+  - text: <span class="iconify" data-icon="tabler:brand-github"></span> quoilam
+    link: https://github.com/quoilam
   - text: <span class="iconify" data-icon="charm:person"></span> zxh.me
     link: https://zxh.me
 ---

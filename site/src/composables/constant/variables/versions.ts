@@ -52,4 +52,4 @@ export type ValidVersion = keyof typeof REQUIRED_DATA_TYPES;
 export const CURRENT_VERSION: ValidVersion = "v1";
 export const EMPTY_VERSION_FALLBACK: ValidVersion = "v0";
 
-export const VERSION_STORAGE_KEY = "ohmycv_version";
+export const VERSION_STORAGE_KEY = "cvgen_version";

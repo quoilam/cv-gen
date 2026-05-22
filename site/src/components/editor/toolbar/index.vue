@@ -1,32 +1,60 @@
 <template>
-  <div class="flex w-72 h-full">
+  <div class="flex h-full">
     <div
       id="toolbar"
-      class="pane-container overflow-y-scroll hide-scrollbar bg-background"
-      lt-lg="bg-accent rounded-none"
+      class="pane-container overflow-y-scroll hide-scrollbar bg-card border border-border/60
+             rounded-l-xl ml-1 shadow-sm"
+      lt-lg="bg-card rounded-none border-none shadow-none"
     >
-      <template v-for="(tool, i) in tools" :key="tool.id">
-        <component :is="tool.component" :id="`toolbar-${tool.id}`" />
-        <UiSeparator v-if="i < tools.length - 1" class="w-[calc(100%-32px)] mx-auto" />
-      </template>
+      <UiAccordion type="multiple" :default-value="allGroups" class="p-2">
+        <UiAccordionItem
+          v-for="group in groups"
+          :key="group.id"
+          :value="group.id"
+          :id="`group-${group.id}`"
+          class="mb-1 border border-border/30 rounded-lg overflow-hidden last:mb-0"
+        >
+          <UiAccordionTrigger class="px-4 py-3.5 text-sm font-semibold tracking-wide bg-muted/20 hover:bg-muted/40 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <span :class="group.icon" class="size-4.5 text-primary/70" />
+              <span class="text-foreground/85">{{ group.label }}</span>
+            </div>
+          </UiAccordionTrigger>
+          <UiAccordionContent class="px-0 pb-1">
+            <template v-for="(toolId, idx) in group.tools" :key="toolId">
+              <component :is="componentMap[toolId]" :id="`toolbar-${toolId}`" />
+              <UiSeparator
+                v-if="idx < group.tools.length - 1"
+                class="w-[calc(100%-40px)] mx-auto opacity-50"
+              />
+            </template>
+          </UiAccordionContent>
+        </UiAccordionItem>
+      </UiAccordion>
     </div>
 
-    <div flex="center col none gap-1" border="l dashed lg:none" w-10 bg-accent>
-      <template v-for="tool in tools" :key="tool.id">
+    <!-- Sidebar icon rail -->
+    <div
+      flex="center col none gap-1"
+      class="w-10 bg-muted/50 border border-border/40 border-l-0 rounded-r-xl mr-1"
+      lt-lg="hidden"
+    >
+      <template v-for="group in groups" :key="group.id">
         <UiTooltipProvider :delay-duration="0">
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiButton
                 size="round"
-                variant="ghost-secondary"
-                @click="scrollTo(tool.id)"
-                :aria-label="getTooltip(tool.id)"
+                variant="ghost"
+                class="text-muted-foreground hover:text-foreground hover:bg-muted"
+                @click="toggleGroup(group.id)"
+                :aria-label="group.label"
               >
-                <span :class="[tool.icon, ' size-4']" />
+                <span :class="[group.icon, 'size-4']" />
               </UiButton>
             </UiTooltipTrigger>
             <UiTooltipContent side="left">
-              {{ getTooltip(tool.id) }}
+              {{ group.label }}
             </UiTooltipContent>
           </UiTooltip>
         </UiTooltipProvider>
@@ -43,20 +71,21 @@ import {
   EditorToolbarFontFamily,
   EditorToolbarFontSize,
   EditorToolbarMargins,
-  EditorToolbarParagraphSpace,
-  EditorToolbarLineHeight,
-  EditorToolbarCorrectCase,
+  EditorToolbarParagraphAndLine,
   EditorToolbarAi,
   EditorToolbarIcon,
   EditorToolbarGit,
   EditorToolbarSmartOnePage,
 } from "#components";
 
-const tools = [
+const allGroups = ["file", "typography", "content", "version"];
+
+const groups = [
   {
     id: "file",
-    icon: "i-carbon:import-export",
-    component: EditorToolbarFile
+    label: "文件",
+    icon: "i-lucide:file-text",
+    tools: ["file"]
   },
   {
     id: "photo",
@@ -64,76 +93,45 @@ const tools = [
     component: EditorToolbarPhoto
   },
   {
-    id: "ai",
-    icon: "i-lucide:sparkles",
-    component: EditorToolbarAi
+    id: "content",
+    label: "内容",
+    icon: "i-lucide:puzzle",
+    tools: ["asset", "icon", "ai"]
   },
   {
-    id: "icon",
-    icon: "i-lucide:icons",
-    component: EditorToolbarIcon
-  },
-  {
-    id: "paper_size",
-    icon: "i-majesticons:paper-fold-line",
-    component: EditorToolbarPaper
-  },
-  {
-    id: "theme_color",
-    icon: "i-material-symbols:palette-outline",
-    component: EditorToolbarThemeColor
-  },
-  {
-    id: "font_family",
-    icon: "i-material-symbols:font-download-outline",
-    component: EditorToolbarFontFamily
-  },
-  {
-    id: "font_size",
-    icon: "i-ri:font-size-2",
-    component: EditorToolbarFontSize
-  },
-  {
-    id: "margins",
-    icon: "i-radix-icons:margin",
-    component: EditorToolbarMargins
-  },
-  {
-    id: "paragraph_spacing",
-    icon: "i-icon-park-outline:paragraph-break-two",
-    component: EditorToolbarParagraphSpace
-  },
-  {
-    id: "line_height",
-    icon: "i-ic:round-format-line-spacing",
-    component: EditorToolbarLineHeight
-  },
-  {
-    id: "smart_one_page",
-    icon: "i-lucide:sparkles",
-    component: EditorToolbarSmartOnePage
-  },
-  {
-    id: "correct_case",
-    icon: "i-icon-park-outline:check-correct",
-    component: EditorToolbarCorrectCase
-  },
-  {
-    id: "git",
+    id: "version",
+    label: "版本",
     icon: "i-lucide:git-branch",
-    component: EditorToolbarGit
+    tools: ["git"]
   }
 ];
 
-const scrollTo = (id: string) => {
-  const toolbar = document.querySelector<HTMLElement>("#toolbar");
-  const section = document.querySelector<HTMLElement>(`#toolbar-${id}`);
+const componentMap: Record<string, any> = {
+  file: EditorToolbarFile,
+  paper_size: EditorToolbarPaper,
+  theme_color: EditorToolbarThemeColor,
+  font_family: EditorToolbarFontFamily,
+  font_size: EditorToolbarFontSize,
+  margins: EditorToolbarMargins,
+  paragraph_and_line: EditorToolbarParagraphAndLine,
+  smart_one_page: EditorToolbarSmartOnePage,
+  asset: EditorToolbarAsset,
+  icon: EditorToolbarIcon,
+  ai: EditorToolbarAi,
+  git: EditorToolbarGit
+};
 
-  if (!toolbar || !section) return;
+function toggleGroup(groupId: string) {
+  const toolbar = document.querySelector<HTMLElement>("#toolbar");
+  const item = document.getElementById(`group-${groupId}`);
+
+  if (!toolbar || !item) return;
+
+  const trigger = item.querySelector("button");
+  if (trigger) trigger.click();
 
   toolbar.scrollTo({
-    // offsetTop - header height
-    top: section.offsetTop - 48,
+    top: item.offsetTop - 48,
     behavior: "smooth"
   });
 };

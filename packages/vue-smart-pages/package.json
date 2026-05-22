@@ -1,14 +1,14 @@
 {
-  "name": "@ohmycv/vue-smart-pages",
+  "name": "@cvgen/vue-smart-pages",
   "version": "0.1.1",
   "description": "Automatically break your content into multiple pages, just like what Word does.",
-  "homepage": "https://github.com/Renovamen/oh-my-cv/tree/main/packages/vue-smart-pages",
+  "homepage": "https://github.com/quoilam/cv-gen/tree/main/packages/vue-smart-pages",
   "bugs": {
-    "url": "https://github.com/Renovamen/oh-my-cv"
+    "url": "https://github.com/quoilam/cv-gen/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renovamen/oh-my-cv.git",
+    "url": "git+https://github.com/quoilam/cv-gen.git",
     "directory": "packages/vue-smart-pages"
   },
   "license": "MIT",

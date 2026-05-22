@@ -72,7 +72,7 @@ interface UseGit {
 仓库中每个简历存为独立目录：
 
 ```
-ohmycv-resumes/
+cvgen-resumes/
 ├── 1/
 │   ├── resume.json       # 完整简历数据 + 样式
 │   └── assets/           # 图片资产（base64 内联在 json 中，此目录可作备选）

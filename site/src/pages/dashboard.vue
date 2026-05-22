@@ -1,15 +1,20 @@
 <template>
-  <div id="dashboard-page">
+  <div id="dashboard-page" class="flex flex-col">
     <SharedHeader />
 
-    <div class="workspace max-w-310 mx-auto" flex="~ col" p="x-4 y-8">
-      <div class="px-2 space-y-2" md="hstack justify-between">
-        <h1 font-bold text-3xl>{{ $t("dashboard.my_resumes") }}</h1>
+    <div class="workspace max-w-7xl mx-auto flex flex-col" p="x-5 y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">我的简历</h1>
+          <p class="text-sm text-muted-foreground mt-1">
+            管理您的所有简历，数据安全保存在本地
+          </p>
+        </div>
         <DashboardFile @update="refresh" />
       </div>
 
-      <UiScrollArea class="flex-1 mt-4 px-2">
-        <div class="gap-x-4 gap-y-8 pt-4" flex="~ wrap">
+      <UiScrollArea class="flex-1">
+        <div class="gap-5 pb-6" flex="~ wrap">
           <DashboardNewResume />
 
           <template v-if="status === 'success'">
@@ -21,8 +26,10 @@
             />
           </template>
           <template v-else>
-            <div v-for="i in 4" :key="i" class="w-56 h-80">
-              <UiSkeleton class="w-[210px] h-[299px] bg-secondary mx-auto" />
+            <div v-for="i in 4" :key="i" class="w-60 h-[360px]">
+              <UiSkeleton class="w-[220px] h-[315px] bg-muted rounded-lg mx-auto" />
+              <UiSkeleton class="w-32 h-4 bg-muted rounded mx-auto mt-3" />
+              <UiSkeleton class="w-24 h-3 bg-muted rounded mx-auto mt-2" />
             </div>
           </template>
         </div>

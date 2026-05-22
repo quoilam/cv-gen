@@ -7,22 +7,19 @@
 </template>
 
 <script setup lang="ts">
-const { t, locale } = useI18n();
-
 const colorMode = useColorMode();
 const preferredDark = usePreferredDark();
 
 useHead({
-  title: t("head.title"),
+  title: "CvGen - 免费的在线简历制作工具",
   meta: [
-    { name: "keywords", content: t("head.keywords") },
-    { name: "description", content: t("head.desc") },
-    { property: "og:title", content: t("head.title") },
-    { property: "og:description", content: t("head.desc") },
-    { property: "og:locale", content: locale },
+    { name: "keywords", content: "Markdown 简历, 简历制作, 在线简历" },
+    { name: "description", content: "免费的在线简历制作工具，使用 Markdown 来轻松制作您的简历！" },
+    { property: "og:title", content: "CvGen - 免费的在线简历制作工具" },
+    { property: "og:description", content: "免费的在线简历制作工具，使用 Markdown 来轻松制作您的简历！" },
     {
       name: "theme-color",
-      content: () => (colorMode.value === "dark" ? "#30343A" : "#F3F4F6")
+      content: () => (colorMode.value === "dark" ? "#15191F" : "#F9F8F6")
     }
   ],
   link: [

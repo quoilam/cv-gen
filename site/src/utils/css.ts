@@ -1,4 +1,4 @@
-import { injectCss } from "@ohmycv/dynamic-css";
+import { injectCss } from "@cvgen/dynamic-css";
 import { useConstant } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 
@@ -18,7 +18,7 @@ export class DynamicCssService {
   };
 
   private _injectedCssId = (type: "toolbar" | "css-editor", id?: string | number) => {
-    return `ohmycv-${type}-${id ?? RENDER.PREVIEW_ID}`;
+    return `cvgen-${type}-${id ?? RENDER.PREVIEW_ID}`;
   };
 
   private themeColor = (selector: string, styles: ResumeStyles) => {

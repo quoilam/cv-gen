@@ -1,5 +1,5 @@
 {
-  "name": "@ohmycv/front-matter",
+  "name": "@cvgen/front-matter",
   "version": "0.1.1",
   "description": "A better `js-yaml`, for extracting and parsing YAML front matter from strings.",
   "keywords": [
@@ -7,13 +7,13 @@
     "front matter",
     "meta data"
   ],
-  "homepage": "https://github.com/Renovamen/oh-my-cv/tree/main/packages/front-matter",
+  "homepage": "https://github.com/quoilam/cv-gen/tree/main/packages/front-matter",
   "bugs": {
-    "url": "https://github.com/Renovamen/oh-my-cv"
+    "url": "https://github.com/quoilam/cv-gen/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renovamen/oh-my-cv.git",
+    "url": "git+https://github.com/quoilam/cv-gen.git",
     "directory": "packages/front-matter"
   },
   "license": "MIT",

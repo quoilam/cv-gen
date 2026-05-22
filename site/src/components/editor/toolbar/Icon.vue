@@ -1,5 +1,5 @@
 <template>
-  <EditorToolbarBox :text="$t('toolbar.icon.title')" icon="i-lucide:icons">
+  <EditorToolbarBox text="图标" icon="i-lucide:icons">
     <EditorIconPicker />
   </EditorToolbarBox>
 </template>

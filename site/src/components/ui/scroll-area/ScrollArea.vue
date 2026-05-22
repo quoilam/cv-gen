@@ -6,7 +6,6 @@ import {
   type ScrollAreaRootProps,
   ScrollAreaViewport
 } from "radix-vue";
-import ScrollBar from "./ScrollBar.vue";
 import { cn } from "~/utils/shadcn";
 
 const props = defineProps<ScrollAreaRootProps & { class?: HTMLAttributes["class"] }>();
@@ -26,7 +25,6 @@ const delegatedProps = computed(() => {
     <ScrollAreaViewport class="h-full w-full rounded-[inherit]">
       <slot />
     </ScrollAreaViewport>
-    <ScrollBar />
     <ScrollAreaCorner />
   </ScrollAreaRoot>
 </template>

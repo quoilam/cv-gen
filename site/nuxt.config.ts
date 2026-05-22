@@ -1,5 +1,4 @@
 import { pwa } from "./configs/pwa";
-import { i18n } from "./configs/i18n";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -9,7 +8,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@unocss/nuxt",
     "@pinia/nuxt",
-    "@nuxtjs/i18n",
     "@nuxtjs/color-mode",
     "@vite-pwa/nuxt",
     "nuxt-simple-sitemap",
@@ -22,8 +20,6 @@ export default defineNuxtConfig({
     "katex/dist/katex.min.css",
     "~/assets/css/index.css"
   ],
-
-  i18n,
 
   shadcn: {
     prefix: "Ui",
@@ -47,18 +43,19 @@ export default defineNuxtConfig({
       ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "application-name", content: "Oh My CV!" },
-        { name: "apple-mobile-web-app-title", content: "Oh My CV!" },
+        { name: "application-name", content: "CvGen" },
+        { name: "apple-mobile-web-app-title", content: "CvGen" },
         { name: "msapplication-TileColor", content: "#fff" },
-        { property: "og:url", content: "https://ohmycv.app" },
+        { property: "og:url", content: "https://quoilam.github.io/cv-gen" },
         { property: "og:type", content: "website" }
       ]
     }
   },
 
   site: {
-    url: "https://ohmycv.app"
+    url: "https://quoilam.github.io/cv-gen"
   },
 
-  pwa
+  pwa,
+  compatibilityDate: "2026-05-23"
 });

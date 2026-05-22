@@ -3,13 +3,13 @@
     <UiDialogTrigger as-child>
       <UiButton class="gap-x-1.5 w-full h-8 justify-start" variant="ghost" size="sm">
         <span i-mdi:upload text-base />
-        {{ $t("toolbar.file.import.trigger") }}
+        导入 Markdown
       </UiButton>
     </UiDialogTrigger>
 
     <UiDialogContent class="sm:max-w-110">
       <UiDialogHeader>
-        <UiDialogTitle>{{ $t("toolbar.file.import.dialog.header") }}</UiDialogTitle>
+        <UiDialogTitle>上传一个 Markdown 文件</UiDialogTitle>
       </UiDialogHeader>
 
       <div class="pt-2 space-y-6 text-sm">
@@ -20,7 +20,7 @@
             border="~ dashed rounded"
           >
             <input v-bind="api.getHiddenInputProps()" />
-            <div text-center>{{ $t("toolbar.file.import.dialog.from_local") }}</div>
+            <div text-center>将文件拖拽至这里，或点击这里以选择文件</div>
           </div>
 
           <div v-if="localFile" class="bg-muted text-muted-foreground rounded p-2 mt-2">
@@ -37,7 +37,7 @@
         <div class="flex gap-x-2">
           <UiInput
             v-model="pastedURL"
-            :placeholder="$t('toolbar.file.import.dialog.from_url')"
+            placeholder="粘贴文件 URL"
             @keyup.enter="uploadFileFromURL"
           />
 
@@ -60,7 +60,7 @@
 <script lang="ts" setup>
 import * as fileUpload from "@zag-js/file-upload";
 import { normalizeProps, useMachine } from "@zag-js/vue";
-import { fetchFile } from "@renovamen/utils";
+import { fetchFile } from "@cvgen/utils";
 
 const { setAndSyncToMonaco } = useDataStore();
 

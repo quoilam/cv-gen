@@ -1,34 +1,25 @@
 import { toast } from "vue-sonner";
-import type { ChangedCase } from "@ohmycv/case-police";
+import type { ChangedCase } from "@cvgen/case-police";
 
 export const useToast = () => {
-  const {
-    $i18n: { t }
-  } = useNuxtApp();
-
   const save = () => {
-    toast.success(t("notification.save"));
+    toast.success("保存成功");
   };
 
   const onSwitch = (msg: string) => {
-    toast.info(t("notification.switch", { msg }));
+    toast.info(`已切换到简历 "${msg}"`);
   };
 
   const onDelete = (msg: string) => {
-    toast.error(t("notification.delete", { msg }));
+    toast.error(`已删除简历 "${msg}"`);
   };
 
   const onNew = () => {
-    toast.success(t("notification.new"));
+    toast.success("新建成功");
   };
 
   const duplicate = (msg: string) => {
-    toast.success(
-      t("notification.duplicate", {
-        old: msg,
-        new: msg + " Copy"
-      })
-    );
+    toast.success(`已创建简历 "${msg}" 的副本 "${msg} Copy"`);
   };
 
   const correct = (msg?: ChangedCase[]) => {
@@ -43,32 +34,31 @@ export const useToast = () => {
         .map(([key, count]) => `${key}${count > 1 ? ` (x${count})` : ""}`)
         .join(", ");
 
-      toast.success(t("notification.correct.yes", { num: msg.length }), {
+      toast.success(`成功修正 ${msg.length} 个单词`, {
         description
       });
     } else {
-      toast.info(t("notification.correct.no"));
+      toast.info("您的所有拼写都是正确的！");
     }
   };
 
   const onImport = (msg: boolean) => {
     if (msg) {
-      toast.success(t("notification.import.yes"));
+      toast.success("已成功导入数据！");
     } else {
-      toast.error(t("notification.import.no"));
+      toast.error("数据格式不正确");
     }
   };
 
-  const errorMessages = {
-    storage: { en: "Unable to access storage, please try again", "zh-cn": "无法访问本地存储，请重试" },
-    not_found: { en: "Resume not found", "zh-cn": "简历未找到" },
-    monaco: { en: "Failed to initialize the editor", "zh-cn": "编辑器初始化失败" },
-    import_fetch: { en: "Failed to import the file, please check the URL", "zh-cn": "从该 URL 导入失败" }
+  const errorMessages: Record<string, string> = {
+    storage: "无法访问本地存储，请重试",
+    not_found: "简历未找到",
+    monaco: "编辑器初始化失败",
+    import_fetch: "从该 URL 导入失败"
   };
 
   const onError = (key: keyof typeof errorMessages) => {
-    const { locale } = useI18n();
-    toast.error(errorMessages[key][locale.value === "zh-cn" ? "zh-cn" : "en"]);
+    toast.error(errorMessages[key]);
   };
 
   return {

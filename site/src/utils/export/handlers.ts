@@ -1,4 +1,4 @@
-import { downloadFile } from "@renovamen/utils";
+import { downloadFile } from "@cvgen/utils";
 import type { ExportHandler } from "./index";
 import { exportService } from "./index";
 import { docxHandler } from "./docx";

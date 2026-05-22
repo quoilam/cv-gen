@@ -9,18 +9,18 @@
           @click="doExport('pdf')"
         >
           <span i-mdi:file-pdf text-base />
-          {{ $t("toolbar.file.export_pdf.title") }}
+          导出为 PDF
         </UiButton>
       </UiTooltipTrigger>
       <UiTooltipContent side="bottom" class="w-54 p-0 rounded border-destructive/60">
         <UiAlert variant="destructive" class="border-none rounded-none">
           <UiAlertTitle>
-            {{ $t("toolbar.file.export_pdf.alert.title") }}
+            注意
             <span class="text-foreground font-normal text-xs">
               (<SharedIssueLink issue="13" />, <SharedIssueLink issue="16" />)
             </span>
           </UiAlertTitle>
-          <UiAlertDescription v-html="$t('toolbar.file.export_pdf.alert.content')" />
+          <UiAlertDescription v-html="'在 Windows 上打印时，请在打印设置弹窗中选择“另存为 PDF”，而<b>不是</b>“Microsoft Print to PDF”。'" />
         </UiAlert>
       </UiTooltipContent>
     </UiTooltip>
@@ -33,7 +33,7 @@
     @click="doExport('html')"
   >
     <span i-mdi:language-html5 text-base />
-    {{ $t("toolbar.file.export_html") }}
+    导出为 HTML
   </UiButton>
 
   <UiButton
@@ -43,7 +43,7 @@
     @click="doExport('docx')"
   >
     <span i-mdi:file-word text-base />
-    {{ $t("toolbar.file.export_docx") }}
+    导出为 DOCX
   </UiButton>
 
   <UiButton
@@ -53,7 +53,7 @@
     @click="doExport('md')"
   >
     <span i-ri:markdown-fill text-base />
-    {{ $t("toolbar.file.export_md") }}
+    导出为 Markdown
   </UiButton>
 </template>
 

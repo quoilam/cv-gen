@@ -1,5 +1,5 @@
 <template>
-  <EditorToolbarBox text="✨ 智能一页" icon="i-lucide:sparkles">
+  <EditorToolbarBox text="智能一页" icon="i-carbon:shrink-screen">
     <!-- Status -->
     <div text="sm muted-foreground" mb-3>
       <template v-if="status === 'fitting'">
@@ -24,41 +24,16 @@
     <UiButton
       :disabled="status === 'fitting'"
       variant="secondary"
-      class="w-full mb-3"
+      class="w-full mb-2"
       @click="handleFit"
     >
-      <span i-lucide:sparkles mr-1 />
+      <span i-carbon:shrink-screen mr-1 />
       {{ status === 'fitting' ? '调整中...' : '自动调整' }}
     </UiButton>
 
-    <UiSeparator class="mb-3" />
-
-    <!-- Sliders -->
-    <div class="flex flex-col gap-y-1">
-      <SliderRow
-        v-for="slider in sliders"
-        :key="slider.key"
-        :icon="slider.icon"
-        :label="slider.label"
-        :unit="slider.unit"
-        :min="slider.min"
-        :max="slider.max"
-        :step="slider.step"
-        :model-value="store.styles[slider.key] as number"
-        :recommended="slider.recValue"
-        :show-rec="hasRecommendation"
-        @change="(v: number) => onSliderChange(slider.key, v)"
-      />
-    </div>
-
-    <!-- Reset -->
-    <div mt-3 text-right>
-      <UiButton
-        v-if="hasRecommendation"
-        variant="ghost-secondary"
-        size="sm"
-        @click="handleReset"
-      >
+    <!-- Reset to recommended -->
+    <div v-if="hasRecommendation" text-right>
+      <UiButton variant="ghost-secondary" size="sm" @click="handleReset">
         ↩ 恢复推荐值
       </UiButton>
     </div>
@@ -67,61 +42,15 @@
 
 <script lang="ts" setup>
 import { useSmartOnePage } from "~/composables/useSmartOnePage";
-import SliderRow from "./SmartOnePageRow.vue";
 
-const store = useStyleStore();
-const { execute } = useStyleHistory();
 const {
   pageCount,
   overflowPercent,
   status,
   hasRecommendation,
   fitToOnePage,
-  resetToRecommended,
-  BOUNDS
+  resetToRecommended
 } = useSmartOnePage("preview");
-
-const sliders = computed(() => [
-  {
-    key: "fontSize" as const,
-    icon: "i-ri:font-size-2",
-    label: "字号",
-    unit: "px",
-    min: BOUNDS.fontSize.min,
-    max: BOUNDS.fontSize.max,
-    step: 0.5,
-    recValue: store.recommended.fontSize
-  },
-  {
-    key: "lineHeight" as const,
-    icon: "i-ic:round-format-line-spacing",
-    label: "行间距",
-    min: BOUNDS.lineHeight.min,
-    max: BOUNDS.lineHeight.max,
-    step: 0.05,
-    recValue: store.recommended.lineHeight
-  },
-  {
-    key: "marginV" as const,
-    icon: "i-icon-park-outline:margin-one",
-    label: "上下边距",
-    unit: "px",
-    min: BOUNDS.marginV.min,
-    max: BOUNDS.marginV.max,
-    step: 1,
-    recValue: store.recommended.marginV
-  },
-  {
-    key: "marginH" as const,
-    icon: "i-icon-park-outline:margin",
-    label: "左右边距",
-    unit: "px",
-    min: BOUNDS.marginH.min,
-    max: BOUNDS.marginH.max,
-    step: 1,
-    recValue: store.recommended.marginH
-  }
-]);
 
 async function handleFit() {
   await fitToOnePage();
@@ -129,10 +58,5 @@ async function handleFit() {
 
 function handleReset() {
   resetToRecommended();
-}
-
-function onSliderChange(key: string, value: number) {
-  const k = key as keyof typeof store.styles;
-  execute(k, store.styles[k], value);
 }
 </script>

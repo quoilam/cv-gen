@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useSmartPages } from "@ohmycv/vue-smart-pages";
+import { useSmartPages } from "@cvgen/vue-smart-pages";
 import type { ResumeStyles } from "~/composables/stores/style";
 import { usePhoto } from "~/composables/photo";
 

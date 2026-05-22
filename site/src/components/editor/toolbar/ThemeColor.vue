@@ -1,6 +1,6 @@
 <template>
   <EditorToolbarBox
-    :text="$t('toolbar.theme_color')"
+    text="主题色"
     icon="i-material-symbols:palette-outline"
   >
     <!-- Color presets -->

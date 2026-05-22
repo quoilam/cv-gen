@@ -9,16 +9,18 @@
 
 body {
   color: hsl(var(--foreground));
-  background: hsl(var(--accent));
+  background: hsl(var(--background));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* `workspace` element should fill the space not occupied by the header */
 header {
-  height: 48px;
+  height: 52px;
 }
 
 .workspace {
-  height: calc(100% - 48px);
+  height: calc(100% - 52px);
 }
 
 /* For icons used in resumes */

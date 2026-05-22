@@ -1,27 +1,34 @@
 <template>
-  <div flex="~ col gap-y-2" items-end>
+  <div flex="~ col gap-y-1.5" items-end>
     <UiButton
       size="round"
-      class="group/btn gap-x-1 transition-all bg-gray-500/90 hover:(bg-gray-500 ring-none w-auto px-2) focus-visible:(w-auto px-2)"
+      variant="ghost"
+      class="group/btn gap-x-1 shadow-sm bg-background/90 backdrop-blur-sm
+             hover:(bg-background ring-1 ring-border shadow-md w-auto px-2.5)
+             focus-visible:(w-auto px-2.5)
+             transition-all duration-200"
       @click="duplicate"
-      :aria-label="$t('dashboard.duplicate')"
+      aria-label="创建副本"
     >
-      <span i-ion:duplicate />
-      <span class="hidden text-xs group-hover/btn:inline group-focus-visible/btn:inline">
-        {{ $t("dashboard.duplicate") }}
+      <span i-ion:duplicate class="size-4" />
+      <span class="hidden text-xs font-medium group-hover/btn:inline group-focus-visible/btn:inline ml-1">
+        创建副本
       </span>
     </UiButton>
 
     <UiButton
       size="round"
-      variant="destructive"
-      class="group/btn gap-x-1 transition-all bg-destructive/90 hover:(bg-destructive w-auto px-2) focus-visible:(w-auto px-2)"
+      variant="ghost"
+      class="group/btn gap-x-1 shadow-sm bg-background/90 backdrop-blur-sm
+             hover:(bg-destructive text-destructive-foreground ring-1 ring-destructive/30 shadow-md w-auto px-2.5)
+             focus-visible:(w-auto px-2.5)
+             transition-all duration-200"
       @click="remove"
-      :aria-label="$t('dashboard.delete')"
+      aria-label="删除"
     >
-      <span i-material-symbols:delete-outline-rounded />
-      <span class="hidden text-xs group-hover/btn:inline group-focus-visible/btn:inline">
-        {{ $t("dashboard.delete") }}
+      <span i-material-symbols:delete-outline-rounded class="size-4" />
+      <span class="hidden text-xs font-medium group-hover/btn:inline group-focus-visible/btn:inline ml-1">
+        删除
       </span>
     </UiButton>
   </div>

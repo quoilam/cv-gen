@@ -1,14 +1,14 @@
 {
-  "name": "@ohmycv/vue-shortcuts",
+  "name": "@cvgen/vue-shortcuts",
   "version": "0.1.1",
   "description": "Use keyboard shortcuts in Vue.",
-  "homepage": "https://github.com/Renovamen/oh-my-cv/tree/main/packages/vue-shortcuts",
+  "homepage": "https://github.com/quoilam/cv-gen/tree/main/packages/vue-shortcuts",
   "bugs": {
-    "url": "https://github.com/Renovamen/oh-my-cv"
+    "url": "https://github.com/quoilam/cv-gen/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renovamen/oh-my-cv.git",
+    "url": "git+https://github.com/quoilam/cv-gen.git",
     "directory": "packages/vue-shortcuts"
   },
   "license": "MIT",
@@ -29,7 +29,7 @@
     "build:pkg": "pnpm run build-fast:pkg --dts"
   },
   "dependencies": {
-    "@renovamen/utils": "workspace:*",
+    "@cvgen/utils": "workspace:*",
     "@vueuse/core": "^10.11.0",
     "vue": "^3.4.31"
   },

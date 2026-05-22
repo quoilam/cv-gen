@@ -4,7 +4,7 @@
       v-model="keyword"
       type="text"
       class="w-full text-sm border rounded px-2 py-1.5 bg-background"
-      :placeholder="$t('icon.search_placeholder')"
+      placeholder="搜索图标..."
       @input="onSearch"
     />
 
@@ -27,7 +27,7 @@
     </div>
 
     <div v-if="!loading && keyword && results.length === 0" class="text-sm text-muted-foreground text-center py-4">
-      {{ $t("icon.no_results") }}
+      未找到图标
     </div>
   </div>
 </template>

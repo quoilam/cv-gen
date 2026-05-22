@@ -1,23 +1,15 @@
 <template>
   <div class="p-3">
-    <!-- API Configuration -->
-    <div v-if="!configured" class="mb-3 space-y-2">
-      <select v-model="selectedProvider" class="w-full text-sm border rounded px-2 py-1 bg-background">
-        <option value="openai">OpenAI</option>
-        <option value="anthropic">Anthropic</option>
-      </select>
-      <input
-        v-model="apiKey"
-        type="password"
-        placeholder="API Key"
-        class="w-full text-sm border rounded px-2 py-1 bg-background"
-      />
-      <UiButton size="sm" class="w-full" @click="doConfigure">
-        {{ $t("ai.configure") }}
-      </UiButton>
+    <!-- Not configured: message + link to settings -->
+    <div v-if="!configured" class="text-center py-6">
+      <div class="text-sm text-muted-foreground mb-3">AI 未配置</div>
+      <NuxtLink to="/settings" class="text-sm text-primary hover:underline inline-flex items-center gap-1">
+        <span i-lucide:settings class="size-3.5" />
+        前往设置
+      </NuxtLink>
     </div>
 
-    <!-- Feature Tabs -->
+    <!-- Configured: Feature Tabs -->
     <div v-else>
       <div class="flex border-b mb-3">
         <button
@@ -27,7 +19,7 @@
           :class="activeTab === tab.id ? 'border-primary text-primary' : 'border-transparent'"
           @click="activeTab = tab.id"
         >
-          {{ $t(tab.labelKey) }}
+          {{ tab.label }}
         </button>
       </div>
 
@@ -36,7 +28,7 @@
         <textarea
           v-model="docInput"
           class="w-full h-32 text-sm border rounded p-2 bg-background resize-none"
-          :placeholder="$t('ai.generate_placeholder')"
+          placeholder="在此输入项目描述，AI 将根据描述生成简历内容"
         />
         <UiButton
           size="sm"
@@ -45,7 +37,7 @@
           @click="doGenerate"
         >
           <span v-if="loading" i-lucide:loader-2 class="animate-spin mr-1" />
-          {{ loading ? $t("ai.generating") : $t("ai.generate") }}
+          {{ loading ? '生成中...' : '生成' }}
         </UiButton>
       </div>
 
@@ -54,7 +46,7 @@
         <textarea
           v-model="jdInput"
           class="w-full h-32 text-sm border rounded p-2 bg-background resize-none"
-          :placeholder="$t('ai.optimize_placeholder')"
+          placeholder="在此输入职位描述，AI 将根据 JD 优化简历"
         />
         <UiButton
           size="sm"
@@ -63,13 +55,13 @@
           @click="doOptimize"
         >
           <span v-if="loading" i-lucide:loader-2 class="animate-spin mr-1" />
-          {{ loading ? $t("ai.optimizing") : $t("ai.optimize") }}
+          {{ loading ? '优化中...' : '优化' }}
         </UiButton>
       </div>
 
       <!-- Stream Output Preview -->
       <div v-if="streamContent" class="mt-3 border rounded p-2 max-h-48 overflow-y-auto">
-        <div class="text-xs text-muted-foreground mb-1">{{ $t("ai.preview") }}</div>
+        <div class="text-xs text-muted-foreground mb-1">预览</div>
         <div class="text-sm whitespace-pre-wrap">{{ streamContent }}</div>
         <div class="flex gap-2 mt-2">
           <UiButton
@@ -78,7 +70,7 @@
             variant="outline"
             @click="doInsert"
           >
-            {{ $t("ai.insert") }}
+            插入
           </UiButton>
           <UiButton
             v-if="activeTab === 'optimize'"
@@ -86,7 +78,7 @@
             variant="outline"
             @click="doReplace"
           >
-            {{ $t("ai.replace") }}
+            替换
           </UiButton>
         </div>
       </div>
@@ -99,26 +91,19 @@
 
 <script lang="ts" setup>
 import { useAI } from "~/composables/ai";
+import { NuxtLink } from "#components";
 
 const ai = useAI();
 
-const configured = ref(false);
-const selectedProvider = ref<"openai" | "anthropic">("openai");
-const apiKey = ref("");
+const { loading, streamContent, error, configured } = ai;
 const activeTab = ref<"generate" | "optimize">("generate");
 const docInput = ref("");
 const jdInput = ref("");
-const { loading, streamContent, error } = ai;
 
 const tabs = [
-  { id: "generate", labelKey: "ai.tab_generate" },
-  { id: "optimize", labelKey: "ai.tab_optimize" }
-];
-
-const doConfigure = () => {
-  ai.configure(selectedProvider.value, apiKey.value);
-  configured.value = true;
-};
+  { id: "generate", label: "生成" },
+  { id: "optimize", label: "优化" }
+] as const;
 
 const doGenerate = async () => {
   try {

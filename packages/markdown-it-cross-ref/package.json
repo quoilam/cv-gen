@@ -1,5 +1,5 @@
 {
-  "name": "@ohmycv/markdown-it-cross-ref",
+  "name": "@cvgen/markdown-it-cross-ref",
   "version": "0.1.1",
   "description": "Enable cross-references in markdown-it.",
   "keywords": [
@@ -7,13 +7,13 @@
     "markdown-it-plugin",
     "markdown-it"
   ],
-  "homepage": "https://github.com/Renovamen/oh-my-cv/tree/main/packages/markdown-it-cross-ref",
+  "homepage": "https://github.com/quoilam/cv-gen/tree/main/packages/markdown-it-cross-ref",
   "bugs": {
-    "url": "https://github.com/Renovamen/oh-my-cv"
+    "url": "https://github.com/quoilam/cv-gen/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renovamen/oh-my-cv.git",
+    "url": "git+https://github.com/quoilam/cv-gen.git",
     "directory": "packages/markdown-it-cross-ref"
   },
   "license": "MIT",

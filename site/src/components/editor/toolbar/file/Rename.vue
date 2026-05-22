@@ -1,7 +1,7 @@
 <template>
   <div class="hstack gap-x-1.5 px-3 w-full h-8">
     <span i-material-symbols:edit-square-outline-rounded text-base />
-    {{ $t("toolbar.file.rename") }}
+    重命名
     <span class="flex-1 tracking-widest" text="xs right muted-foreground">↵</span>
   </div>
 

@@ -6,13 +6,13 @@
     @click="save"
   >
     <span i-ic:baseline-save text-base />
-    {{ $t("toolbar.file.save") }}
+    保存
     <span class="flex-1 tracking-widest" text="xs right muted-foreground">⌘ S</span>
   </UiButton>
 </template>
 
 <script lang="ts" setup>
-import { useShortcuts } from "@ohmycv/vue-shortcuts";
+import { useShortcuts } from "@cvgen/vue-shortcuts";
 
 const { data } = useDataStore();
 const { styles } = useStyleStore();

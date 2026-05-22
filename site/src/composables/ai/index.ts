@@ -1,23 +1,69 @@
+import localforage from "localforage";
 import type { LLMProvider } from "./providers/types";
 import { OpenAIProvider } from "./providers/openai";
 import { AnthropicProvider } from "./providers/anthropic";
 import { PROMPTS } from "./prompts";
 
+export interface LLMConfig {
+  provider: "openai" | "anthropic";
+  apiKey: string;
+  model?: string;
+  baseUrl?: string;
+}
+
+const llmConfigStore = localforage.createInstance({ name: "cvgen_llm_config" });
+
+let _initialized = false;
+
 export const useAI = () => {
   const loading = ref(false);
   const streamContent = ref("");
   const error = ref<string | null>(null);
+  const configured = ref(false);
+  const currentModel = ref<string | null>(null);
+  const currentBaseUrl = ref<string | null>(null);
 
   let _provider: LLMProvider | null = null;
   const _streamCallbacks: Array<(chunk: string) => void> = [];
 
-  const configure = (provider: "openai" | "anthropic", apiKey: string) => {
-    if (provider === "openai") {
-      _provider = new OpenAIProvider(apiKey);
-    } else {
-      _provider = new AnthropicProvider(apiKey);
-    }
+  const saveConfig = async (config: LLMConfig) => {
+    await llmConfigStore.setItem("config", config);
   };
+
+  const loadConfig = async (): Promise<LLMConfig | null> => {
+    return llmConfigStore.getItem<LLMConfig>("config");
+  };
+
+  const clearConfig = async () => {
+    await llmConfigStore.removeItem("config");
+  };
+
+  const configure = (config: LLMConfig) => {
+    if (config.provider === "openai") {
+      _provider = new OpenAIProvider(config.apiKey, config.model, config.baseUrl);
+      currentModel.value = config.model ?? "gpt-4o";
+      currentBaseUrl.value = config.baseUrl ?? "https://api.openai.com/v1";
+    } else {
+      _provider = new AnthropicProvider(config.apiKey, config.model, config.baseUrl);
+      currentModel.value = config.model ?? "claude-sonnet-4-6";
+      currentBaseUrl.value = config.baseUrl ?? "https://api.anthropic.com/v1";
+    }
+    configured.value = true;
+    saveConfig(config);
+  };
+
+  const disconnect = async () => {
+    _provider = null;
+    configured.value = false;
+    currentModel.value = null;
+    currentBaseUrl.value = null;
+    await clearConfig();
+  };
+
+  if (!_initialized) {
+    _initialized = true;
+    loadConfig().then((c) => { if (c) configure(c); });
+  }
 
   const onStream = (cb: (chunk: string) => void) => {
     _streamCallbacks.push(cb);
@@ -97,8 +143,12 @@ export const useAI = () => {
     insertToEditor,
     replaceEditorContent,
     onStream,
+    disconnect,
     loading,
     streamContent,
-    error
+    error,
+    configured,
+    currentModel,
+    currentBaseUrl
   };
 };

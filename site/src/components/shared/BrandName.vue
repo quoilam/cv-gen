@@ -1,1 +1,3 @@
-<template>Oh<span text-primary>My</span>CV</template>
+<template>
+  <span>Oh<span class="text-primary font-bold">My</span>CV</span>
+</template>

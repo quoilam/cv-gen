@@ -1,10 +1,10 @@
-# Oh My CV!
+# CvGen
 
 Microsoft Word and LaTeX are too overkill for a resume.
 
 So, why not write it in Markdown?
 
-Have fun: [ohmycv.app](https://ohmycv.app/)
+Have fun: [quoilam.github.io/cv-gen](https://quoilam.github.io/cv-gen)
 
 
 &nbsp;
@@ -50,6 +50,7 @@ Contributions are welcome. Please read this [Contributing Guide](.github/CONTRIB
 
 ## Credits
 
+- [Renovamen/oh-my-cv](https://github.com/Renovamen/oh-my-cv) — 本项目 fork 自 Oh My CV!，感谢原作者的工作
 - [billryan/resume](https://github.com/billryan/resume)
 
 

@@ -1,5 +1,5 @@
 {
-  "name": "@ohmycv/markdown-it-latex-cmds",
+  "name": "@cvgen/markdown-it-latex-cmds",
   "version": "0.1.1",
   "description": "Enable using LaTeX like commands in markdown-it",
   "keywords": [
@@ -7,13 +7,13 @@
     "markdown-it-plugin",
     "markdown-it"
   ],
-  "homepage": "https://github.com/Renovamen/oh-my-cv/tree/main/packages/markdown-it-latex-cmds",
+  "homepage": "https://github.com/quoilam/cv-gen/tree/main/packages/markdown-it-latex-cmds",
   "bugs": {
-    "url": "https://github.com/Renovamen/oh-my-cv"
+    "url": "https://github.com/quoilam/cv-gen/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Renovamen/oh-my-cv.git",
+    "url": "git+https://github.com/quoilam/cv-gen.git",
     "directory": "packages/markdown-it-latex-cmds"
   },
   "license": "MIT",

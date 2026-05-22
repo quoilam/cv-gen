@@ -40,7 +40,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
 
   function estimateOverflow(): { pages: number; overflow: number } {
     const pages = document.querySelectorAll(
-      `#resume-${resumeId} [data-scope="vue-smart-pages"] [data-part="page"]`
+      `#resume-${resumeId} [data-part="page"]`
     );
     const count = pages.length || 1;
 

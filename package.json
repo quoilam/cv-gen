@@ -1,9 +1,14 @@
 {
-  "name": "oh-my-cv",
+  "name": "cv-gen",
   "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.4.0",
   "type": "module",
+  "homepage": "https://quoilam.github.io/cv-gen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quoilam/cv-gen.git"
+  },
   "scripts": {
     "build": "pnpm --filter=site build",
     "build:pkg": "pnpm -r --stream build:pkg",

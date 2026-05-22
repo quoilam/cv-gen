@@ -8,10 +8,10 @@ import type {
 // @ts-expect-error missing types
 import MarkdownItDeflist from "markdown-it-deflist";
 import LinkAttributes from "markdown-it-link-attributes";
-import MarkdownItKatex from "@ohmycv/markdown-it-katex";
-import MarkdownItCite from "@ohmycv/markdown-it-cross-ref";
-import MarkdownItLatexCmds from "@ohmycv/markdown-it-latex-cmds";
-import { FrontMatterParser } from "@ohmycv/front-matter";
+import MarkdownItKatex from "@cvgen/markdown-it-katex";
+import MarkdownItCite from "@cvgen/markdown-it-cross-ref";
+import MarkdownItLatexCmds from "@cvgen/markdown-it-latex-cmds";
+import { FrontMatterParser } from "@cvgen/front-matter";
 
 type ResumeHeaderItem = {
   readonly text: string;

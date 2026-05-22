@@ -1,8 +1,9 @@
 <template>
   <UiButton
-    variant="ghost-secondary"
+    variant="ghost"
     size="round"
-    :aria-label="$t('toggle_theme')"
+    class="text-muted-foreground hover:text-foreground"
+    aria-label="切换颜色模式"
     @click="switchMode"
   >
     <div

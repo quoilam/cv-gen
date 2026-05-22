@@ -9,8 +9,8 @@ export const pwa: ModuleOptions = {
   manifest: {
     id: scope,
     scope,
-    name: "Oh My CV!",
-    short_name: "Oh My CV!",
+    name: "CvGen",
+    short_name: "CvGen",
     icons: [
       {
         src: "/pwa-192x192.png",

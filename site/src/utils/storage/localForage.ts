@@ -1,5 +1,5 @@
 import * as localForage from "localforage";
-import { isClient, copy, now } from "@renovamen/utils";
+import { isClient, copy, now } from "@cvgen/utils";
 import type {
   DbService,
   StorageJsonData,
@@ -11,7 +11,7 @@ import { StorageVersion } from "./utils";
 import { MigrateService, type ValidStorageJsonData } from "./migrate";
 
 export class LocalForageDbService implements DbService {
-  private _key = "ohmycv_data";
+  private _key = "cvgen_data";
 
   private _storageError = () => ({
     data: null,

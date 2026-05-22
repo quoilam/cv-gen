@@ -29,7 +29,7 @@
 ├── assets/                 # 图片资产（二进制原始格式）
 │   ├── photo.png
 │   └── logo.jpg
-└── .ohmycv/
+└── .cvgen/
     └── sync-state.json     # 同步状态（用于冲突检测）
 ```
 

@@ -1,5 +1,5 @@
 <template>
-  <EditorToolbarBox :text="$t('toolbar.ai.title')" icon="i-lucide:sparkles">
+  <EditorToolbarBox text="AI 助手" icon="i-lucide:sparkles">
     <EditorAIPanel />
   </EditorToolbarBox>
 </template>

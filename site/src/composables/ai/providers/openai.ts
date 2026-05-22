@@ -4,10 +4,12 @@ export class OpenAIProvider implements LLMProvider {
   readonly id = "openai";
   readonly label = "OpenAI";
   private _apiKey: string;
+  private _model: string;
   private _baseUrl: string;
 
-  constructor(apiKey: string, baseUrl = "https://api.openai.com/v1") {
+  constructor(apiKey: string, model = "gpt-4o", baseUrl = "https://api.openai.com/v1") {
     this._apiKey = apiKey;
+    this._model = model;
     this._baseUrl = baseUrl;
   }
 
@@ -19,7 +21,7 @@ export class OpenAIProvider implements LLMProvider {
         Authorization: `Bearer ${this._apiKey}`
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: this._model,
         messages,
         temperature: 0.7
       })
@@ -45,7 +47,7 @@ export class OpenAIProvider implements LLMProvider {
         Authorization: `Bearer ${this._apiKey}`
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: this._model,
         messages,
         temperature: 0.7,
         stream: true

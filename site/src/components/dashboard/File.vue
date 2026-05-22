@@ -1,22 +1,19 @@
 <template>
   <div class="flex gap-2">
-    <UiButton @click="exportToJSON">
-      <span i-ic:baseline-save-as size-4 mr-1 />
-      {{ $t("dashboard.saveas") }}
+    <UiButton variant="outline" size="sm" class="h-9 font-medium" @click="exportToJSON">
+      <span i-lucide:download size-3.5 class="mr-1.5" />
+      导出
     </UiButton>
-    <UiButton
-      class="bg-neutral-800 hover:(bg-neutral-800/90 ring-neutral-800/40) dark:(bg-secondary hover:bg-background hover:ring-secondary/40)"
-      @click="open"
-    >
-      <span i-ic:round-upload-file size-4 mr-1 />
-      {{ $t("dashboard.import") }}
+    <UiButton variant="outline" size="sm" class="h-9 font-medium" @click="open">
+      <span i-lucide:upload size-3.5 class="mr-1.5" />
+      导入
     </UiButton>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useShortcuts } from "@ohmycv/vue-shortcuts";
-import { useFileDialog, readFile } from "@renovamen/utils";
+import { useShortcuts } from "@cvgen/vue-shortcuts";
+import { useFileDialog, readFile } from "@cvgen/utils";
 
 const emits = defineEmits<{
   (e: "update"): void;

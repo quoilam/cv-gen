@@ -4,16 +4,20 @@ export class AnthropicProvider implements LLMProvider {
   readonly id = "anthropic";
   readonly label = "Anthropic";
   private _apiKey: string;
+  private _model: string;
+  private _baseUrl: string;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, model = "claude-sonnet-4-6", baseUrl = "https://api.anthropic.com/v1") {
     this._apiKey = apiKey;
+    this._model = model;
+    this._baseUrl = baseUrl;
   }
 
   async chat(messages: LLMMessage[]): Promise<string> {
     const systemMsg = messages.find((m) => m.role === "system");
     const userMsgs = messages.filter((m) => m.role === "user");
 
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(`${this._baseUrl}/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +25,7 @@ export class AnthropicProvider implements LLMProvider {
         "anthropic-version": "2023-06-01"
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
+        model: this._model,
         max_tokens: 4096,
         system: systemMsg?.content,
         messages: userMsgs.map((m) => ({ role: "user", content: m.content }))
@@ -44,7 +48,7 @@ export class AnthropicProvider implements LLMProvider {
     const systemMsg = messages.find((m) => m.role === "system");
     const userMsgs = messages.filter((m) => m.role === "user");
 
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(`${this._baseUrl}/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +56,7 @@ export class AnthropicProvider implements LLMProvider {
         "anthropic-version": "2023-06-01"
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
+        model: this._model,
         max_tokens: 4096,
         system: systemMsg?.content,
         messages: userMsgs.map((m) => ({ role: "user", content: m.content })),

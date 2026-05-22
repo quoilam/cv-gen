@@ -51,10 +51,10 @@ const SETTINGS_FILE = "settings.json";
 let _fs: LightningFS | null = null;
 let _config: GitConfig | null = null;
 const _dir = "/repo";
-const configStore = localforage.createInstance({ name: "ohmycv_git_config" });
+const configStore = localforage.createInstance({ name: "cvgen_git_config" });
 
 function _getFs(): LightningFS {
-  if (!_fs) _fs = new LightningFS("ohmycv_git");
+  if (!_fs) _fs = new LightningFS("cvgen_git");
   return _fs;
 }
 
@@ -187,7 +187,7 @@ export const GitOps = {
     await git.pull({
       fs, http,
       dir: _dir,
-      author: { name: "ohmycv", email: "ohmycv@local" },
+      author: { name: "cvgen", email: "cvgen@local" },
       onAuth: () => _getAuth(),
     });
 
@@ -313,7 +313,7 @@ async function _commitAndPush(message: string): Promise<void> {
 
   await git.commit({
     fs, dir: _dir, message,
-    author: { name: "ohmycv", email: "ohmycv@local" },
+    author: { name: "cvgen", email: "cvgen@local" },
   });
 
   await git.push({
@@ -534,7 +534,7 @@ async function _importRepoToLocal() {
         }
       }
       if (changed) {
-        const assetStore = localforage.createInstance({ name: "ohmycv_assets" });
+        const assetStore = localforage.createInstance({ name: "cvgen_assets" });
         await assetStore.setItem("assets", localAssets);
       }
     } catch {}

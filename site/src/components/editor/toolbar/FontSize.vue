@@ -1,5 +1,5 @@
 <template>
-  <EditorToolbarBox :text="$t('toolbar.font_size')" icon="i-ri:font-size-2">
+  <EditorToolbarBox text="字号" icon="i-ri:font-size-2">
     <SharedUiSlider
       unit="px"
       :model-value="modelValue"

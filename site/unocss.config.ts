@@ -3,11 +3,9 @@ import {
   presetAttributify,
   presetIcons,
   presetUno,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup
 } from "unocss";
-import { i18n } from "./configs/i18n";
 import presetAnimations from "unocss-preset-animations";
 import { presetShadcn } from "unocss-preset-shadcn";
 
@@ -48,6 +46,9 @@ export default defineConfig({
     colors: {
       success: "hsl(var(--success))",
       info: "hsl(var(--info))"
+    },
+    fontFamily: {
+      ui: "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif"
     }
   },
   presets: [
@@ -58,47 +59,48 @@ export default defineConfig({
         display: "inline-block"
       }
     }),
-    presetWebFonts({
-      fonts: {
-        ui: "Lato:400,700"
-      }
-    }),
     presetAnimations(),
     presetShadcn(
       {
         color: {
-          base: "orange",
+          base: "blue",
           light: {
-            background: "0 0% 100%",
-            foreground: "215 25% 27%",
+            background: "40 20% 98%",
+            foreground: "222 20% 18%",
             card: "0 0% 100%",
-            "card-foreground": "215 25% 27%",
+            "card-foreground": "222 20% 18%",
             popover: "0 0% 100%",
-            "popover-foreground": "215 25% 27%",
-            secondary: "220 13% 91%",
-            "secondary-foreground": "220.9 39.3% 11%", // gray
-            muted: "220 14.3% 95.9%", // gray
-            "muted-foreground": "220 8.9% 46.1%", // gray
-            accent: "220 14.3% 95.9%", // gray
-            "accent-foreground": "220.9 39.3% 11%", // gray
-            border: "216 12% 85%",
-            input: "216 12% 85%"
+            "popover-foreground": "222 20% 18%",
+            primary: "221 83% 53%",
+            "primary-foreground": "0 0% 100%",
+            secondary: "220 14% 94%",
+            "secondary-foreground": "220 30% 25%",
+            muted: "220 14% 96%",
+            "muted-foreground": "220 9% 46%",
+            accent: "220 14% 94%",
+            "accent-foreground": "220 30% 25%",
+            border: "220 13% 88%",
+            input: "220 13% 88%",
+            ring: "221 83% 53%"
           },
           dark: {
-            background: "213 12% 15%",
-            foreground: "0 0% 90%",
-            card: "213 12% 15%",
-            "card-foreground": "0 0% 90%",
-            popover: "213 12% 15%",
-            "popover-foreground": "0 0% 90%",
-            secondary: "230 5% 36%",
-            "secondary-foreground": "0 0% 98%", // neutral
-            muted: "220 10% 21%",
-            "muted-foreground": "0 0% 63.9%", // neutral
-            accent: "220 10% 21%",
-            "accent-foreground": "0 0% 98%", // neutral
-            border: "0 0% 45%",
-            input: "0 0% 45%"
+            background: "222 20% 10%",
+            foreground: "210 20% 95%",
+            card: "222 20% 12%",
+            "card-foreground": "210 20% 95%",
+            popover: "222 20% 12%",
+            "popover-foreground": "210 20% 95%",
+            primary: "217 91% 65%",
+            "primary-foreground": "222 20% 10%",
+            secondary: "217 15% 20%",
+            "secondary-foreground": "210 20% 95%",
+            muted: "217 15% 18%",
+            "muted-foreground": "215 14% 65%",
+            accent: "217 15% 20%",
+            "accent-foreground": "210 20% 95%",
+            border: "217 15% 25%",
+            input: "217 15% 25%",
+            ring: "217 91% 65%"
           }
         }
       },
@@ -112,6 +114,4 @@ export default defineConfig({
       include: [/\.ts/, /\.vue$/, /\.vue\?vue/]
     }
   },
-  // @ts-expect-error icon is a customized key
-  safelist: i18n.locales.map((item) => item.icon)
 });

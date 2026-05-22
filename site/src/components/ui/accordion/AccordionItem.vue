@@ -1,24 +1,21 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from "vue";
-import { DropdownMenuSeparator, type DropdownMenuSeparatorProps } from "radix-vue";
+import { AccordionItem, type AccordionItemProps } from "radix-vue";
 import { cn } from "~/utils/shadcn";
 
-const props = defineProps<
-  DropdownMenuSeparatorProps & {
-    class?: HTMLAttributes["class"];
-  }
->();
+const props = defineProps<AccordionItemProps & { class?: HTMLAttributes["class"] }>();
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props;
-
   return delegated;
 });
 </script>
 
 <template>
-  <DropdownMenuSeparator
+  <AccordionItem
     v-bind="delegatedProps"
-    :class="cn('-mx-1 my-1 h-px bg-muted', props.class)"
-  />
+    :class="cn('border-b border-border', props.class)"
+  >
+    <slot />
+  </AccordionItem>
 </template>

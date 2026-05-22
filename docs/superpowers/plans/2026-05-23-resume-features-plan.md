@@ -260,7 +260,7 @@ export interface AssetInfo {
 }
 
 const assetStore = localforage.createInstance({
-  name: "ohmycv_assets"
+  name: "cvgen_assets"
 });
 
 function generateId(): string {
@@ -1308,7 +1308,7 @@ let _config: GitConfig | null = null;
 const _dir = "/resumes";
 
 function _getFs(): LightningFS {
-  if (!_fs) _fs = new LightningFS("ohmycv_git");
+  if (!_fs) _fs = new LightningFS("cvgen_git");
   return _fs;
 }
 
@@ -1352,7 +1352,7 @@ export const GitOps = {
       fs,
       http,
       dir: _dir,
-      author: { name: "ohmycv", email: "ohmycv@local" },
+      author: { name: "cvgen", email: "cvgen@local" },
       onAuth: () => _getAuth()
     });
   },
@@ -1367,7 +1367,7 @@ export const GitOps = {
       fs,
       dir: _dir,
       message,
-      author: { name: "ohmycv", email: "ohmycv@local" }
+      author: { name: "cvgen", email: "cvgen@local" }
     });
 
     await git.push({
