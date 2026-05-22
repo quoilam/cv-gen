@@ -10,7 +10,7 @@
       @update:model-value="
         (value) => {
           modelValue = value!;
-          setStyle('paragraphSpace', value!.at(0)!);
+          execute('paragraphSpace', styles.paragraphSpace, value!.at(0)!);
         }
       "
     />
@@ -18,7 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 
 const modelValue = ref([styles.paragraphSpace]);
 </script>

@@ -31,7 +31,7 @@ const html = computed(() => markdownService.renderResume(props.markdown));
 const { render } = useSmartPages(target, html, size, margins, {
   beforeRender: async () => {
     // Wait for the fonts to be loaded
-    await googleFontsService.presetObserver(props.styles);
+    await fontService.presetObserver(props.styles);
   },
   watchThrottledOptions: {
     throttle: 200

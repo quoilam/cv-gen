@@ -6,7 +6,7 @@
           class="gap-x-1.5 w-full h-8 justify-start"
           variant="ghost"
           size="sm"
-          @click="exportPDF"
+          @click="doExport('pdf')"
         >
           <span i-mdi:file-pdf text-base />
           {{ $t("toolbar.file.export_pdf.title") }}
@@ -30,7 +30,17 @@
     class="gap-x-1.5 w-full h-8 justify-start"
     variant="ghost"
     size="sm"
-    @click="exportMd"
+    @click="doExport('html')"
+  >
+    <span i-mdi:language-html5 text-base />
+    {{ $t("toolbar.file.export_html") }}
+  </UiButton>
+
+  <UiButton
+    class="gap-x-1.5 w-full h-8 justify-start"
+    variant="ghost"
+    size="sm"
+    @click="doExport('md')"
   >
     <span i-ri:markdown-fill text-base />
     {{ $t("toolbar.file.export_md") }}
@@ -38,22 +48,25 @@
 </template>
 
 <script lang="ts" setup>
-import { downloadFile } from "@renovamen/utils";
+import { exportService } from "~/utils/export";
+import { registerExportHandlers } from "~/utils/export/handlers";
+import type { ExportContext } from "~/utils/export";
+
+registerExportHandlers();
 
 const { data } = useDataStore();
+const { styles } = useStyleStore();
 const saveName = computed(() => data.resumeName.trim().replace(/\s+/g, "_"));
 
-// Export as PDF
-const exportPDF = () => {
-  const title = document.title;
+const ctx = computed<ExportContext>(() => ({
+  markdown: data.markdown,
+  css: data.css,
+  styles: toRaw(styles),
+  name: saveName.value,
+  html: markdownService.renderResume(data.markdown)
+}));
 
-  document.title = saveName.value;
-  window.print();
-  document.title = title;
-};
-
-// Export as Markdown
-const exportMd = () => {
-  downloadFile(`${saveName.value}.md`, data.markdown);
+const doExport = (format: string) => {
+  exportService.export(format, ctx.value);
 };
 </script>

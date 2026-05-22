@@ -34,11 +34,13 @@
 <script lang="ts" setup>
 import type { DbResume } from "~/utils/storage";
 
+const { getResumes } = useResume();
+
 const {
   data: resumes,
   refresh,
   status
-} = useAsyncData<DbResume[]>("resume-list", () => storageService.getResumes(), {
+} = useAsyncData<DbResume[]>("resume-list", () => getResumes(), {
   server: false,
   immediate: false,
   default: () => []

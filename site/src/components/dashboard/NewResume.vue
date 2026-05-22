@@ -13,9 +13,10 @@
 <script lang="ts" setup>
 const router = useRouter();
 const localePath = useLocalePath();
+const { createResume } = useResume();
 
 const newAndSwitch = async () => {
-  const data = await storageService.createResume();
+  const data = await createResume();
 
   if (!data) return;
   else router.push(localePath(`/editor/${data.id}`));

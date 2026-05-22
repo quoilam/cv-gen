@@ -25,10 +25,12 @@ const props = defineProps<{
   resume: DbResume;
 }>();
 
+const { updateResume } = useResume();
+
 const rename = async (text?: string) => {
   if (!text) return;
 
-  await storageService.updateResume(
+  await updateResume(
     {
       id: props.resume.id,
       name: text

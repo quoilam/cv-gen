@@ -8,7 +8,7 @@
       @update:model-value="
         (value) => {
           modelValue = value!;
-          setStyle('fontSize', value!.at(0)!);
+          execute('fontSize', styles.fontSize, value!.at(0)!);
         }
       "
     />
@@ -16,7 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 
 const modelValue = ref([styles.fontSize]);
 </script>

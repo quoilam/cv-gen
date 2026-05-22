@@ -31,9 +31,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    public: {
-      googleFontsKey: ""
-    }
+    public: {}
   },
 
   colorMode: {

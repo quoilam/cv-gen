@@ -12,12 +12,13 @@
 <script lang="ts" setup>
 import type { ValidPaperSize } from "~/composables/constant";
 
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 const { PAPER } = useConstant();
 
 const items = Object.keys(PAPER.SIZES).map((paper) => ({
   label: paper,
   value: paper,
-  onSelect: () => setStyle("paper", paper as ValidPaperSize)
+  onSelect: () => execute("paper", styles.paper, paper as ValidPaperSize)
 }));
 </script>

@@ -15,12 +15,6 @@ export const useConstant = () => {
           );
         return check(V.LOCAL_EN_FONTS) || check(V.LOCAL_CJK_FONTS);
       }
-    },
-    GF: {
-      CJK_SUBSETS: V.GF_CJK_SUBSETS,
-      CJK_FAMILY_TO_NAME: V.GF_CJK_FAMILY_TO_NAME,
-      CJK_FIRST: V.GF_CJK_FIRST,
-      IGNORE: V.GF_IGNORE_FONTS
     }
   };
 
