@@ -78,6 +78,8 @@ toolbar:
     horizontal: 左右
   paragraph_spacing: 段间距
   line_height: 行间距
+  git:
+    title: Git 同步
 
 asset:
   upload: 上传图片
@@ -113,3 +115,11 @@ ai:
   replace: 替换
   tab_generate: 生成
   tab_optimize: 优化
+
+git:
+  connect: 连接仓库
+  connecting: 连接中...
+  connected: 已连接 GitHub
+  sync: 保存并同步
+  no_history: 暂无提交历史
+  view: 查看此版本

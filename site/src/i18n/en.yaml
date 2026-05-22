@@ -78,6 +78,8 @@ toolbar:
     horizontal: Left & Right
   paragraph_spacing: Paragraph Spacing
   line_height: Line Spacing
+  git:
+    title: Git Sync
 
 asset:
   upload: Upload Image
@@ -113,3 +115,11 @@ ai:
   replace: Replace
   tab_generate: Generate
   tab_optimize: Optimize
+
+git:
+  connect: Connect Repository
+  connecting: Connecting...
+  connected: Connected to GitHub
+  sync: Save & Sync
+  no_history: No commit history
+  view: View this version

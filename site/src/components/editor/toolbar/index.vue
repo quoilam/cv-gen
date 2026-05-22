@@ -48,7 +48,8 @@ import {
   EditorToolbarLineHeight,
   EditorToolbarCorrectCase,
   EditorToolbarAi,
-  EditorToolbarIcon
+  EditorToolbarIcon,
+  EditorToolbarGit
 } from "#components";
 
 const tools = [
@@ -111,6 +112,11 @@ const tools = [
     id: "correct_case",
     icon: "i-icon-park-outline:check-correct",
     component: EditorToolbarCorrectCase
+  },
+  {
+    id: "git",
+    icon: "i-lucide:git-branch",
+    component: EditorToolbarGit
   }
 ];
 
@@ -131,7 +137,7 @@ const { t } = useI18n();
 
 const getTooltip = (id: string) => {
   const key = `toolbar.${id}`;
-  return ["asset", "file", "correct_case", "font_family", "margins", "ai", "icon"].includes(id)
+  return ["asset", "file", "correct_case", "font_family", "margins", "ai", "icon", "git"].includes(id)
     ? t(`${key}.title`)
     : t(key);
 };
