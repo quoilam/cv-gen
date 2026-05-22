@@ -29,6 +29,10 @@ const SENSITIVITY = {
 
 type ParamName = "fontSize" | "lineHeight" | "marginV" | "marginH" | "paragraphSpace";
 
+const PARAMS: ParamName[] = [
+  "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
+];
+
 const THRESHOLD = 0.02; // ±2% tolerance
 
 type Direction = "compress" | "expand";
@@ -46,16 +50,16 @@ export const useSmartOnePage = (resumeId: string | number) => {
     const pages = document.querySelectorAll(
       `#resume-${resumeId} [data-part="page"]`
     );
-    const count = pages.length || 1;
+    if (pages.length === 0) return { pages: 1, ratio: 1 };
 
     let totalHeight = 0;
     pages.forEach((p) => {
       totalHeight += p.scrollHeight;
     });
     const pageHeight = (pages[0] as HTMLElement).clientHeight;
-    const ratio = pageHeight > 0 ? totalHeight / pageHeight : count;
+    const ratio = pageHeight > 0 ? totalHeight / pageHeight : 1;
 
-    return { pages: count, ratio };
+    return { pages: pages.length, ratio };
   }
 
   function weightedAdjust(
@@ -67,12 +71,9 @@ export const useSmartOnePage = (resumeId: string | number) => {
     if (deviation <= THRESHOLD) return {};
 
     const result: Partial<ResumeStyles> = {};
-    const params: ParamName[] = [
-      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
-    ];
     const sign = direction === "compress" ? -1 : 1;
 
-    for (const param of params) {
+    for (const param of PARAMS) {
       const share = deviation * WEIGHTS[param];
       const delta = share / SENSITIVITY[param];
       const currentVal = current[param] as number;
@@ -111,11 +112,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
     const remaining = direction === "compress" ? ratio - 1.0 : 1.0 - ratio;
     if (remaining <= THRESHOLD) return null;
 
-    const params: ParamName[] = [
-      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
-    ];
-
-    const available = params.filter((p) => {
+    const available = PARAMS.filter((p) => {
       const val = applied[p] ?? (current[p] as number);
       if (direction === "compress") return val > BOUNDS[p].min;
       return val < BOUNDS[p].max;
@@ -145,10 +142,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
   }
 
   function atBounds(values: Partial<ResumeStyles>, direction: Direction): boolean {
-    const params: ParamName[] = [
-      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
-    ];
-    return params.every((p) => {
+    return PARAMS.every((p) => {
       const val = values[p] ?? store.styles[p];
       if (direction === "compress") return val <= BOUNDS[p].min + 0.01;
       return val >= BOUNDS[p].max - 0.01;
@@ -171,8 +165,6 @@ export const useSmartOnePage = (resumeId: string | number) => {
     // Already within tolerance
     if (Math.abs(initial.ratio - 1.0) <= THRESHOLD) {
       status.value = "success";
-      pageCount.value = 1;
-      fillRatio.value = 1;
       hasRecommendation.value = true;
       store.setRecommended({});
       return;
