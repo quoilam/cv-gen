@@ -32,23 +32,33 @@ function compressPhoto(file: File): Promise<string> {
         const isLossy = mimeType === "image/jpeg";
         resolve(canvas.toDataURL(mimeType, isLossy ? 0.85 : undefined));
       };
-      img.onerror = reject;
+      img.onerror = () => reject(new Error("Failed to decode image"));
       img.src = reader.result as string;
     };
-    reader.onerror = reject;
+    reader.onerror = () => reject(new Error("Failed to read image file"));
     reader.readAsDataURL(file);
   });
 }
 
 export const usePhoto = () => {
   const init = async () => {
-    photo.value = await photoStore.getItem<string>(PHOTO_KEY) ?? null;
+    try {
+      photo.value = await photoStore.getItem<string>(PHOTO_KEY) ?? null;
+    } catch (error) {
+      console.error("Failed to load photo:", error);
+      photo.value = null;
+    }
   };
 
   const uploadPhoto = async (file: File) => {
-    const base64 = await compressPhoto(file);
-    await photoStore.setItem(PHOTO_KEY, base64);
-    photo.value = base64;
+    try {
+      const base64 = await compressPhoto(file);
+      await photoStore.setItem(PHOTO_KEY, base64);
+      photo.value = base64;
+    } catch (error) {
+      console.error("Failed to upload photo:", error);
+      throw error;
+    }
   };
 
   const removePhoto = async () => {
