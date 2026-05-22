@@ -26,7 +26,18 @@ const margins = computed(() => ({
   left: props.styles.marginH,
   right: props.styles.marginH
 }));
-const html = computed(() => markdownService.renderResume(props.markdown));
+import { usePhoto } from "~/composables/photo";
+
+const html = ref("");
+const { photo } = usePhoto();
+
+watch(
+  () => [props.markdown, photo.value] as const,
+  async ([md]) => {
+    html.value = await markdownService.renderResume(md);
+  },
+  { immediate: true }
+);
 
 const { render } = useSmartPages(target, html, size, margins, {
   beforeRender: async () => {
