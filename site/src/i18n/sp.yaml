@@ -35,6 +35,8 @@ toolbar:
     title: Imágenes
   ai:
     title: Asistente IA
+  icon:
+    title: Iconos
   file:
     title: Archivo
     save: Guardar
@@ -80,6 +82,10 @@ toolbar:
 asset:
   upload: Subir Imagen
   empty: No hay imágenes
+
+icon:
+  search_placeholder: Buscar iconos...
+  no_results: No se encontraron iconos
 
 notification:
   save: Cambios Guardados

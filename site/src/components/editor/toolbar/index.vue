@@ -47,7 +47,8 @@ import {
   EditorToolbarParagraphSpace,
   EditorToolbarLineHeight,
   EditorToolbarCorrectCase,
-  EditorToolbarAi
+  EditorToolbarAi,
+  EditorToolbarIcon
 } from "#components";
 
 const tools = [
@@ -65,6 +66,11 @@ const tools = [
     id: "ai",
     icon: "i-lucide:sparkles",
     component: EditorToolbarAi
+  },
+  {
+    id: "icon",
+    icon: "i-lucide:icons",
+    component: EditorToolbarIcon
   },
   {
     id: "paper_size",
@@ -125,7 +131,7 @@ const { t } = useI18n();
 
 const getTooltip = (id: string) => {
   const key = `toolbar.${id}`;
-  return ["asset", "file", "correct_case", "font_family", "margins", "ai"].includes(id)
+  return ["asset", "file", "correct_case", "font_family", "margins", "ai", "icon"].includes(id)
     ? t(`${key}.title`)
     : t(key);
 };

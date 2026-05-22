@@ -35,6 +35,8 @@ toolbar:
     title: Images
   ai:
     title: AI Assistant
+  icon:
+    title: Icons
   file:
     title: File
     save: Save
@@ -80,6 +82,10 @@ toolbar:
 asset:
   upload: Upload Image
   empty: No images uploaded
+
+icon:
+  search_placeholder: Search icons...
+  no_results: No icons found
 
 notification:
   save: Your changes have been saved
