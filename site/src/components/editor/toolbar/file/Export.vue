@@ -40,6 +40,16 @@
     class="gap-x-1.5 w-full h-8 justify-start"
     variant="ghost"
     size="sm"
+    @click="doExport('docx')"
+  >
+    <span i-mdi:file-word text-base />
+    {{ $t("toolbar.file.export_docx") }}
+  </UiButton>
+
+  <UiButton
+    class="gap-x-1.5 w-full h-8 justify-start"
+    variant="ghost"
+    size="sm"
     @click="doExport('md')"
   >
     <span i-ri:markdown-fill text-base />

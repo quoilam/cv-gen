@@ -46,6 +46,8 @@ toolbar:
       alert:
         title: ¡Atención!
         content: Al imprimir en Windows, seleccione "Guardar como PDF" en la ventana emergente de configuración de impresión, <b>no</b> "Microsoft Print to PDF".
+    export_html: Exportar HTML
+    export_docx: Exportar DOCX
     export_md: Exportar Markdown
   correct_case:
     title: Corregir Mayusculas

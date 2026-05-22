@@ -46,6 +46,8 @@ toolbar:
       alert:
         title: 注意
         content: 在 Windows 上打印时，请在打印设置弹窗中选择“另存为 PDF”，而<b>不是</b>“Microsoft Print to PDF”。
+    export_html: 导出为 HTML
+    export_docx: 导出为 DOCX
     export_md: 导出为 Markdown
   correct_case:
     title: 专有名词大小写修正

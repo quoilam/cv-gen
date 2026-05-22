@@ -1,6 +1,7 @@
 import { downloadFile } from "@renovamen/utils";
 import type { ExportHandler } from "./index";
 import { exportService } from "./index";
+import { docxHandler } from "./docx";
 
 export const mdHandler: ExportHandler = (ctx) => {
   downloadFile(`${ctx.name}.md`, ctx.markdown);
@@ -45,4 +46,5 @@ export function registerExportHandlers() {
   exportService.register("md", mdHandler);
   exportService.register("pdf", pdfHandler);
   exportService.register("html", htmlHandler);
+  exportService.register("docx", docxHandler);
 }
