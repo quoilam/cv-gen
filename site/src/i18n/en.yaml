@@ -33,6 +33,8 @@ dashboard:
 toolbar:
   asset:
     title: Images
+  ai:
+    title: AI Assistant
   file:
     title: File
     save: Save
@@ -91,3 +93,17 @@ notification:
   import:
     yes: Data has been successfully imported!
     no : Data format is invalid.
+
+ai:
+  configure: Connect
+  generate: Generate Bullet Points
+  generating: Generating...
+  optimize: Optimize Resume
+  optimizing: Optimizing...
+  generate_placeholder: Paste project documentation here...
+  optimize_placeholder: Paste job description here...
+  preview: Preview
+  insert: Insert
+  replace: Replace
+  tab_generate: Generate
+  tab_optimize: Optimize

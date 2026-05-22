@@ -33,6 +33,8 @@ dashboard:
 toolbar:
   asset:
     title: 图片
+  ai:
+    title: AI 助手
   file:
     title: 文件
     save: 保存
@@ -91,3 +93,17 @@ notification:
   import:
     yes: 已成功导入数据！
     no : 数据格式不正确
+
+ai:
+  configure: 连接
+  generate: 生成简历片段
+  generating: 生成中...
+  optimize: 优化简历
+  optimizing: 优化中...
+  generate_placeholder: 在此粘贴项目文档...
+  optimize_placeholder: 在此粘贴职位描述 (JD)...
+  preview: 预览
+  insert: 插入
+  replace: 替换
+  tab_generate: 生成
+  tab_optimize: 优化
