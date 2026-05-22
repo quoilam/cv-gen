@@ -78,6 +78,7 @@ toolbar:
     horizontal: 左右
   paragraph_spacing: 段间距
   line_height: 行间距
+  smart_one_page: 智能一页
   git:
     title: Git 同步
 

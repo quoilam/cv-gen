@@ -17,6 +17,9 @@ logs
 .DS_Store
 .idea
 .vscode
+.superpowers/
+.claude/
+CLAUDE.md
 
 # Local env files
 .env

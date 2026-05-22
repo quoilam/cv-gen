@@ -78,6 +78,7 @@ toolbar:
     horizontal: Left & Right
   paragraph_spacing: Paragraph Spacing
   line_height: Line Spacing
+  smart_one_page: Smart One Page
   git:
     title: Git Sync
 

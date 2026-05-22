@@ -16,6 +16,7 @@ export type ResumeStyles = {
 export const useStyleStore = defineStore("style", () => {
   const { DEFAULT } = useConstant();
   const styles = reactive<ResumeStyles>(copy(DEFAULT.STYLES));
+  const recommended = reactive<Partial<ResumeStyles>>({});
 
   const setStyle = async <T extends keyof ResumeStyles>(
     key: T,
@@ -34,8 +35,36 @@ export const useStyleStore = defineStore("style", () => {
     if (!["marginV", "marginH"].includes(key)) dynamicCssService.injectToolbar(styles);
   };
 
+  const setStyles = async (values: Partial<ResumeStyles>) => {
+    for (const key of Object.keys(values) as (keyof ResumeStyles)[]) {
+      const value = values[key];
+      if (value === undefined) continue;
+      if (["fontCJK", "fontEN"].includes(key)) {
+        await fontService.resolve(value as Font);
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (styles as any)[key] = value;
+    }
+    dynamicCssService.injectToolbar(styles);
+  };
+
+  const setRecommended = (values: Partial<ResumeStyles>) => {
+    Object.assign(recommended, values);
+  };
+
+  const clearRecommended = () => {
+    const keys = Object.keys(recommended) as (keyof ResumeStyles)[];
+    for (const key of keys) {
+      delete recommended[key];
+    }
+  };
+
   return {
     styles,
-    setStyle
+    recommended,
+    setStyle,
+    setStyles,
+    setRecommended,
+    clearRecommended
   };
 });
