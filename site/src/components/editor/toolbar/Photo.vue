@@ -7,7 +7,7 @@
       >
         <span i-lucide:upload />
         {{ hasPhoto ? "Change Photo" : "Upload Photo" }}
-        <input type="file" accept="image/*" class="hidden" @change="onUpload" />
+        <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="onUpload" />
       </label>
       <button
         v-if="hasPhoto"
@@ -28,10 +28,17 @@ const hasPhoto = computed(() => photo.value !== null);
 
 onMounted(() => init());
 
+const fileInput = ref<HTMLInputElement>();
+
 const onUpload = async (e: Event) => {
-  const file = (e.target as HTMLInputElement).files?.[0];
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];
   if (!file) return;
-  await uploadPhoto(file);
+  try {
+    await uploadPhoto(file);
+  } finally {
+    input.value = "";
+  }
 };
 
 const onRemove = async () => {
