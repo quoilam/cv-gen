@@ -8,7 +8,7 @@ type MonacoStates = {
   css: MonacoModel;
 };
 
-const useMonacoState = () =>
+export const useMonacoState = () =>
   useState<MonacoStates | undefined>("monacoStates", shallowRef);
 
 export const useMonaco = () => {

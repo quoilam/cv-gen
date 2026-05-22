@@ -1,4 +1,5 @@
 import localforage from "localforage";
+import { useMonacoState } from "../monaco";
 
 export interface AssetInfo {
   id: string;
@@ -38,13 +39,15 @@ function compressImage(file: File): Promise<AssetInfo> {
         const ctx = canvas.getContext("2d")!;
         ctx.drawImage(img, 0, 0, width, height);
 
-        const base64 = canvas.toDataURL("image/jpeg", 0.85);
+        const mimeType = file.type || "image/jpeg";
+        const isLossy = mimeType === "image/jpeg";
+        const base64 = canvas.toDataURL(mimeType, isLossy ? 0.85 : undefined);
         const id = generateId();
         resolve({
           id,
           name: file.name,
           base64,
-          mimeType: "image/jpeg",
+          mimeType,
           width,
           height,
           size: base64.length
@@ -60,11 +63,16 @@ function compressImage(file: File): Promise<AssetInfo> {
 
 export const useAsset = () => {
   const uploadImage = async (file: File): Promise<AssetInfo> => {
-    const asset = await compressImage(file);
-    const assets = await getAssets();
-    assets.push(asset);
-    await assetStore.setItem("assets", assets);
-    return asset;
+    try {
+      const asset = await compressImage(file);
+      const assets = await getAssets();
+      assets.push(asset);
+      await assetStore.setItem("assets", assets);
+      return asset;
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+      throw error;
+    }
   };
 
   const getAssets = async (): Promise<AssetInfo[]> => {
@@ -81,10 +89,35 @@ export const useAsset = () => {
   };
 
   const insertImageRef = (asset: AssetInfo) => {
-    const { setContent } = useMonaco();
-    const { data } = useDataStore();
+    const states = useMonacoState();
+    if (!states.value) return;
+
+    const { editor } = states.value;
+    const position = editor.getPosition();
+    if (!position) return;
+
     const mdRef = `![${asset.name}](${asset.base64})`;
-    setContent("markdown", data.markdown + "\n" + mdRef);
+
+    editor.executeEdits("insert-image-ref", [
+      {
+        range: {
+          startLineNumber: position.lineNumber,
+          startColumn: position.column,
+          endLineNumber: position.lineNumber,
+          endColumn: position.column
+        },
+        text: mdRef,
+        forceMoveMarkers: true
+      }
+    ]);
+
+    const newPos = {
+      lineNumber: position.lineNumber,
+      column: position.column + mdRef.length
+    };
+    editor.setPosition(newPos);
+    editor.revealPositionInCenter(newPos);
+    editor.focus();
   };
 
   return { uploadImage, getAssets, deleteAsset, insertImageRef };
