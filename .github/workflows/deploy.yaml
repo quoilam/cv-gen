@@ -55,6 +55,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run e2e tests
+        run: |
+          pnpm dev &
+          sleep 10
+          pnpm test:e2e
+
       - name: Build site
         run: pnpm release
         env:
