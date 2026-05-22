@@ -1,3 +1,4 @@
+import localforage from "localforage";
 import MarkdownIt from "markdown-it";
 import type {
   PluginSimple,
@@ -20,6 +21,7 @@ type ResumeHeaderItem = {
 
 type ResumeFrontMatter = {
   readonly name?: string;
+  readonly photo?: "left" | "right";
   readonly header?: Array<ResumeHeaderItem>;
 };
 
@@ -100,7 +102,16 @@ export class MarkdownService {
     return item.newLine ? `<br>\n${element}` : element;
   }
 
-  public renderHeader(frontMatter: ResumeFrontMatter) {
+  public async renderHeader(frontMatter: ResumeFrontMatter) {
+    let photoHtml = "";
+    if (frontMatter.photo && (frontMatter.photo === "left" || frontMatter.photo === "right")) {
+      const photoStore = localforage.createInstance({ name: "ohmycv_photo" });
+      const photoBase64 = await photoStore.getItem<string>("photo");
+      if (photoBase64) {
+        photoHtml = `<img class="resume-photo resume-photo--${frontMatter.photo}" src="${photoBase64}" />`;
+      }
+    }
+
     const content = [
       frontMatter.name ? `<h1>${frontMatter.name}</h1>\n` : "",
       (frontMatter.header ?? [])
@@ -110,14 +121,14 @@ export class MarkdownService {
         .join("\n")
     ].join("");
 
-    return `<div class="resume-header">${content}</div>`;
+    return `<div class="resume-header">${photoHtml}${content}</div>`;
   }
 
-  public renderResume(md: string) {
+  public async renderResume(md: string) {
     const { body, frontMatter } = this._frontMatterParser.parse(md);
 
     const content = this._resolveDeflist(this._renderMarkdown(body));
-    const header = this.renderHeader(frontMatter);
+    const header = await this.renderHeader(frontMatter);
 
     return header + content;
   }
