@@ -100,7 +100,8 @@ const uploadFileFromURL = async () => {
     localFile.value = null;
     pastedURL.value = "";
   } catch (error) {
-    // TODO: use toast to show error message
+    const toast = useToast();
+    toast.error("import_fetch");
     console.error(error);
   }
 };

@@ -36,7 +36,8 @@ export const useMonaco = () => {
 
       states.value = { editor, markdown, css };
     } catch (error) {
-      // TODO: use toast to show error
+      const toast = useToast();
+      toast.error("monaco");
       console.error("Failed to initialize the editor: ", error);
     } finally {
       loading.value = false;

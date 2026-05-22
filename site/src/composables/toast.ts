@@ -59,6 +59,18 @@ export const useToast = () => {
     }
   };
 
+  const errorMessages = {
+    storage: { en: "Unable to access storage, please try again", "zh-cn": "无法访问本地存储，请重试" },
+    not_found: { en: "Resume not found", "zh-cn": "简历未找到" },
+    monaco: { en: "Failed to initialize the editor", "zh-cn": "编辑器初始化失败" },
+    import_fetch: { en: "Failed to import the file, please check the URL", "zh-cn": "从该 URL 导入失败" }
+  };
+
+  const onError = (key: keyof typeof errorMessages) => {
+    const { locale } = useI18n();
+    toast.error(errorMessages[key][locale.value === "zh-cn" ? "zh-cn" : "en"]);
+  };
+
   return {
     save,
     switch: onSwitch,
@@ -66,6 +78,7 @@ export const useToast = () => {
     new: onNew,
     duplicate,
     correct,
-    import: onImport
+    import: onImport,
+    error: onError
   };
 };
