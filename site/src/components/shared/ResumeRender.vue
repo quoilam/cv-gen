@@ -5,6 +5,7 @@
 <script lang="ts" setup>
 import { useSmartPages } from "@ohmycv/vue-smart-pages";
 import type { ResumeStyles } from "~/composables/stores/style";
+import { usePhoto } from "~/composables/photo";
 
 const props = defineProps<{
   id: string | number;
@@ -26,7 +27,17 @@ const margins = computed(() => ({
   left: props.styles.marginH,
   right: props.styles.marginH
 }));
-const html = computed(() => markdownService.renderResume(props.markdown));
+
+const html = ref("");
+const { photo } = usePhoto();
+
+watch(
+  () => [props.markdown, photo.value] as const,
+  async ([md]) => {
+    html.value = await markdownService.renderResume(md);
+  },
+  { immediate: true }
+);
 
 const { render } = useSmartPages(target, html, size, margins, {
   beforeRender: async () => {

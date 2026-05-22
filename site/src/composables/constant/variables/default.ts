@@ -207,8 +207,20 @@ ${PREVIEW_SELECTOR} svg.iconify {
   vertical-align: -0.2em;
 }
 
-${PREVIEW_SELECTOR} img {
-  max-width: 100%;
+${PREVIEW_SELECTOR} .resume-photo {
+  width: 100px;
+  height: 133px;
+  object-fit: cover;
+}
+
+${PREVIEW_SELECTOR} .resume-photo--left {
+  float: left;
+  margin-right: 16px;
+}
+
+${PREVIEW_SELECTOR} .resume-photo--right {
+  float: right;
+  margin-left: 16px;
 }
 
 /* Header */
