@@ -93,14 +93,14 @@ export const docxHandler: ExportHandler = async (ctx) => {
         properties: {
           page: {
             size: {
-              width: ctx.styles.paper === "a4" ? 11906 : 12240,
-              height: ctx.styles.paper === "a4" ? 16838 : 15840
+              width: ctx.styles.paper === "A4" ? 11906 : 12240,
+              height: ctx.styles.paper === "A4" ? 16838 : 15840
             },
             margin: {
-              top: Math.round(ctx.styles.marginV * 56.7),
-              bottom: Math.round(ctx.styles.marginV * 56.7),
-              left: Math.round(ctx.styles.marginH * 56.7),
-              right: Math.round(ctx.styles.marginH * 56.7)
+              top: Math.round(ctx.styles.marginV * 15),
+              bottom: Math.round(ctx.styles.marginV * 15),
+              left: Math.round(ctx.styles.marginH * 15),
+              right: Math.round(ctx.styles.marginH * 15)
             }
           }
         },
