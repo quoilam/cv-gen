@@ -14,13 +14,6 @@ import { MigrateService } from "./migrate";
 export interface SyncProvider {
   push(): Promise<{ error: string | null }>;
   pull(): Promise<{ error: string | null }>;
-  getHistory(
-    id: number
-  ): Promise<{ data: Array<{ hash: string; time: string }>; error: string | null }>;
-  getVersion(
-    id: number,
-    hash: string
-  ): Promise<{ data: DbResume | null; error: string | null }>;
 }
 
 export class ResumeRepository {

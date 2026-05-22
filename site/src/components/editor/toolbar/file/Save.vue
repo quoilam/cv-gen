@@ -28,6 +28,9 @@ const save = async () => {
     css: data.css,
     styles: toRaw(styles)
   });
+
+  const git = useGit();
+  git.notifyActivity();
 };
 
 // Use the shortcut to save the current resume
