@@ -31,6 +31,8 @@ dashboard:
   delete: Eliminar
 
 toolbar:
+  asset:
+    title: Imágenes
   file:
     title: Archivo
     save: Guardar
@@ -72,6 +74,10 @@ toolbar:
     horizontal: Izquierdo & Derecho
   paragraph_spacing: Espaciado de párrafo
   line_height: Espaciado de línea
+
+asset:
+  upload: Subir Imagen
+  empty: No hay imágenes
 
 notification:
   save: Cambios Guardados

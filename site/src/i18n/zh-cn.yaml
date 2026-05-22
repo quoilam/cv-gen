@@ -31,6 +31,8 @@ dashboard:
   delete: 删除
 
 toolbar:
+  asset:
+    title: 图片
   file:
     title: 文件
     save: 保存
@@ -72,6 +74,10 @@ toolbar:
     horizontal: 左右
   paragraph_spacing: 段间距
   line_height: 行间距
+
+asset:
+  upload: 上传图片
+  empty: 暂无图片
 
 notification:
   save: 保存成功
