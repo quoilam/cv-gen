@@ -29,57 +29,60 @@ const SENSITIVITY = {
 
 type ParamName = "fontSize" | "lineHeight" | "marginV" | "marginH" | "paragraphSpace";
 
+const THRESHOLD = 0.02; // ±2% tolerance
+
+type Direction = "compress" | "expand";
+
 export const useSmartOnePage = (resumeId: string | number) => {
   const store = useStyleStore();
   const { executeBatch } = useStyleHistory();
 
   const pageCount = ref(1);
-  const overflowPercent = ref(0);
+  const fillRatio = ref(1);
   const status = ref<"idle" | "fitting" | "success" | "warn">("idle");
   const hasRecommendation = ref(false);
 
-  function estimateOverflow(): { pages: number; overflow: number } {
+  function measureFillRatio(): { pages: number; ratio: number } {
     const pages = document.querySelectorAll(
       `#resume-${resumeId} [data-part="page"]`
     );
     const count = pages.length || 1;
 
-    if (count <= 1) return { pages: 1, overflow: 1.0 };
-
     let totalHeight = 0;
     pages.forEach((p) => {
       totalHeight += p.scrollHeight;
     });
-    const firstPageHeight = (pages[0] as HTMLElement).clientHeight;
-    const overflow = firstPageHeight > 0 ? totalHeight / firstPageHeight : count;
+    const pageHeight = (pages[0] as HTMLElement).clientHeight;
+    const ratio = pageHeight > 0 ? totalHeight / pageHeight : count;
 
-    return { pages: count, overflow };
+    return { pages: count, ratio };
   }
 
-  function weightedEstimate(
+  function weightedAdjust(
     current: ResumeStyles,
-    overflow: number
+    ratio: number,
+    direction: Direction
   ): Partial<ResumeStyles> {
-    const excess = overflow - 1.0;
-    if (excess <= 0) return {};
+    const deviation = Math.abs(ratio - 1.0);
+    if (deviation <= THRESHOLD) return {};
 
     const result: Partial<ResumeStyles> = {};
     const params: ParamName[] = [
-      "fontSize",
-      "lineHeight",
-      "marginV",
-      "marginH",
-      "paragraphSpace"
+      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
     ];
+    const sign = direction === "compress" ? -1 : 1;
 
     for (const param of params) {
-      const share = excess * WEIGHTS[param];
-      const reduction = share / SENSITIVITY[param];
+      const share = deviation * WEIGHTS[param];
+      const delta = share / SENSITIVITY[param];
       const currentVal = current[param] as number;
-      const newVal = Math.max(
-        currentVal - reduction,
-        BOUNDS[param].min
-      );
+      let newVal = currentVal + sign * delta;
+
+      if (direction === "compress") {
+        newVal = Math.max(newVal, BOUNDS[param].min);
+      } else {
+        newVal = Math.min(newVal, BOUNDS[param].max);
+      }
       (result as Record<string, number>)[param] = Math.round(newVal * 100) / 100;
     }
 
@@ -91,66 +94,65 @@ export const useSmartOnePage = (resumeId: string | number) => {
     await new Promise((r) => setTimeout(r, 300));
   }
 
-  async function measureCurrent(): Promise<{ pages: number; overflow: number }> {
+  async function measureCurrent(): Promise<{ pages: number; ratio: number }> {
     await waitForRender();
-    const result = estimateOverflow();
+    const result = measureFillRatio();
     pageCount.value = result.pages;
-    overflowPercent.value = Math.round((result.overflow - 1.0) * 100);
+    fillRatio.value = result.ratio;
     return result;
   }
 
   function refine(
     current: ResumeStyles,
-    overflow: number,
-    applied: Partial<ResumeStyles>
+    ratio: number,
+    applied: Partial<ResumeStyles>,
+    direction: Direction
   ): Partial<ResumeStyles> | null {
-    const remaining = overflow - 1.0;
-    if (remaining <= 0.02) return null;
+    const remaining = direction === "compress" ? ratio - 1.0 : 1.0 - ratio;
+    if (remaining <= THRESHOLD) return null;
 
     const params: ParamName[] = [
-      "fontSize",
-      "lineHeight",
-      "marginV",
-      "marginH",
-      "paragraphSpace"
+      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
     ];
 
     const available = params.filter((p) => {
       const val = applied[p] ?? (current[p] as number);
-      return val > BOUNDS[p].min;
+      if (direction === "compress") return val > BOUNDS[p].min;
+      return val < BOUNDS[p].max;
     });
 
     if (available.length === 0) return null;
 
     const totalWeight = available.reduce((s, p) => s + WEIGHTS[p], 0);
-
+    const sign = direction === "compress" ? -1 : 1;
     const correction: Partial<ResumeStyles> = {};
+
     for (const param of available) {
       const share = remaining * (WEIGHTS[param] / totalWeight);
-      const reduction = share / SENSITIVITY[param];
+      const delta = share / SENSITIVITY[param];
       const currentVal = (applied[param] ?? current[param]) as number;
-      const newVal = Math.max(
-        currentVal - reduction,
-        BOUNDS[param].min
-      );
-      (correction as Record<string, number>)[param] =
-        Math.round(newVal * 100) / 100;
+      let newVal = currentVal + sign * delta;
+
+      if (direction === "compress") {
+        newVal = Math.max(newVal, BOUNDS[param].min);
+      } else {
+        newVal = Math.min(newVal, BOUNDS[param].max);
+      }
+      (correction as Record<string, number>)[param] = Math.round(newVal * 100) / 100;
     }
 
     return correction;
   }
 
-  function atBounds(values: Partial<ResumeStyles>): boolean {
+  function atBounds(values: Partial<ResumeStyles>, direction: Direction): boolean {
     const params: ParamName[] = [
-      "fontSize",
-      "lineHeight",
-      "marginV",
-      "marginH",
-      "paragraphSpace"
+      "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
     ];
-    return params.every(
-      (p) => (values[p] ?? store.styles[p]) <= BOUNDS[p].min + 0.01
-    );
+    return params.every((p) => {
+      const val = values[p] ?? store.styles[p];
+      if (direction === "compress") return val <= BOUNDS[p].min + 0.01;
+      return val >= BOUNDS[p].max - 0.01;
+    });
   }
 
   function makeChange(key: string, oldValue: unknown, newValue: unknown) {
@@ -166,17 +168,20 @@ export const useSmartOnePage = (resumeId: string | number) => {
     const current = { ...store.styles };
     const initial = await measureCurrent();
 
-    if (initial.overflow <= 1.02) {
+    // Already within tolerance
+    if (Math.abs(initial.ratio - 1.0) <= THRESHOLD) {
       status.value = "success";
       pageCount.value = 1;
-      overflowPercent.value = 0;
+      fillRatio.value = 1;
       hasRecommendation.value = true;
       store.setRecommended({});
       return;
     }
 
+    const direction: Direction = initial.ratio > 1.0 + THRESHOLD ? "compress" : "expand";
+
     // Step 1: Weighted estimate
-    let applied = weightedEstimate(current, initial.overflow);
+    let applied = weightedAdjust(current, initial.ratio, direction);
 
     const changes = Object.entries(applied).map(([key, value]) =>
       makeChange(key, (current as Record<string, unknown>)[key], value)
@@ -186,9 +191,9 @@ export const useSmartOnePage = (resumeId: string | number) => {
     // Step 2: Measure and refine (up to 2 rounds)
     for (let round = 0; round < 2; round++) {
       const measurement = await measureCurrent();
-      if (measurement.pages <= 1 && measurement.overflow <= 1.02) break;
+      if (Math.abs(measurement.ratio - 1.0) <= THRESHOLD) break;
 
-      const correction = refine(current, measurement.overflow, applied);
+      const correction = refine(current, measurement.ratio, applied, direction);
       if (!correction) break;
 
       const correctionChanges = Object.entries(correction).map(([key, value]) =>
@@ -204,9 +209,9 @@ export const useSmartOnePage = (resumeId: string | number) => {
     store.setRecommended(applied);
     hasRecommendation.value = true;
 
-    if (final.pages <= 1) {
+    if (Math.abs(final.ratio - 1.0) <= THRESHOLD) {
       status.value = "success";
-    } else if (atBounds(applied)) {
+    } else if (atBounds(applied, direction)) {
       status.value = "warn";
     } else {
       status.value = "success";
@@ -224,16 +229,16 @@ export const useSmartOnePage = (resumeId: string | number) => {
 
   async function refresh() {
     const result = await measureCurrent();
-    if (result.pages <= 1 && status.value !== "fitting" && hasRecommendation.value) {
+    if (Math.abs(result.ratio - 1.0) <= THRESHOLD && status.value !== "fitting" && hasRecommendation.value) {
       status.value = "success";
-    } else if (result.pages > 1 && !hasRecommendation.value) {
+    } else if (Math.abs(result.ratio - 1.0) > THRESHOLD && !hasRecommendation.value) {
       status.value = "idle";
     }
   }
 
   return {
     pageCount,
-    overflowPercent,
+    fillRatio,
     status,
     hasRecommendation,
     fitToOnePage,
