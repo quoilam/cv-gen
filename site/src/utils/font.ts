@@ -1,6 +1,12 @@
 import { useConstant, type Font } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 
+const CJK_RE = /[㐀-䶿一-鿿豈-﫿぀-ゟ゠-ヿ가-힯＀-￯]/;
+
+export function isCJKFont(name: string, fontFamily?: string): boolean {
+  return CJK_RE.test(name) || (!!fontFamily && CJK_RE.test(fontFamily));
+}
+
 export interface FontProvider {
   readonly name: string;
   search(query: string): Font[];
