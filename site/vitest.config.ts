@@ -3,6 +3,7 @@ import AutoImport from "unplugin-auto-import/vite";
 
 const srcDir = new URL("src/", import.meta.url).pathname;
 const packagesDir = new URL("../packages/", import.meta.url).pathname;
+const mocksDir = new URL("tests/__mocks__/", import.meta.url).pathname;
 
 export default defineConfig({
   plugins: [
@@ -13,13 +14,18 @@ export default defineConfig({
         {
           "nuxt/app": ["useState", "useAsyncData", "useLazyFetch", "useRoute", "useRouter"],
           "@cvgen/dynamic-css": ["dynamicCssService"],
+          "~/composables/monaco": ["useMonaco"],
         },
       ],
-      dirs: [`${srcDir}composables`, `${srcDir}composables/stores`],
+      dirs: [
+        `${srcDir}composables/stores`,
+        `${srcDir}composables/constant`,
+      ],
     }),
   ],
   resolve: {
     alias: {
+      "~/composables/monaco": `${mocksDir}monaco-composable.ts`,
       "~/": srcDir,
       "@@/": srcDir,
       "@cvgen/dynamic-css": `${packagesDir}dynamic-css/src/index.ts`,
