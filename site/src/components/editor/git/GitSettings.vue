@@ -35,21 +35,21 @@
 import { useGit } from "~/composables/git";
 
 const git = useGit();
-const { configured, syncing, error } = git;
+const { configured, syncStatus, error } = git;
 
+const syncing = computed(() => syncStatus.value === "syncing");
 const repoUrl = ref("");
 const token = ref("");
 
 const doConnect = async () => {
   try {
     await git.configure({ repoUrl: repoUrl.value, token: token.value });
-    await git.clone();
   } catch {}
 };
 
 const doSync = async () => {
   try {
-    await git.save("Manual sync");
+    await git.push();
   } catch {}
 };
 </script>
