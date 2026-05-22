@@ -38,13 +38,15 @@ const emit = defineEmits<{
   (e: "update"): void;
 }>();
 
+const { duplicateResume, deleteResume } = useResume();
+
 const duplicate = async () => {
-  await storageService.duplicateResume(props.resume.id);
+  await duplicateResume(props.resume.id);
   emit("update");
 };
 
 const remove = async () => {
-  await storageService.deleteResume(props.resume.id);
+  await deleteResume(props.resume.id);
   emit("update");
 };
 </script>

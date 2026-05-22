@@ -58,11 +58,12 @@ import { isInteger } from "@renovamen/utils";
 
 const route = useRoute();
 const { data } = useDataStore();
+const { switchToResume } = useResume();
 
 // Fetch resume data
 onMounted(() => {
   if (isInteger(route.params.id, { allowString: true })) {
-    storageService.switchToResume(Number(route.params.id));
+    switchToResume(Number(route.params.id));
   }
 });
 

@@ -16,11 +16,12 @@ import { useShortcuts } from "@ohmycv/vue-shortcuts";
 
 const { data } = useDataStore();
 const { styles } = useStyleStore();
+const { updateResume } = useResume();
 
 const save = async () => {
   if (!data.resumeId) return;
 
-  await storageService.updateResume({
+  await updateResume({
     id: data.resumeId,
     name: data.resumeName,
     markdown: data.markdown,

@@ -87,7 +87,8 @@
 import * as colorPicker from "@zag-js/color-picker";
 import { normalizeProps, useMachine } from "@zag-js/vue";
 
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 const { COLOR } = useConstant();
 
 const [state, send] = useMachine(
@@ -97,7 +98,8 @@ const [state, send] = useMachine(
     positioning: {
       gutter: 14
     },
-    onValueChange: (details) => setStyle("themeColor", toHex(details.value))
+    onValueChange: (details) =>
+      execute("themeColor", styles.themeColor, toHex(details.value))
   })
 );
 const api = computed(() => colorPicker.connect(state.value, send, normalizeProps));

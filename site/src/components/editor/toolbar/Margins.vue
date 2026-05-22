@@ -11,7 +11,7 @@
       @update:model-value="
         (value) => {
           vModelValue = value!;
-          setStyle('marginV', value!.at(0)!);
+          execute('marginV', styles.marginV, value!.at(0)!);
         }
       "
     />
@@ -27,7 +27,7 @@
       @update:model-value="
         (value) => {
           hModelValue = value!;
-          setStyle('marginH', value!.at(0)!);
+          execute('marginH', styles.marginH, value!.at(0)!);
         }
       "
     />
@@ -35,7 +35,8 @@
 </template>
 
 <script lang="ts" setup>
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 
 const vModelValue = ref([styles.marginV]);
 const hModelValue = ref([styles.marginH]);

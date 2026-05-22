@@ -11,7 +11,7 @@
       @update:model-value="
         (value) => {
           modelValue = value!;
-          setStyle('lineHeight', value!.at(0)!);
+          execute('lineHeight', styles.lineHeight, value!.at(0)!);
         }
       "
     />
@@ -19,7 +19,8 @@
 </template>
 
 <script lang="ts" setup>
-const { styles, setStyle } = useStyleStore();
+const { styles } = useStyleStore();
+const { execute } = useStyleHistory();
 
 const modelValue = ref([styles.lineHeight]);
 </script>

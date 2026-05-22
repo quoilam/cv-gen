@@ -21,9 +21,9 @@ export const useStyleStore = defineStore("style", () => {
     key: T,
     value: ResumeStyles[T]
   ) => {
-    // handle Google fonts
+    // resolve font
     if (["fontCJK", "fontEN"].includes(key)) {
-      await googleFontsService.resolve(value as Font);
+      await fontService.resolve(value as Font);
     }
 
     // update styles for the current resume

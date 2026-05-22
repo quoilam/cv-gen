@@ -16,13 +16,14 @@
 
 <script lang="ts" setup>
 const { data } = useDataStore();
+const { updateResume } = useResume();
 
 const rename = async (text?: string) => {
   if (!text || !data.resumeId) return;
 
   data.resumeName = text;
 
-  await storageService.updateResume(
+  await updateResume(
     {
       id: data.resumeId,
       name: text

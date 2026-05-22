@@ -16,7 +16,7 @@
     "@ohmycv/case-police": "workspace:*",
     "@ohmycv/dynamic-css": "workspace:*",
     "@ohmycv/front-matter": "workspace:*",
-    "@ohmycv/google-fonts-loader": "workspace:*",
+
     "@ohmycv/markdown-it-cross-ref": "workspace:*",
     "@ohmycv/markdown-it-katex": "workspace:*",
     "@ohmycv/markdown-it-latex-cmds": "workspace:*",

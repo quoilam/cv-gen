@@ -23,14 +23,15 @@ const emits = defineEmits<{
 }>();
 
 const { open, onChange } = useFileDialog(".json");
+const { importFromJson, exportToJSON: doExport } = useResume();
 
 onChange(async (file) => {
   const content = await readFile(file);
-  await storageService.importFromJson(content);
+  await importFromJson(content);
   emits("update");
 });
 
-const exportToJSON = () => storageService.exportToJSON();
+const exportToJSON = () => doExport();
 
 useShortcuts("shift+ctrl+s", exportToJSON);
 </script>
