@@ -37,7 +37,6 @@
 
 <script setup lang="ts">
 import {
-  EditorToolbarAsset,
   EditorToolbarFile,
   EditorToolbarPaper,
   EditorToolbarThemeColor,
@@ -50,7 +49,7 @@ import {
   EditorToolbarAi,
   EditorToolbarIcon,
   EditorToolbarGit,
-  EditorToolbarSmartOnePage
+  EditorToolbarSmartOnePage,
 } from "#components";
 
 const tools = [
@@ -60,9 +59,9 @@ const tools = [
     component: EditorToolbarFile
   },
   {
-    id: "asset",
-    icon: "i-lucide:image",
-    component: EditorToolbarAsset
+    id: "photo",
+    icon: "i-lucide:user-round",
+    component: EditorToolbarPhoto
   },
   {
     id: "ai",
@@ -143,7 +142,7 @@ const { t } = useI18n();
 
 const getTooltip = (id: string) => {
   const key = `toolbar.${id}`;
-  return ["asset", "file", "correct_case", "font_family", "margins", "ai", "icon", "git", "smart_one_page"].includes(id)
+  return ["photo", "file", "correct_case", "font_family", "margins", "ai", "icon", "git", "smart_one_page"].includes(id)
     ? t(`${key}.title`)
     : t(key);
 };
