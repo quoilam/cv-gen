@@ -5,6 +5,7 @@
 <script lang="ts" setup>
 import { useSmartPages } from "@ohmycv/vue-smart-pages";
 import type { ResumeStyles } from "~/composables/stores/style";
+import { usePhoto } from "~/composables/photo";
 
 const props = defineProps<{
   id: string | number;
@@ -26,7 +27,6 @@ const margins = computed(() => ({
   left: props.styles.marginH,
   right: props.styles.marginH
 }));
-import { usePhoto } from "~/composables/photo";
 
 const html = ref("");
 const { photo } = usePhoto();
