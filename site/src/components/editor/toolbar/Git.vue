@@ -1,7 +1,8 @@
 <template>
-  <EditorToolbarBox :text="$t('toolbar.git.title')" icon="i-lucide:git-branch">
+  <EditorToolbarBox text="Git 同步" icon="i-lucide:git-branch">
     <EditorGitSettings />
-    <UiSeparator class="my-2" />
-    <EditorGitHistory />
   </EditorToolbarBox>
 </template>
+
+<script lang="ts" setup>
+</script>
