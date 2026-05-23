@@ -19,7 +19,7 @@ function compressPhoto(file: File): Promise<string> {
       const img = new Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const maxWidth = 400;
+        const maxWidth = 600;
         let { width, height } = img;
 
         if (width > maxWidth) {

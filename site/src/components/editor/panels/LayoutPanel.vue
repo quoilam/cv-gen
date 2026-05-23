@@ -15,25 +15,6 @@
 
     <div class="border-t border-border/50" />
 
-    <!-- Content Width -->
-    <div>
-      <div class="panel-label">
-        内容宽度
-        <span class="text-xs text-muted-foreground ml-1">{{ styles.contentWidth }}%</span>
-      </div>
-      <div class="mt-2">
-        <SharedUiSlider
-          unit="%"
-          :model-value="contentWidthValue"
-          :min="50"
-          :max="100"
-          @update:model-value="(v) => { contentWidthValue = v!; execute('contentWidth', styles.contentWidth, v!.at(0)!); }"
-        />
-      </div>
-    </div>
-
-    <div class="border-t border-border/50" />
-
     <!-- Margins -->
     <div>
       <div class="panel-label">页边距</div>
@@ -43,6 +24,8 @@
           <SharedUiSlider
             unit="px"
             :model-value="marginVValue"
+            :min="20"
+            :max="80"
             @update:model-value="(v) => { marginVValue = v!; execute('marginV', styles.marginV, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginV }}px</span>
@@ -52,6 +35,8 @@
           <SharedUiSlider
             unit="px"
             :model-value="marginHValue"
+            :min="20"
+            :max="60"
             @update:model-value="(v) => { marginHValue = v!; execute('marginH', styles.marginH, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginH }}px</span>
@@ -139,7 +124,6 @@ const paperItems = Object.keys(PAPER.SIZES).map((paper) => ({
 }));
 
 // Slider refs (double-model pattern matches existing toolbar components)
-const contentWidthValue = ref([styles.contentWidth]);
 const marginVValue = ref([styles.marginV]);
 const marginHValue = ref([styles.marginH]);
 const lineHeightValue = ref([styles.lineHeight]);

@@ -4,6 +4,7 @@ import type { ValidPaperSize, Font } from "~/composables/constant";
 export type ResumeStyles = {
   marginV: number;
   marginH: number;
+  contentWidth: number;
   lineHeight: number;
   paragraphSpace: number;
   themeColor: string;

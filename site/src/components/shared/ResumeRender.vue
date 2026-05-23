@@ -7,6 +7,17 @@ import { useSmartPages } from "@cvgen/vue-smart-pages";
 import type { ResumeStyles } from "~/composables/stores/style";
 import { usePhoto } from "~/composables/photo";
 
+// Lazy load Iconify for rendering resume icons (only when preview renders)
+onMounted(() => {
+  if (!document.querySelector('script[src*="iconify"]')) {
+    const script = document.createElement("script");
+    script.src = "https://code.iconify.design/2/2.2.1/iconify.min.js";
+    script.type = "module";
+    script.async = true;
+    document.body.appendChild(script);
+  }
+});
+
 const props = defineProps<{
   id: string | number;
   markdown: string;

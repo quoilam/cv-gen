@@ -1,39 +1,33 @@
 import type { ResumeStyles } from "~/composables/stores/style";
 
-// Balanced strategy bounds
+// Adjustment bounds (margins are not adjusted — keep them as-is)
 const BOUNDS = {
   fontSize: { min: 11, max: 20, default: 15 },
   lineHeight: { min: 1.1, max: 2.0, default: 1.3 },
-  marginV: { min: 18, max: 80, default: 50 },
-  marginH: { min: 18, max: 80, default: 45 },
   paragraphSpace: { min: 0, max: 50, default: 5 }
 };
 
-// Visual cost weights (sum = 1.0)
+// Visual cost weights (sum = 1.0) — only content-affecting params
 const WEIGHTS = {
-  marginV: 0.35,
-  lineHeight: 0.30,
-  fontSize: 0.20,
-  marginH: 0.10,
-  paragraphSpace: 0.05
+  lineHeight: 0.50,
+  fontSize: 0.35,
+  paragraphSpace: 0.15
 };
 
 // Sensitivity: approximate height change per unit of each parameter
 const SENSITIVITY = {
   fontSize: 0.07,
   lineHeight: 0.40,
-  marginV: 0.005,
-  marginH: 0.002,
   paragraphSpace: 0.01
 };
 
-type ParamName = "fontSize" | "lineHeight" | "marginV" | "marginH" | "paragraphSpace";
+type ParamName = "fontSize" | "lineHeight" | "paragraphSpace";
 
 const PARAMS: ParamName[] = [
-  "fontSize", "lineHeight", "marginV", "marginH", "paragraphSpace"
+  "fontSize", "lineHeight", "paragraphSpace"
 ];
 
-const THRESHOLD = 0.02; // ±2% tolerance
+const THRESHOLD = 0.015; // ±1.5% tolerance
 
 type Direction = "compress" | "expand";
 
@@ -180,8 +174,8 @@ export const useSmartOnePage = (resumeId: string | number) => {
     );
     await executeBatch(changes);
 
-    // Step 2: Measure and refine (up to 2 rounds)
-    for (let round = 0; round < 2; round++) {
+    // Step 2: Measure and refine (up to 3 rounds)
+    for (let round = 0; round < 3; round++) {
       const measurement = await measureCurrent();
       if (Math.abs(measurement.ratio - 1.0) <= THRESHOLD) break;
 

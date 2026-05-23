@@ -35,7 +35,8 @@
   #code-preview-handle,
   #tools-pane,
   #nuxt-devtools-container,
-  [data-radix-popper-content-wrapper] {
+  [data-radix-popper-content-wrapper],
+  .editor-floating-panel {
     display: none !important;
   }
 

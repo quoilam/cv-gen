@@ -92,8 +92,6 @@ import { fetchFile } from "@cvgen/utils";
 import { exportService } from "~/utils/export";
 import { registerExportHandlers } from "~/utils/export/handlers";
 import type { ExportContext } from "~/utils/export";
-import { useShortcuts } from "@cvgen/vue-shortcuts";
-
 registerExportHandlers();
 
 const { data, setAndSyncToMonaco } = useDataStore();
@@ -111,7 +109,6 @@ const handleSave = async () => {
     styles: toRaw(styles),
   });
 };
-useShortcuts("ctrl+s", handleSave);
 
 // Rename
 const handleRename = async (text?: string) => {

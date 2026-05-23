@@ -107,6 +107,28 @@ export default defineConfig({
       false
     )
   ],
+  safelist: [
+    "i-tabler:dots",
+    "i-tabler:file-text",
+    "i-tabler:palette",
+    "i-tabler:layout",
+    "i-tabler:brand-github",
+    "i-lucide:zoom-in",
+    "i-lucide:zoom-out",
+    "i-lucide:upload",
+    "i-ri:image-line",
+    "i-ri:markdown-fill",
+    "i-mdi:file-pdf",
+    "i-mdi:language-html5",
+    "i-mdi:file-word",
+    "i-mdi:upload",
+    "i-fluent:arrow-autofit-width-20-filled",
+    "i-fluent:arrow-autofit-height-20-filled",
+    "i-ic:baseline-save",
+    "i-material-symbols:edit-square-outline-rounded",
+    "i-ph:sun-bold",
+    "i-ph:moon-bold",
+  ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   content: {
     pipeline: {

@@ -4,6 +4,7 @@ import type { ResumeStyles } from "../../stores/style";
 export const DEFAULT_STYLES = {
   marginV: 50,
   marginH: 45,
+  contentWidth: 100,
   lineHeight: 1.3,
   paragraphSpace: 5,
   themeColor: "#377bb5",
@@ -207,20 +208,14 @@ ${PREVIEW_SELECTOR} svg.iconify {
   vertical-align: -0.2em;
 }
 
+/* Photo in header */
+
 ${PREVIEW_SELECTOR} .resume-photo {
-  width: 100px;
-  height: 133px;
+  width: 80px;
+  height: 107px;
   object-fit: cover;
-}
-
-${PREVIEW_SELECTOR} .resume-photo--left {
-  float: left;
-  margin-right: 16px;
-}
-
-${PREVIEW_SELECTOR} .resume-photo--right {
-  float: right;
-  margin-left: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 /* Header */
@@ -229,10 +224,38 @@ ${PREVIEW_SELECTOR} .resume-header {
   text-align: center;
 }
 
+${PREVIEW_SELECTOR} .resume-header--with-photo {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+${PREVIEW_SELECTOR} .resume-header--with-photo.resume-header--photo-right {
+  flex-direction: row-reverse;
+}
+
+${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header-text {
+  text-align: right;
+}
+
+${PREVIEW_SELECTOR} .resume-header-text {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+
 ${PREVIEW_SELECTOR} .resume-header h1 {
   text-align: center;
   line-height: 1;
   margin-bottom: 8px;
+}
+
+${PREVIEW_SELECTOR} .resume-header--with-photo .resume-header h1 {
+  text-align: left;
+}
+
+${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header h1 {
+  text-align: right;
 }
 
 ${PREVIEW_SELECTOR} .resume-header-item:not(.no-separator)::after {

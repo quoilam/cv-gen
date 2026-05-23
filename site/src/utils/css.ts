@@ -57,6 +57,23 @@ export class DynamicCssService {
     return `@media print { @page { size: ${styles.paper}; } }`;
   };
 
+  private headerLayout = (selector: string) => {
+    return (
+      // Flexbox header when photo is present — top-align so text starts at photo top
+      `${selector} .resume-header--with-photo { display: flex; align-items: flex-start; gap: 18px; }` +
+      `${selector} .resume-header--with-photo.resume-header--photo-right { flex-direction: row-reverse; }` +
+      // Photo sizing — passport ratio, flex-shrink so it keeps its size
+      `${selector} .resume-photo { width: 80px; height: 107px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }` +
+      // Text wrapper fills remaining space
+      `${selector} .resume-header-text { flex: 1; min-width: 0; padding-top: 2px; }` +
+      // Text alignment follows photo position
+      `${selector} .resume-header--with-photo .resume-header-text { text-align: left; }` +
+      `${selector} .resume-header--with-photo .resume-header h1 { text-align: left; }` +
+      `${selector} .resume-header--photo-right .resume-header-text { text-align: right; }` +
+      `${selector} .resume-header--photo-right .resume-header h1 { text-align: right; }`
+    );
+  };
+
   /**
    * Inject CSS that controlled by the toolbar into the document.
    *
@@ -68,6 +85,7 @@ export class DynamicCssService {
     const selector = this._selector(id);
 
     const css =
+      this.headerLayout(selector) +
       this.fontFamily(selector, styles) +
       this.fontSize(selector, styles) +
       this.themeColor(selector, styles) +

@@ -1,6 +1,5 @@
 <template>
   <div class="asset-panel space-y-4">
-    <!-- Photo Upload -->
     <div>
       <div class="panel-label">头像照片</div>
       <div class="flex items-center gap-2 mt-2">
@@ -19,26 +18,6 @@
         >
           移除
         </button>
-      </div>
-    </div>
-
-    <div class="border-t border-border/50" />
-
-    <!-- Icon Picker -->
-    <div>
-      <div class="panel-label">图标搜索</div>
-      <div class="mt-2">
-        <EditorIconPicker />
-      </div>
-    </div>
-
-    <div class="border-t border-border/50" />
-
-    <!-- Asset Manager -->
-    <div>
-      <div class="panel-label">资源管理</div>
-      <div class="mt-2">
-        <EditorAssetManager />
       </div>
     </div>
   </div>

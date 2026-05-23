@@ -33,23 +33,7 @@ export const pwa: ModuleOptions = {
   workbox: {
     globPatterns: ["**/*.{js,css,html,otf,ttf,woff2,png,svg}"],
     maximumFileSizeToCacheInBytes: 16000000,
-    cleanupOutdatedCaches: true,
-    runtimeCaching: [
-      {
-        urlPattern: /^https:\/\/fonts.googleapis.com\/.*/i,
-        handler: "CacheFirst",
-        options: {
-          cacheName: "google-fonts-cache",
-          expiration: {
-            maxEntries: 10,
-            maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-          },
-          cacheableResponse: {
-            statuses: [0, 200]
-          }
-        }
-      }
-    ]
+    cleanupOutdatedCaches: true
   },
   registerWebManifestInRouteRules: true,
   writePlugin: true

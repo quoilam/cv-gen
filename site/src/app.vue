@@ -1,14 +1,24 @@
 <template>
   <div class="font-ui">
-    <VitePwaManifest />
     <NuxtPage />
-    <UiToaster close-button />
+    <ClientOnly>
+      <UiToaster close-button />
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
 const colorMode = useColorMode();
 const preferredDark = usePreferredDark();
+
+onMounted(() => {
+  // 开发模式下注销已注册的 Service Worker，避免缓存干扰
+  if (import.meta.env.DEV) {
+    navigator.serviceWorker?.getRegistrations().then((regs) => {
+      regs.forEach((r) => r.unregister());
+    });
+  }
+});
 
 useHead({
   title: "CvGen - 免费的在线简历制作工具",
@@ -27,14 +37,10 @@ useHead({
       rel: "icon",
       type: "image/svg+xml",
       href: () => (preferredDark.value ? "/favicon-dark.svg" : "/favicon.svg")
-    }
-  ],
-  script: [
-    {
-      src: "https://code.iconify.design/2/2.2.1/iconify.min.js",
-      type: "module",
-      tagPosition: "bodyClose"
-    }
+    },
+    ...(!import.meta.env.DEV
+      ? [{ rel: "manifest", href: "/manifest.webmanifest" }]
+      : [])
   ]
 });
 </script>

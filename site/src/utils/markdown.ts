@@ -108,11 +108,11 @@ export class MarkdownService {
       const photoStore = localforage.createInstance({ name: "ohmycv_photo" });
       const photoBase64 = await photoStore.getItem<string>("photo");
       if (photoBase64) {
-        photoHtml = `<img class="resume-photo resume-photo--${frontMatter.photo}" src="${photoBase64}" />`;
+        photoHtml = `<img class="resume-photo" src="${photoBase64}" alt="photo" />`;
       }
     }
 
-    const content = [
+    const textContent = [
       frontMatter.name ? `<h1>${frontMatter.name}</h1>\n` : "",
       (frontMatter.header ?? [])
         .map((item, i, array) =>
@@ -121,7 +121,20 @@ export class MarkdownService {
         .join("\n")
     ].join("");
 
-    return `<div class="resume-header">${photoHtml}${content}</div>`;
+    const hasPhoto = !!photoHtml;
+    const photoPos = frontMatter.photo ?? "left";
+
+    const classList = ["resume-header"];
+    if (hasPhoto) {
+      classList.push("resume-header--with-photo", `resume-header--photo-${photoPos}`);
+    }
+    const className = classList.join(" ");
+
+    const innerHtml = hasPhoto
+      ? `${photoHtml}<div class="resume-header-text">${textContent}</div>`
+      : textContent;
+
+    return `<div class="${className}">${innerHtml}</div>`;
   }
 
   public async renderResume(md: string) {
