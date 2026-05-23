@@ -12,19 +12,7 @@
     </nuxt-link>
 
     <div class="hstack gap-x-0.5">
-      <UiButton
-        :as="NuxtLink"
-        to="/dashboard"
-        variant="ghost"
-        size="sm"
-        class="h-8 gap-x-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
-        aria-label="我的简历"
-      >
-        <span class="i-ep:menu text-base" />
-        <span class="hide-on-mobile">我的简历</span>
-      </UiButton>
-
-      <slot name="tail" />
+<slot name="tail" />
 
       <UiButton
         :as="NuxtLink"
