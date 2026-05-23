@@ -1,0 +1,52 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { setActivePinia, createPinia } from "pinia";
+
+vi.mock("@cvgen/dynamic-css", () => ({
+  dynamicCssService: {
+    injectCssEditor: vi.fn(),
+    injectToolbar: vi.fn(),
+  },
+}));
+
+const mockFontResolve = vi.fn();
+vi.mock("~/composables/icon", () => ({
+  fontService: {
+    resolve: mockFontResolve,
+  },
+}));
+
+describe("useStyleStore", () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+  });
+
+  it("initializes with default styles", () => {
+    const { styles } = useStyleStore();
+    expect(styles.themeColor).toBe("#377bb5");
+    expect(styles.fontSize).toBe(15);
+    expect(styles.paper).toBe("A4");
+  });
+
+  it("setStyle updates a single style field", async () => {
+    const { styles, setStyle } = useStyleStore();
+    await setStyle("fontSize", 18);
+    expect(styles.fontSize).toBe(18);
+  });
+
+  it("setStyles updates multiple fields at once", async () => {
+    const { styles, setStyles } = useStyleStore();
+    await setStyles({ fontSize: 20, themeColor: "#ff0000" });
+    expect(styles.fontSize).toBe(20);
+    expect(styles.themeColor).toBe("#ff0000");
+  });
+
+  it("setRecommended and clearRecommended manage recommended state", () => {
+    const { recommended, setRecommended, clearRecommended } = useStyleStore();
+    setRecommended({ fontSize: 14 });
+    expect(recommended.fontSize).toBe(14);
+
+    clearRecommended();
+    expect(recommended.fontSize).toBeUndefined();
+  });
+});
