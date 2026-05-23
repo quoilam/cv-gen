@@ -64,13 +64,11 @@ jobs:
       - name: Run e2e tests
         run: |
           pnpm dev &
-          sleep 10
+          npx wait-on http://localhost:3000 --timeout 60000
           pnpm test:e2e
 
       - name: Build site
         run: pnpm release
-        env:
-          NUXT_PUBLIC_GOOGLE_FONTS_KEY: ${{ secrets.GOOGLE_FONTS_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
