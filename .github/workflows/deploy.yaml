@@ -62,10 +62,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run e2e tests
-        run: |
-          pnpm dev &
-          npx wait-on http://localhost:3000 --timeout 60000
-          pnpm test:e2e
+        run: pnpm test:e2e
 
       - name: Build site
         run: pnpm release
