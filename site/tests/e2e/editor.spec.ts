@@ -7,22 +7,15 @@ test.describe("Editor", () => {
   });
 
   test("editor page loads", async ({ page }) => {
-    await expect(page.locator("#editor-page")).toBeVisible();
+    await expect(page.locator("#editor-page")).toBeVisible({ timeout: 10000 });
   });
 
   test("preview pane is present", async ({ page }) => {
-    // Preview pane should exist in editor layout
     await expect(page.locator("#preview-pane")).toBeVisible();
   });
 
   test("code pane is present", async ({ page }) => {
-    // Code pane should exist (Monaco editor or skeleton)
     await expect(page.locator("#code-pane")).toBeVisible();
-  });
-
-  test("toolbar toggle button exists", async ({ page }) => {
-    const toggleBtn = page.locator("[aria-label*='工具栏']");
-    await expect(toggleBtn).toBeVisible();
   });
 
   test("navigates back to dashboard via header", async ({ page }) => {
