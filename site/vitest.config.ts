@@ -1,9 +1,11 @@
+import { resolve } from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vitest/config";
 import AutoImport from "unplugin-auto-import/vite";
 
-const srcDir = new URL("src/", import.meta.url).pathname;
-const packagesDir = new URL("../packages/", import.meta.url).pathname;
-const mocksDir = new URL("tests/__mocks__/", import.meta.url).pathname;
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const srcDir = resolve(__dirname, "src");
+const mocksDir = resolve(__dirname, "tests/__mocks__");
 
 export default defineConfig({
   plugins: [
@@ -18,26 +20,26 @@ export default defineConfig({
         },
       ],
       dirs: [
-        `${srcDir}composables/stores`,
-        `${srcDir}composables/constant`,
+        `${srcDir}/composables/stores`,
+        `${srcDir}/composables/constant`,
       ],
     }),
   ],
   resolve: {
     alias: {
-      "~/composables/monaco": `${mocksDir}monaco-composable.ts`,
-      "~/": srcDir,
-      "@@/": srcDir,
-      "@cvgen/dynamic-css": `${packagesDir}dynamic-css/src/index.ts`,
-      "@cvgen/utils": `${packagesDir}utils/src/index.ts`,
-      "@cvgen/front-matter": `${packagesDir}front-matter/src/index.ts`,
-      "@cvgen/markdown-it-katex": `${packagesDir}markdown-it-katex/src/index.ts`,
-      "@cvgen/markdown-it-cross-ref": `${packagesDir}markdown-it-cross-ref/src/index.ts`,
-      "@cvgen/markdown-it-latex-cmds": `${packagesDir}markdown-it-latex-cmds/src/index.ts`,
-      "@cvgen/case-police": `${packagesDir}case-police/src/index.ts`,
-      "@cvgen/vue-shortcuts": `${packagesDir}vue-shortcuts/src/index.ts`,
-      "@cvgen/vue-smart-pages": `${packagesDir}vue-smart-pages/src/index.ts`,
-      "@cvgen/vue-zoom": `${packagesDir}vue-zoom/src/index.ts`,
+      "~/composables/monaco": `${mocksDir}/monaco-composable.ts`,
+      "~/": `${srcDir}/`,
+      "@@/": `${srcDir}/`,
+      "@cvgen/dynamic-css": resolve(__dirname, "src/internal/dynamic-css"),
+      "@cvgen/utils": resolve(__dirname, "src/internal/utils"),
+      "@cvgen/front-matter": resolve(__dirname, "src/internal/front-matter"),
+      "@cvgen/markdown-it-katex": resolve(__dirname, "src/internal/markdown-it-katex"),
+      "@cvgen/markdown-it-cross-ref": resolve(__dirname, "src/internal/markdown-it-cross-ref"),
+      "@cvgen/markdown-it-latex-cmds": resolve(__dirname, "src/internal/markdown-it-latex-cmds"),
+      "@cvgen/case-police": resolve(__dirname, "src/internal/case-police"),
+      "@cvgen/vue-shortcuts": resolve(__dirname, "src/internal/vue-shortcuts"),
+      "@cvgen/vue-smart-pages": resolve(__dirname, "src/internal/vue-smart-pages"),
+      "@cvgen/vue-zoom": resolve(__dirname, "src/internal/vue-zoom"),
     },
   },
   test: {
