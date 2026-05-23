@@ -57,7 +57,8 @@
     "@playwright/test": "^1.45.0",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^15.7.0",
-    "vitest": "^3.2.0"
+    "unplugin-auto-import": "^0.18.0",
+    "vitest": "^2.0.5"
   },
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^4.6.2",
