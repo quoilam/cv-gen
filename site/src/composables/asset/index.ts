@@ -11,9 +11,13 @@ export interface AssetInfo {
   size: number;
 }
 
-const assetStore = localforage.createInstance({
-  name: "cvgen_assets"
-});
+let _assetStore: LocalForage | null = null;
+function _getAssetStore() {
+  if (!_assetStore) {
+    _assetStore = localforage.createInstance({ name: "cvgen_assets" });
+  }
+  return _assetStore;
+}
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -67,7 +71,7 @@ export const useAsset = () => {
       const asset = await compressImage(file);
       const assets = await getAssets();
       assets.push(asset);
-      await assetStore.setItem("assets", assets);
+      await _getAssetStore().setItem("assets", assets);
       return asset;
     } catch (error) {
       console.error("Failed to upload image:", error);
@@ -76,13 +80,13 @@ export const useAsset = () => {
   };
 
   const getAssets = async (): Promise<AssetInfo[]> => {
-    const data = await assetStore.getItem<AssetInfo[]>("assets");
+    const data = await _getAssetStore().getItem<AssetInfo[]>("assets");
     return data ?? [];
   };
 
   const deleteAsset = async (id: string): Promise<void> => {
     const assets = await getAssets();
-    await assetStore.setItem(
+    await _getAssetStore().setItem(
       "assets",
       assets.filter((a) => a.id !== id)
     );

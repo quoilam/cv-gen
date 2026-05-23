@@ -58,5 +58,9 @@ export default defineNuxtConfig({
   },
 
   pwa,
-  compatibilityDate: "2026-05-23"
+  compatibilityDate: "2026-05-23",
+
+  routeRules: {
+    "/dashboard": { prerender: false }
+  }
 });

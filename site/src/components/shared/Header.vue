@@ -14,18 +14,7 @@
     <div class="hstack gap-x-0.5">
 <slot name="tail" />
 
-      <UiButton
-        :as="NuxtLink"
-        to="/settings"
-        variant="ghost"
-        size="round"
-        class="text-muted-foreground hover:text-foreground"
-        aria-label="设置"
-      >
-        <span i-lucide:settings text-base />
-      </UiButton>
-
-      <SharedToggleDark />
+<SharedToggleDark />
 
       <UiButton
         as="a"
@@ -43,5 +32,4 @@
 </template>
 
 <script lang="ts" setup>
-import { NuxtLink } from "#components";
 </script>

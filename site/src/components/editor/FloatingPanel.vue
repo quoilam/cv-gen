@@ -3,10 +3,12 @@
     <!-- Trigger dot -->
     <button
       v-show="!isOpen"
-      class="floating-dot"
+      class="floating-trigger"
       aria-label="打开编辑面板"
       @click="isOpen = true"
-    />
+    >
+      <span class="i-tabler:dots size-5" />
+    </button>
 
     <!-- Backdrop -->
     <Transition name="fade">
@@ -64,23 +66,31 @@ const tabs = [
   z-index: 50;
 }
 
-/* Trigger dot */
-.floating-dot {
-  width: 8px;
-  height: 8px;
+/* Trigger button */
+.floating-trigger {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--color-muted-foreground, #94a3b8);
-  opacity: 0.35;
-  border: none;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  color: hsl(var(--muted-foreground));
   cursor: pointer;
   padding: 0;
-  transition: opacity 150ms, transform 150ms;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 150ms, transform 150ms, box-shadow 150ms, background 150ms;
+  opacity: 0.7;
 }
 
-.floating-dot:hover {
+.floating-trigger:hover {
   opacity: 1;
-  transform: scale(1.4);
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  border-color: hsl(var(--accent));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: scale(1.1);
 }
 
 /* Backdrop */

@@ -11,25 +11,14 @@ import type {
 import { IsValid } from "./utils";
 import { MigrateService } from "./migrate";
 
-export interface SyncProvider {
-  push(): Promise<{ error: string | null }>;
-  pull(): Promise<{ error: string | null }>;
-}
-
 export class ResumeRepository {
   private _db: DbService;
-  private _remote: SyncProvider | null;
   private _version: ValidVersion;
 
-  constructor(db: DbService, remote?: SyncProvider) {
+  constructor(db: DbService) {
     const { VERSION } = useConstant();
     this._version = VERSION.CURRENT;
     this._db = db;
-    this._remote = remote ?? null;
-  }
-
-  setRemote(provider: SyncProvider) {
-    this._remote = provider;
   }
 
   async getResumes() {

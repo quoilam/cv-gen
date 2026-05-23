@@ -1,8 +1,12 @@
 import localforage from "localforage";
 
-const photoStore = localforage.createInstance({
-  name: "ohmycv_photo"
-});
+let _photoStore: LocalForage | null = null;
+function _getPhotoStore() {
+  if (!_photoStore) {
+    _photoStore = localforage.createInstance({ name: "ohmycv_photo" });
+  }
+  return _photoStore;
+}
 
 const PHOTO_KEY = "photo";
 
@@ -43,7 +47,7 @@ function compressPhoto(file: File): Promise<string> {
 export const usePhoto = () => {
   const init = async () => {
     try {
-      photo.value = await photoStore.getItem<string>(PHOTO_KEY) ?? null;
+      photo.value = await _getPhotoStore().getItem<string>(PHOTO_KEY) ?? null;
     } catch (error) {
       console.error("Failed to load photo:", error);
       photo.value = null;
@@ -53,7 +57,7 @@ export const usePhoto = () => {
   const uploadPhoto = async (file: File) => {
     try {
       const base64 = await compressPhoto(file);
-      await photoStore.setItem(PHOTO_KEY, base64);
+      await _getPhotoStore().setItem(PHOTO_KEY, base64);
       photo.value = base64;
     } catch (error) {
       console.error("Failed to upload photo:", error);
@@ -62,7 +66,7 @@ export const usePhoto = () => {
   };
 
   const removePhoto = async () => {
-    await photoStore.removeItem(PHOTO_KEY);
+    await _getPhotoStore().removeItem(PHOTO_KEY);
     photo.value = null;
   };
 
