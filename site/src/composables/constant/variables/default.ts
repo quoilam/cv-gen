@@ -235,7 +235,7 @@ ${PREVIEW_SELECTOR} .resume-header--with-photo.resume-header--photo-right {
 }
 
 ${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header-text {
-  text-align: right;
+  text-align: center;
 }
 
 ${PREVIEW_SELECTOR} .resume-header-text {
@@ -251,11 +251,11 @@ ${PREVIEW_SELECTOR} .resume-header h1 {
 }
 
 ${PREVIEW_SELECTOR} .resume-header--with-photo .resume-header h1 {
-  text-align: left;
+  text-align: center;
 }
 
 ${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header h1 {
-  text-align: right;
+  text-align: center;
 }
 
 ${PREVIEW_SELECTOR} .resume-header-item:not(.no-separator)::after {

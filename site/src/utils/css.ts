@@ -66,11 +66,11 @@ export class DynamicCssService {
       `${selector} .resume-photo { width: 80px; height: 107px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }` +
       // Text wrapper fills remaining space
       `${selector} .resume-header-text { flex: 1; min-width: 0; padding-top: 2px; }` +
-      // Text alignment follows photo position
-      `${selector} .resume-header--with-photo .resume-header-text { text-align: left; }` +
-      `${selector} .resume-header--with-photo .resume-header h1 { text-align: left; }` +
-      `${selector} .resume-header--photo-right .resume-header-text { text-align: right; }` +
-      `${selector} .resume-header--photo-right .resume-header h1 { text-align: right; }`
+      // Text is centered in the remaining area after photo
+      `${selector} .resume-header--with-photo .resume-header-text { text-align: center; }` +
+      `${selector} .resume-header--with-photo .resume-header h1 { text-align: center; }` +
+      `${selector} .resume-header--photo-right .resume-header-text { text-align: center; }` +
+      `${selector} .resume-header--photo-right .resume-header h1 { text-align: center; }`
     );
   };
 
