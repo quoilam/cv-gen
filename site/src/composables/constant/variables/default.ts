@@ -212,7 +212,7 @@ ${PREVIEW_SELECTOR} svg.iconify {
 
 ${PREVIEW_SELECTOR} .resume-photo {
   width: 80px;
-  height: 107px;
+  height: 96px;
   object-fit: cover;
   border-radius: 3px;
   flex-shrink: 0;
@@ -226,7 +226,7 @@ ${PREVIEW_SELECTOR} .resume-header {
 
 ${PREVIEW_SELECTOR} .resume-header--with-photo {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 18px;
 }
 

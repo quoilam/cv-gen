@@ -59,13 +59,13 @@ export class DynamicCssService {
 
   private headerLayout = (selector: string) => {
     return (
-      // Flexbox header when photo is present — top-align so text starts at photo top
-      `${selector} .resume-header--with-photo { display: flex; align-items: flex-start; gap: 18px; }` +
+      // Flexbox header when photo is present — center text vertically with photo
+      `${selector} .resume-header--with-photo { display: flex; align-items: center; gap: 18px; }` +
       `${selector} .resume-header--with-photo.resume-header--photo-right { flex-direction: row-reverse; }` +
-      // Photo sizing — passport ratio, flex-shrink so it keeps its size
-      `${selector} .resume-photo { width: 80px; height: 107px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }` +
+      // Photo sizing — compact portrait ratio, flex-shrink so it keeps its size
+      `${selector} .resume-photo { width: 80px; height: 96px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }` +
       // Text wrapper fills remaining space
-      `${selector} .resume-header-text { flex: 1; min-width: 0; padding-top: 2px; }` +
+      `${selector} .resume-header-text { flex: 1; min-width: 0; }` +
       // Text is centered in the remaining area after photo
       `${selector} .resume-header--with-photo .resume-header-text { text-align: center; }` +
       `${selector} .resume-header--with-photo .resume-header h1 { text-align: center; }` +
