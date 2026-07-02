@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Editor", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/editor/99999");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
   });
 
   test("editor page loads", async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe("Editor", () => {
     const homeLink = page.locator("header a[href='/']").first();
     if (await homeLink.isVisible()) {
       await homeLink.click();
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
     }
   });
 });
