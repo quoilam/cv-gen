@@ -97,17 +97,42 @@ export class FrontMatterParser<T = { [key: string]: any }> {
     };
   }
 
+  /**
+   * Auto-quote plain scalar values that contain ": " (colon + space)
+   * to prevent the YAML parser from misinterpreting them as mapping entries.
+   * Example: `- text: <span>生日: 2004.07.24</span>` would fail because
+   * ": " in "生日: 2004.07.24" looks like a YAML key-value separator.
+   */
+  private _sanitizeYaml(fmString: string): string {
+    return fmString.replace(
+      /^(\s+- text:)\s+(?!['">|])(.+)$/gm,
+      (match, prefix, value) => {
+        if (/: / .test(value)) {
+          const trimmed = value.trimEnd();
+          const trailing = value.slice(trimmed.length);
+          const escaped = trimmed.includes('"')
+            ? trimmed.replace(/"/g, '\\"')
+            : trimmed;
+          return `${prefix} "${escaped}"${trailing}`;
+        }
+        return match;
+      }
+    );
+  }
+
   private _parse(content: string): FrontMatterResults<T> {
     const split = this.split(content);
 
     if (!split) return this._emptyResults(content);
 
     try {
-      const frontMatter = (yamlParser.load(split.frontMatterString) || {}) as T;
+      const sanitized = this._sanitizeYaml(split.frontMatterString);
+      const frontMatter = (yamlParser.load(sanitized) || {}) as T;
       this._lastFrontMatter = frontMatter;
 
       return { ...split, frontMatter };
     } catch (e) {
+      console.error("[FrontMatterParser] YAML parse error:", e);
       const frontMatter =
         this.options.errorBehavior === "error"
           ? (() => {
