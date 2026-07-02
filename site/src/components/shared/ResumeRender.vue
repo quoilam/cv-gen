@@ -45,7 +45,11 @@ const { photo } = usePhoto();
 watch(
   () => [props.markdown, photo.value] as const,
   async ([md]) => {
-    html.value = await markdownService.renderResume(md);
+    try {
+      html.value = await markdownService.renderResume(md);
+    } catch (error) {
+      console.error("Failed to render resume:", error);
+    }
   },
   { immediate: true }
 );

@@ -135,10 +135,14 @@ export class FrontMatterParser<T = { [key: string]: any }> {
    * @see {@link FrontMatterResults}
    */
   public parse(content: string): FrontMatterResults<T> {
-    const lines = content.split(/(\r?\n)/);
+    // Trim leading whitespace (including accidental newlines from editor)
+    // so that front matter is still detected if the content starts with an
+    // empty line. The actual parsing still operates on the trimmed content.
+    const start = content.trimStart();
+    const lines = start.split(/(\r?\n)/);
 
     if (lines[0] && /= yaml =|---/.test(lines[0])) {
-      return this._parse(content);
+      return this._parse(start);
     } else {
       return this._emptyResults(content);
     }

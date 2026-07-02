@@ -37,6 +37,7 @@ type MarkdownServiceOptions = {
 export class MarkdownService {
   private _md: MarkdownIt;
   private _frontMatterParser: FrontMatterParser<ResumeFrontMatter>;
+  private _photoStore = localforage.createInstance({ name: "ohmycv_photo" });
 
   constructor(opt: MarkdownServiceOptions = {}) {
     this._md = this._setupMarkdownIt(opt);
@@ -105,8 +106,7 @@ export class MarkdownService {
   public async renderHeader(frontMatter: ResumeFrontMatter) {
     let photoHtml = "";
     if (frontMatter.photo && (frontMatter.photo === "left" || frontMatter.photo === "right")) {
-      const photoStore = localforage.createInstance({ name: "ohmycv_photo" });
-      const photoBase64 = await photoStore.getItem<string>("photo");
+      const photoBase64 = await this._photoStore.getItem<string>("photo");
       if (photoBase64) {
         photoHtml = `<img class="resume-photo" src="${photoBase64}" alt="photo" />`;
       }
