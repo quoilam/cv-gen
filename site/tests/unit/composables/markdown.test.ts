@@ -217,4 +217,32 @@ name: Badge Test
     expect(result).not.toContain("--badge-color");
     expect(result).toContain("#1 Best");
   });
+
+  it("stacks header above the first heading with contact inside header", async () => {
+    const result = await markdownService.renderResume(`---
+name: Jane Doe
+subtitle: Engineer
+header:
+  - text: jane@x.com
+---
+
+## Experience
+
+Worked here.`);
+
+    const headerIdx = result.indexOf('<div class="resume-header">');
+    const subtitleIdx = result.indexOf('<span class="resume-subtitle">Engineer</span>');
+    const contactIdx = result.indexOf('<div class="resume-header-contact">');
+    const h2Idx = result.indexOf("<h2>Experience</h2>");
+
+    // order: header → subtitle → contact → h2 (heading below, not beside, the header)
+    expect(headerIdx).toBeGreaterThan(-1);
+    expect(subtitleIdx).toBeGreaterThan(headerIdx);
+    expect(contactIdx).toBeGreaterThan(subtitleIdx);
+    expect(h2Idx).toBeGreaterThan(contactIdx);
+
+    // contact must be nested inside .resume-header (its closing div comes after it)
+    const headerCloseIdx = result.indexOf("</div>", contactIdx);
+    expect(headerCloseIdx).toBeGreaterThan(contactIdx);
+  });
 });

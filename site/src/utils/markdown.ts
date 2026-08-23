@@ -105,7 +105,7 @@ export class MarkdownService {
     return item.newLine ? `<br>\n${element}` : element;
   }
 
-  public async renderHeader(frontMatter: ResumeFrontMatter) {
+  public async renderHeader(frontMatter: ResumeFrontMatter, contact: string) {
     let photoHtml = "";
     if (frontMatter.photo && (frontMatter.photo === "left" || frontMatter.photo === "right")) {
       const photoBase64 = await this._photoStore.getItem<string>("photo");
@@ -116,7 +116,8 @@ export class MarkdownService {
 
     const textContent = [
       frontMatter.name ? `<h1>${frontMatter.name}</h1>\n` : "",
-      frontMatter.subtitle ? `<span class="resume-subtitle">${frontMatter.subtitle}</span>` : ""
+      frontMatter.subtitle ? `<span class="resume-subtitle">${frontMatter.subtitle}</span>` : "",
+      contact
     ].join("");
 
     const hasPhoto = !!photoHtml;
@@ -166,14 +167,16 @@ export class MarkdownService {
     onResult?.(this._frontMatterParser.lastError ?? null);
 
     const content = this._resolveDeflist(this._renderMarkdown(body));
-    const header = await this.renderHeader(frontMatter);
-    const contact = this.renderHeaderContact(frontMatter);
+    const header = await this.renderHeader(
+      frontMatter,
+      this.renderHeaderContact(frontMatter)
+    );
 
     const { firstHeading, rest } = this._splitFirstHeading(content);
     if (firstHeading) {
-      return `<div class="resume-top">${header}${firstHeading}${contact}</div>${rest}`;
+      return `<div class="resume-top">${header}${firstHeading}</div>${rest}`;
     }
-    return header + contact + content;
+    return header + content;
   }
 }
 

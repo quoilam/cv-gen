@@ -57,4 +57,15 @@ describe("DynamicCssService", () => {
     expect(css).toContain("--badge-color: #444444");
     expect(css).toContain("--badge-opacity: 20%");
   });
+
+  it("stacks header above the first heading instead of beside it", () => {
+    dynamicCssService.injectToolbar(baseStyles);
+    const css = getCss();
+    // heading now spans its own full-width row
+    expect(css).toContain('grid-template-areas: "identity identity" "heading heading";');
+    expect(css).toContain(".resume-top > h2 { grid-area: heading; margin-top: -4px; }");
+    // contact moved inside the header, no longer a right-hand grid cell
+    expect(css).toContain(".resume-header-contact { margin-top: 2px; }");
+    expect(css).not.toContain("grid-area: contact");
+  });
 });
