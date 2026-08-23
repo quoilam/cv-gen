@@ -35,6 +35,7 @@ export default defineConfig({
       "@cvgen/front-matter": resolve(__dirname, "src/internal/front-matter"),
       "@cvgen/markdown-it-katex": resolve(__dirname, "src/internal/markdown-it-katex"),
       "@cvgen/markdown-it-cross-ref": resolve(__dirname, "src/internal/markdown-it-cross-ref"),
+      "@cvgen/markdown-it-badge": resolve(__dirname, "src/internal/markdown-it-badge"),
       "@cvgen/markdown-it-latex-cmds": resolve(__dirname, "src/internal/markdown-it-latex-cmds"),
       "@cvgen/case-police": resolve(__dirname, "src/internal/case-police"),
       "@cvgen/vue-shortcuts": resolve(__dirname, "src/internal/vue-shortcuts"),

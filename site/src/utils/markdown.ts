@@ -10,6 +10,7 @@ import MarkdownItDeflist from "markdown-it-deflist";
 import LinkAttributes from "markdown-it-link-attributes";
 import MarkdownItKatex from "@cvgen/markdown-it-katex";
 import MarkdownItCite from "@cvgen/markdown-it-cross-ref";
+import MarkdownItBadge from "@cvgen/markdown-it-badge";
 import MarkdownItLatexCmds from "@cvgen/markdown-it-latex-cmds";
 import { FrontMatterParser } from "@cvgen/front-matter";
 
@@ -137,8 +138,12 @@ export class MarkdownService {
     return `<div class="${className}">${innerHtml}</div>`;
   }
 
-  public async renderResume(md: string) {
+  public async renderResume(
+    md: string,
+    onResult?: (err: unknown | null) => void
+  ) {
     const { body, frontMatter } = this._frontMatterParser.parse(md);
+    onResult?.(this._frontMatterParser.lastError ?? null);
 
     const content = this._resolveDeflist(this._renderMarkdown(body));
     const header = await this.renderHeader(frontMatter);
@@ -150,6 +155,7 @@ export class MarkdownService {
 export const markdownService = new MarkdownService({
   plugins: [
     MarkdownItDeflist,
+    MarkdownItBadge,
     MarkdownItKatex,
     MarkdownItCite,
     MarkdownItLatexCmds,

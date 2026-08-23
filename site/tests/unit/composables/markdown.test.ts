@@ -122,4 +122,99 @@ name: Test
     expect(result).toContain("<strong>bold</strong>");
     expect(result).toContain("text");
   });
+
+  it("passes null to onResult when front matter is valid", async () => {
+    let result: unknown = "unset";
+    await markdownService.renderResume(
+      `---
+name: Test User
+---
+
+Content`,
+      (err) => {
+        result = err;
+      },
+    );
+    expect(result).toBeNull();
+  });
+
+  it("passes the error to onResult and falls back to last front matter on parse failure", async () => {
+    await markdownService.renderResume(`---
+name: Good Name
+---
+
+Content`);
+
+    let result: unknown = "unset";
+    const html = await markdownService.renderResume(
+      `---
+name: "Bad
+---
+
+Content`,
+      (err) => {
+        result = err;
+      },
+    );
+    expect(result).not.toBeNull();
+    // errorBehavior "last": falls back to the previously parsed front matter
+    expect(html).toContain("Good Name");
+  });
+
+  it("renders bold dt as badge", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**Cooking Engineer Intern**
+  ~ Microwavesoft
+  ~ 2021`);
+    expect(result).toContain('class="resume-badge"');
+    expect(result).toContain("Cooking Engineer Intern");
+    expect(result).toContain("Microwavesoft");
+  });
+
+  it("extracts #hex color prefix in badge", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**#377bb5 Microwavesoft**
+  ~ 2021`);
+    expect(result).toContain('--badge-color: #377bb5');
+    expect(result).toContain("Microwavesoft");
+    expect(result).not.toContain("#377bb5 Microwavesoft");
+  });
+
+  it("renders image icon in badge", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**![](logo.png)Company**
+  ~ 2021`);
+    expect(result).toContain('class="resume-badge-icon"');
+    expect(result).toContain('src="logo.png"');
+  });
+
+  it("does not badge bold text outside dt", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**just bold** text here`);
+    expect(result).not.toContain("resume-badge");
+    expect(result).toContain("<strong>just bold</strong>");
+  });
+
+  it("does not treat non-hex # as color prefix", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**#1 Best**
+  ~ 2021`);
+    expect(result).not.toContain("--badge-color");
+    expect(result).toContain("#1 Best");
+  });
 });

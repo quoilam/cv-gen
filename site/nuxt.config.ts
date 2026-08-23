@@ -66,6 +66,7 @@ export default defineNuxtConfig({
         "@cvgen/dynamic-css": resolve(__dirname, "src/internal/dynamic-css"),
         "@cvgen/front-matter": resolve(__dirname, "src/internal/front-matter"),
         "@cvgen/markdown-it-cross-ref": resolve(__dirname, "src/internal/markdown-it-cross-ref"),
+        "@cvgen/markdown-it-badge": resolve(__dirname, "src/internal/markdown-it-badge"),
         "@cvgen/markdown-it-katex": resolve(__dirname, "src/internal/markdown-it-katex"),
         "@cvgen/markdown-it-latex-cmds": resolve(__dirname, "src/internal/markdown-it-latex-cmds"),
         "@cvgen/utils": resolve(__dirname, "src/internal/utils"),
