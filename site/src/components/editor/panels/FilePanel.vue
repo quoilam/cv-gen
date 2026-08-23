@@ -106,7 +106,6 @@ const handleSave = async () => {
     id: data.resumeId,
     name: data.resumeName,
     markdown: data.markdown,
-    css: data.css,
     styles: toRaw(styles),
   });
 };
@@ -122,7 +121,6 @@ const handleRename = async (text?: string) => {
 const saveName = computed(() => data.resumeName.trim().replace(/\s+/g, "_"));
 const ctx = computed<ExportContext>(() => ({
   markdown: data.markdown,
-  css: data.css,
   styles: toRaw(styles),
   name: saveName.value,
   html: markdownService.renderResume(data.markdown, (err) => {

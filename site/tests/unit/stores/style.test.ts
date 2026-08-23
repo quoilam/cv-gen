@@ -3,7 +3,6 @@ import { setActivePinia, createPinia } from "pinia";
 
 vi.mock("@cvgen/dynamic-css", () => ({
   dynamicCssService: {
-    injectCssEditor: vi.fn(),
     injectToolbar: vi.fn(),
   },
 }));

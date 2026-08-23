@@ -58,7 +58,7 @@ const size = PAPER.SIZES[props.resume.styles.paper];
 const renderRef = ref<InstanceType<typeof SharedResumeRender>>();
 
 onMounted(async () => {
-  dynamicCssService.injectCssEditor(props.resume.css, props.resume.id);
+  dynamicCssService.injectBackbone(props.resume.id);
   await fontService.resolve(props.resume.styles.fontEN);
   await fontService.resolve(props.resume.styles.fontCJK);
   dynamicCssService.injectToolbar(props.resume.styles, props.resume.id);

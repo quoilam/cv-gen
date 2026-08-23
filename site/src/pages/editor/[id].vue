@@ -69,7 +69,6 @@ const handleSave = async () => {
     id: data.resumeId,
     name: data.resumeName,
     markdown: data.markdown,
-    css: data.css,
     styles: toRaw(styles),
   });
 };

@@ -3,7 +3,6 @@ import { setActivePinia, createPinia } from "pinia";
 
 vi.mock("@cvgen/dynamic-css", () => ({
   dynamicCssService: {
-    injectCssEditor: vi.fn(),
     injectToolbar: vi.fn(),
   },
 }));
@@ -29,7 +28,6 @@ describe("useDataStore", () => {
   it("initializes with default values", () => {
     const { data } = useDataStore();
     expect(data.markdown).toBe("");
-    expect(data.css).toBe("");
     expect(data.resumeId).toBeNull();
     expect(data.loaded).toBe(false);
     expect(data.resumeName).toBe("New Resume");
@@ -39,15 +37,6 @@ describe("useDataStore", () => {
     const { data, setData } = useDataStore();
     setData("markdown", "# Hello");
     expect(data.markdown).toBe("# Hello");
-  });
-
-  it("setData for css calls injectCssEditor", async () => {
-    const { setData } = useDataStore();
-    const { dynamicCssService } = await import("@cvgen/dynamic-css");
-    setData("css", "body { color: red; }");
-    expect(dynamicCssService.injectCssEditor).toHaveBeenCalledWith(
-      "body { color: red; }",
-    );
   });
 
   it("setAndSyncToMonaco updates data and syncs to monaco", () => {

@@ -69,6 +69,11 @@ export class LocalForageDbService implements DbService {
         await localForage.setItem(`${this._key}_${from}`, storage);
       }
 
+      // Strip the legacy css field that is no longer persisted
+      for (const resume of Object.values(data)) {
+        delete (resume as { css?: string }).css;
+      }
+
       return data;
     } catch (error) {
       return null;

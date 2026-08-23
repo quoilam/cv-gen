@@ -4,7 +4,6 @@ import type { ResumeStyles } from "~/composables/stores/style";
 export type DbResumeEmpty = {
   name: string;
   markdown: string;
-  css: string;
   styles: ResumeStyles;
 };
 

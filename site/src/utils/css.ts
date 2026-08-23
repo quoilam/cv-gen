@@ -2,7 +2,7 @@ import { injectCss } from "@cvgen/dynamic-css";
 import { useConstant } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 
-const { RENDER } = useConstant();
+const { RENDER, DEFAULT } = useConstant();
 
 /**
  * Service for injecting dynamic CSS into the document.
@@ -141,7 +141,8 @@ export class DynamicCssService {
    * @param id Element ID of the corresponding resume element (dashboard). If not
    * provided, it will be set to "preview", which is the preview view in the editor.
    */
-  public injectCssEditor(css: string, id?: string | number) {
+  public injectBackbone(id?: string | number) {
+    let css = DEFAULT.CSS_CONTENT;
     if (id !== undefined) {
       // To control each resume element (dashboard) separately
       css = css.replaceAll(RENDER.PREVIEW_SELECTOR, this._selector(id));

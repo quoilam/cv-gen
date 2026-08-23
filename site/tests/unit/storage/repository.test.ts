@@ -110,13 +110,11 @@ describe("ResumeRepository", () => {
       id,
       name: "My CV",
       markdown: "# Custom MD",
-      css: ".custom {}",
     });
 
     const { data: loaded } = await repo.getResume(id);
     expect(loaded!.name).toBe("My CV");
     expect(loaded!.markdown).toBe("# Custom MD");
-    expect(loaded!.css).toBe(".custom {}");
     expect(loaded!.id).toBe(id);
     expect(loaded!.updated_at).toBeDefined();
     expect(loaded!.created_at).toBeDefined();

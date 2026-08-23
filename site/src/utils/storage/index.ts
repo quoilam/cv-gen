@@ -30,7 +30,6 @@ export class StorageService {
     return {
       name: DEFAULT.RESUME_NAME,
       markdown: DEFAULT.MD_CONTENT,
-      css: DEFAULT.CSS_CONTENT,
       styles: DEFAULT.STYLES
     };
   }

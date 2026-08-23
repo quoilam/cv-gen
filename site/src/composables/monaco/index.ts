@@ -5,7 +5,6 @@ import { setupMonacoModel, setupMonacoEditor, type MonacoModel } from "./setup";
 type MonacoStates = {
   editor: Monaco.editor.IStandaloneCodeEditor;
   markdown: MonacoModel;
-  css: MonacoModel;
 };
 
 export const useMonacoState = () =>
@@ -24,17 +23,12 @@ export const useMonaco = () => {
       const { editor } = await setupMonacoEditor(container);
       const { data, setData } = useDataStore();
 
-      // Markdown model
       const markdown = await setupMonacoModel("markdown", data.markdown, () =>
         setData("markdown", markdown.get().getValue())
       );
 
-      // CSS model
-      const css = await setupMonacoModel("css", data.css, () =>
-        setData("css", css.get().getValue())
-      );
-
-      states.value = { editor, markdown, css };
+      editor.setModel(markdown.get());
+      states.value = { editor, markdown };
     } catch (error) {
       const toast = useToast();
       toast.error("monaco");
@@ -47,24 +41,18 @@ export const useMonaco = () => {
   const dispose = () => {
     states.value?.editor.dispose();
     states.value?.markdown.dispose();
-    states.value?.css.dispose();
 
     states.value = undefined;
     loading.value = false;
   };
 
-  const activateModel = (model: "markdown" | "css") => {
-    states.value?.editor.setModel(states.value[model].get());
-  };
-
-  const setContent = (model: "markdown" | "css", content: string) => {
+  const setContent = (model: "markdown", content: string) => {
     states.value?.[model].get().setValue(content);
   };
 
   return {
     setup,
     dispose,
-    activateModel,
     setContent,
     loading
   };

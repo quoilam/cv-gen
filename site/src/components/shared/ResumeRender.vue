@@ -21,7 +21,6 @@ onMounted(() => {
 const props = defineProps<{
   id: string | number;
   markdown: string;
-  css?: string;
   styles: ResumeStyles;
 }>();
 
@@ -81,7 +80,6 @@ watchThrottled(
     props.styles.lineHeight,
     props.styles.paragraphSpace,
     props.styles.fontSize,
-    props.css,
     props.styles.fontCJK,
     props.styles.fontEN
   ],

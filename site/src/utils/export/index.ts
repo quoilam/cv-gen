@@ -2,7 +2,6 @@ import type { ResumeStyles } from "~/composables/stores/style";
 
 export type ExportContext = {
   markdown: string;
-  css: string;
   styles: ResumeStyles;
   name: string;
   html: string;

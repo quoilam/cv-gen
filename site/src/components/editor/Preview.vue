@@ -7,7 +7,6 @@
       <SharedResumeRender
         id="preview"
         :markdown="data.markdown"
-        :css="data.css"
         :styles="styles"
       />
     </VueZoom>

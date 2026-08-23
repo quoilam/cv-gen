@@ -29,10 +29,9 @@ export const setupMonaco = async () => {
   const monaco = await import("monaco-editor");
   window.monaco = monaco;
 
-  // Import editor and css workers
-  const [{ default: EditorWorker }, { default: CssWorker }] = await Promise.all([
-    import("monaco-editor/esm/vs/editor/editor.worker?worker"),
-    import("monaco-editor/esm/vs/language/css/css.worker?worker")
+  // Import editor worker
+  const [{ default: EditorWorker }] = await Promise.all([
+    import("monaco-editor/esm/vs/editor/editor.worker?worker")
   ]);
 
   window.MonacoEnvironment = {
@@ -40,8 +39,6 @@ export const setupMonaco = async () => {
       switch (label) {
         case "editorWorkerService":
           return new EditorWorker();
-        case "css":
-          return new CssWorker();
         default:
           throw new Error(`Unknown label ${label}`);
       }
@@ -55,7 +52,7 @@ export const setupMonaco = async () => {
 };
 
 export const setupMonacoModel = async (
-  language: "markdown" | "css",
+  language: "markdown",
   content: string,
   onChange: () => void
 ): Promise<MonacoModel> => {

@@ -2,6 +2,7 @@ import { downloadFile } from "@cvgen/utils";
 import type { ExportHandler } from "./index";
 import { exportService } from "./index";
 import { docxHandler } from "./docx";
+import { useConstant } from "~/composables/constant";
 
 export const mdHandler: ExportHandler = (ctx) => {
   downloadFile(`${ctx.name}.md`, ctx.markdown);
@@ -15,6 +16,7 @@ export const pdfHandler: ExportHandler = (ctx) => {
 };
 
 export const htmlHandler: ExportHandler = (ctx) => {
+  const { DEFAULT } = useConstant();
   const doc = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +35,7 @@ export const htmlHandler: ExportHandler = (ctx) => {
     h1, h2, h3 { color: ${ctx.styles.themeColor}; }
     h2 { border-bottom: 1px solid ${ctx.styles.themeColor}; }
     a { color: ${ctx.styles.themeColor}; }
-    ${ctx.css}
+    ${DEFAULT.CSS_CONTENT}
   </style>
 </head>
 <body>${ctx.html}</body>
