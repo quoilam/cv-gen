@@ -21,12 +21,21 @@ export const useResume = () => {
     return data ?? [];
   };
 
-  const updateResume = async (data: DbResumeUpdate, newUpdateTime = true) => {
+  const updateResume = async (
+    data: DbResumeUpdate,
+    newUpdateTime = true,
+    silent = false
+  ) => {
     const { data: updated, error } = await _getRepo().updateResume(data, newUpdateTime);
     if (error) {
       console.error("Update error:", error);
-    } else {
+    } else if (!silent) {
       toast.save();
+    }
+    if (updated) {
+      // Fire-and-forget: if a backup folder is authorized, keep the local
+      // snapshot fresh so it survives browser cache wipes.
+      useStorageBackup().syncBackup();
     }
     return updated;
   };
@@ -38,6 +47,7 @@ export const useResume = () => {
     } else {
       toast.new();
     }
+    if (data) useStorageBackup().syncBackup();
     return data;
   };
 
@@ -48,6 +58,7 @@ export const useResume = () => {
     } else if (data) {
       toast.delete(data.name);
     }
+    if (data) useStorageBackup().syncBackup();
     return data;
   };
 
@@ -100,9 +111,6 @@ export const useResume = () => {
     switchToResume,
     duplicateResume,
     exportToJSON,
-    importFromJson,
-    setSyncProvider: (provider: import("~/utils/storage/repository").SyncProvider) => {
-      _getRepo().setRemote(provider);
-    },
+    importFromJson
   };
 };

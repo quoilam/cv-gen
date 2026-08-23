@@ -23,12 +23,11 @@ type ResumeHeaderItem = {
 type ResumeFrontMatter = {
   readonly name?: string;
   readonly subtitle?: string;
-  readonly photo?: "left" | "right";
   readonly header?: Array<ResumeHeaderItem>;
 };
 
 type MarkdownItPlugins = Array<
-  PluginSimple | PluginWithOptions | [PluginWithOptions, any]
+  PluginSimple | PluginWithOptions | [PluginWithOptions, unknown]
 >;
 
 type MarkdownServiceOptions = {
@@ -106,26 +105,24 @@ export class MarkdownService {
   }
 
   public async renderHeader(frontMatter: ResumeFrontMatter, contact: string) {
-    let photoHtml = "";
-    if (frontMatter.photo && (frontMatter.photo === "left" || frontMatter.photo === "right")) {
-      const photoBase64 = await this._photoStore.getItem<string>("photo");
-      if (photoBase64) {
-        photoHtml = `<img class="resume-photo" src="${photoBase64}" alt="photo" />`;
-      }
-    }
+    const photoBase64 = await this._photoStore.getItem<string>("photo");
+    const photoHtml = photoBase64
+      ? `<img class="resume-photo" src="${photoBase64}" alt="photo" />`
+      : "";
 
     const textContent = [
       frontMatter.name ? `<h1>${frontMatter.name}</h1>\n` : "",
-      frontMatter.subtitle ? `<span class="resume-subtitle">${frontMatter.subtitle}</span>` : "",
+      frontMatter.subtitle
+        ? `<span class="resume-subtitle">${frontMatter.subtitle}</span>`
+        : "",
       contact
     ].join("");
 
     const hasPhoto = !!photoHtml;
-    const photoPos = frontMatter.photo ?? "left";
 
     const classList = ["resume-header"];
     if (hasPhoto) {
-      classList.push("resume-header--with-photo", `resume-header--photo-${photoPos}`);
+      classList.push("resume-header--with-photo", "resume-header--photo-right");
     }
     const className = classList.join(" ");
 
@@ -143,7 +140,10 @@ export class MarkdownService {
     const content = items
       .map((item, i, array) => {
         const normalized = i === 0 && item.newLine ? { ...item, newLine: false } : item;
-        return this._renderHeaderItem(normalized, i !== array.length - 1 && !array[i + 1].newLine);
+        return this._renderHeaderItem(
+          normalized,
+          i !== array.length - 1 && !array[i + 1].newLine
+        );
       })
       .join("\n");
 
@@ -155,14 +155,12 @@ export class MarkdownService {
     if (!match) return { firstHeading: "", rest: html };
 
     const firstHeading = match[0];
-    const rest = html.slice(0, match.index) + html.slice(match.index + firstHeading.length);
+    const rest =
+      html.slice(0, match.index) + html.slice(match.index + firstHeading.length);
     return { firstHeading, rest };
   }
 
-  public async renderResume(
-    md: string,
-    onResult?: (err: unknown | null) => void
-  ) {
+  public async renderResume(md: string, onResult?: (err: unknown | null) => void) {
     const { body, frontMatter } = this._frontMatterParser.parse(md);
     onResult?.(this._frontMatterParser.lastError ?? null);
 

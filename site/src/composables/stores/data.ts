@@ -3,6 +3,7 @@ export type SystemData = {
   resumeId: number | null;
   resumeName: string;
   loaded: boolean;
+  lastSavedAt: number | null;
 };
 
 export const useDataStore = defineStore("data", () => {
@@ -12,7 +13,8 @@ export const useDataStore = defineStore("data", () => {
     markdown: "",
     resumeId: null,
     resumeName: DEFAULT.RESUME_NAME,
-    loaded: false
+    loaded: false,
+    lastSavedAt: null
   });
 
   const setData = <T extends keyof SystemData>(key: T, value: SystemData[T]) => {

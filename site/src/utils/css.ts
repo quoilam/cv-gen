@@ -32,13 +32,13 @@ export class DynamicCssService {
     return `${selector} :not(.resume-header-item) > a { color: ${COLOR.THEME}; }`;
   };
 
-  private badge = (selector: string) => {
+  private badge = (selector: string, styles: ResumeStyles) => {
     const opacity = (COLOR.BADGE.opacity * 100).toFixed(0);
     return (
       `${selector} .resume-badge { ` +
       `--badge-color: ${COLOR.BADGE.color}; --badge-opacity: ${opacity}%; ` +
       `--badge-icon-scale: ${COLOR.BADGE.iconScale}; ` +
-      `display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; ` +
+      `display: inline-flex; align-items: center; gap: 6px; padding: ${styles.badgeHeight}px 10px; ` +
       `border-radius: 4px; overflow: visible; ` +
       `background: color-mix(in srgb, var(--badge-color) var(--badge-opacity), transparent); ` +
       `color: var(--badge-color); font-weight: bold; }` +
@@ -116,7 +116,7 @@ export class DynamicCssService {
       this.fontSize(selector, styles) +
       this.headingColor(selector) +
       this.linkColor(selector) +
-      this.badge(selector) +
+      this.badge(selector, styles) +
       this.paragraphSpace(selector, styles) +
       this.lineHeight(selector, styles) +
       // We only need to set paper size for the preview view in the editor

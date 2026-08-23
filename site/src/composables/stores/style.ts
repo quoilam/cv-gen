@@ -8,6 +8,7 @@ export type ResumeStyles = {
   lineHeight: number;
   paragraphSpace: number;
   firstHeadingOverlap: number;
+  badgeHeight: number;
   fontCJK: Font;
   fontEN: Font;
   fontSize: number;
@@ -16,7 +17,6 @@ export type ResumeStyles = {
 export const useStyleStore = defineStore("style", () => {
   const { DEFAULT } = useConstant();
   const styles = reactive<ResumeStyles>(copy(DEFAULT.STYLES));
-  const recommended = reactive<Partial<ResumeStyles>>({});
 
   const setStyle = async <T extends keyof ResumeStyles>(
     key: T,
@@ -48,23 +48,9 @@ export const useStyleStore = defineStore("style", () => {
     dynamicCssService.injectToolbar(styles);
   };
 
-  const setRecommended = (values: Partial<ResumeStyles>) => {
-    Object.assign(recommended, values);
-  };
-
-  const clearRecommended = () => {
-    const keys = Object.keys(recommended) as (keyof ResumeStyles)[];
-    for (const key of keys) {
-      delete recommended[key];
-    }
-  };
-
   return {
     styles,
-    recommended,
     setStyle,
-    setStyles,
-    setRecommended,
-    clearRecommended
+    setStyles
   };
 });

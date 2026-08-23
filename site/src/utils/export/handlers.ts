@@ -1,12 +1,6 @@
-import { downloadFile } from "@cvgen/utils";
 import type { ExportHandler } from "./index";
 import { exportService } from "./index";
 import { docxHandler } from "./docx";
-import { useConstant } from "~/composables/constant";
-
-export const mdHandler: ExportHandler = (ctx) => {
-  downloadFile(`${ctx.name}.md`, ctx.markdown);
-};
 
 export const pdfHandler: ExportHandler = (ctx) => {
   const prevTitle = document.title;
@@ -15,38 +9,7 @@ export const pdfHandler: ExportHandler = (ctx) => {
   document.title = prevTitle;
 };
 
-export const htmlHandler: ExportHandler = (ctx) => {
-  const { DEFAULT, COLOR } = useConstant();
-  const doc = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${ctx.name}</title>
-  <style>
-    @page { size: A4; margin: 0; }
-    body {
-      margin: ${ctx.styles.marginV}px ${ctx.styles.marginH}px;
-      font-family: ${ctx.styles.fontEN.fontFamily || ctx.styles.fontEN.name}, ${ctx.styles.fontCJK.fontFamily || ctx.styles.fontCJK.name}, Arial, Helvetica, sans-serif;
-      font-size: ${ctx.styles.fontSize}px;
-      line-height: ${ctx.styles.lineHeight};
-      color: black;
-    }
-    h1, h2, h3 { color: ${COLOR.THEME}; }
-    h2 { border-bottom: 1px solid ${COLOR.THEME}; }
-    a { color: ${COLOR.THEME}; }
-    ${DEFAULT.CSS_CONTENT}
-  </style>
-</head>
-<body>${ctx.html}</body>
-</html>`;
-
-  downloadFile(`${ctx.name}.html`, doc);
-};
-
 export function registerExportHandlers() {
-  exportService.register("md", mdHandler);
   exportService.register("pdf", pdfHandler);
-  exportService.register("html", htmlHandler);
   exportService.register("docx", docxHandler);
 }

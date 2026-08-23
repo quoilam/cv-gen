@@ -207,6 +207,18 @@ name: Badge Test
     expect(result).toContain("<strong>just bold</strong>");
   });
 
+  it("keeps bold with trailing text as plain bold (not banner)", async () => {
+    const result = await markdownService.renderResume(`---
+name: Badge Test
+---
+
+**Senior Dev** (Remote)
+  ~ Company`);
+    expect(result).not.toContain("resume-badge");
+    expect(result).toContain("<strong>Senior Dev</strong>");
+    expect(result).toContain("(Remote)");
+  });
+
   it("does not treat non-hex # as color prefix", async () => {
     const result = await markdownService.renderResume(`---
 name: Badge Test

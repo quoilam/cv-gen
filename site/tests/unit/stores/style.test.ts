@@ -37,13 +37,4 @@ describe("useStyleStore", () => {
     await setStyles({ fontSize: 20 });
     expect(styles.fontSize).toBe(20);
   });
-
-  it("setRecommended and clearRecommended manage recommended state", () => {
-    const { recommended, setRecommended, clearRecommended } = useStyleStore();
-    setRecommended({ fontSize: 14 });
-    expect(recommended.fontSize).toBe(14);
-
-    clearRecommended();
-    expect(recommended.fontSize).toBeUndefined();
-  });
 });

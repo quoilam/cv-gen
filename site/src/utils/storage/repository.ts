@@ -2,7 +2,6 @@ import { downloadFile } from "@renovamen/utils";
 import type { ValidVersion } from "~/composables/constant";
 import type {
   DbService,
-  DbResume,
   DbResumeUpdate,
   DbResumeEmpty,
   StorageJson,
@@ -68,7 +67,7 @@ export class ResumeRepository {
     return { data: dup, error: null };
   }
 
-  async exportToJSON() {
+  async getJSON() {
     const { data: resumes, error } = await this.getResumes();
     if (error) return { data: null, error };
 
@@ -78,6 +77,12 @@ export class ResumeRepository {
     }, {});
 
     const json: StorageJson = { version: this._version, data: jsonData };
+    return { data: json, error: null };
+  }
+
+  async exportToJSON() {
+    const { data: json, error } = await this.getJSON();
+    if (error) return { data: null, error };
     downloadFile("ohmycv_data.json", JSON.stringify(json));
     return { data: json, error: null };
   }

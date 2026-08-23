@@ -20,6 +20,16 @@ function parseBadge(children: Token[]): BadgeMeta | null {
   }
   if (strongStart === -1 || strongEnd === -1) return null;
 
+  // If the strong is not the only content of the dt (e.g. `**bold** rest`),
+  // keep it as plain bold instead of a banner.
+  for (let i = 0; i < children.length; i++) {
+    if (i > strongStart && i < strongEnd) continue;
+    const t = children[i];
+    if ((t.type === "text" || t.type === "code_inline") && t.content.trim() !== "") {
+      return null;
+    }
+  }
+
   let text = "";
   let iconUrl: string | undefined;
   for (let i = strongStart + 1; i < strongEnd; i++) {

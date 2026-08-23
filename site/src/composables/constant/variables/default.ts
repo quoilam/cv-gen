@@ -8,6 +8,7 @@ export const DEFAULT_STYLES = {
   lineHeight: 1.3,
   paragraphSpace: 5,
   firstHeadingOverlap: 4,
+  badgeHeight: 2,
   fontCJK: {
     name: "华康宋体",
     fontFamily: "HKST"
@@ -21,7 +22,6 @@ export const DEFAULT_STYLES = {
 export const DEFAULT_MD_CONTENT = `---
 name: Haha Ha
 subtitle: "Applying for: Cooking Engineer"
-photo: left
 header:
   - text: <span class="iconify" data-icon="tabler:phone"></span> (+1) 123-456-7890
   - text: <span class="iconify" data-icon="tabler:mail"></span> icancook@email.com
@@ -35,11 +35,11 @@ header:
 <!--
   语法说明（本注释不会渲染到预览）：
 
-  · Front-matter：顶部 --- 区块，可配置 name（姓名）、subtitle（副标题）、photo（left/right）、header（联系方式，text/link/newLine）
-  · 头像照片：在「照片」面板上传，front-matter 写 photo: left 或 photo: right
+  · Front-matter：顶部 --- 区块，可配置 name（姓名）、subtitle（副标题）、header（联系方式，text/link/newLine）
+  · 头像照片：在「照片」面板上传，照片自动显示在右侧
   · 标题：## 二级标题作为分节，颜色默认跟随全局主题色
   · 定义列表：**术语** 后接缩进的 ~ 定义
-  · 彩色 banner：加粗的职位/项目名自动变 banner；**#hex 名称** 指定颜色（如 **#ff0000 公司名**）；**![](图标)名称** 加图标
+  · 彩色 banner：加粗的职位/项目名自动变 banner；**#hex 名称** 指定颜色（如 **#ff0000 公司名**）；**![](图标)名称** 加图标；**职位** 后带普通文字时不生成 banner
   · 交叉引用：[~P1]: 论文定义，正文用 [~P1] 引用
   · 公式：行内 $E=mc^2$，块级 $$E=mc^2$$
   · 图标：<span class="iconify" data-icon="tabler:phone"></span>
