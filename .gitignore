@@ -25,3 +25,10 @@ CLAUDE.md
 .env
 .env.*
 !.env.example
+
+# Test artifacts
+playwright-report
+test-results
+
+# Nuxt auto-generated types
+auto-imports.d.ts
