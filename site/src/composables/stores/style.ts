@@ -8,6 +8,13 @@ export type ResumeStyles = {
   lineHeight: number;
   paragraphSpace: number;
   themeColor: string;
+  headingColor: string;
+  linkColor: string;
+  sectionBarColor: string;
+  sectionBarOpacity: number;
+  sectionBarEnabled: boolean;
+  badgeColor: string;
+  badgeOpacity: number;
   fontCJK: Font;
   fontEN: Font;
   fontSize: number;

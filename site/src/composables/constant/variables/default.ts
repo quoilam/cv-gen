@@ -8,6 +8,13 @@ export const DEFAULT_STYLES = {
   lineHeight: 1.3,
   paragraphSpace: 5,
   themeColor: "#377bb5",
+  headingColor: "#377bb5",
+  linkColor: "#377bb5",
+  sectionBarColor: "#377bb5",
+  sectionBarOpacity: 0.12,
+  sectionBarEnabled: false,
+  badgeColor: "#377bb5",
+  badgeOpacity: 0.15,
   fontCJK: {
     name: "华康宋体",
     fontFamily: "HKST"
@@ -21,6 +28,7 @@ export const DEFAULT_STYLES = {
 
 export const DEFAULT_MD_CONTENT = `---
 name: Haha Ha
+photo: left
 header:
   - text: |
       <span style="font-size: 1.2em; font-weight: bold;">Applying for: Cooking Engineer</span>

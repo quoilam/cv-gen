@@ -21,11 +21,37 @@ export class DynamicCssService {
     return `cvgen-${type}-${id ?? RENDER.PREVIEW_ID}`;
   };
 
-  private themeColor = (selector: string, styles: ResumeStyles) => {
+  private headingColor = (selector: string, styles: ResumeStyles) => {
     return (
-      `${selector} :not(.resume-header-item) > a { color: ${styles.themeColor}; }` +
-      `${selector} h1, ${selector} h2, ${selector} h3 { color: ${styles.themeColor}; }` +
-      `${selector} h2 { border-bottom-color: ${styles.themeColor}; }`
+      `${selector} h1, ${selector} h2, ${selector} h3 { color: ${styles.headingColor}; }` +
+      `${selector} h2 { border-bottom-color: ${styles.headingColor}; }`
+    );
+  };
+
+  private linkColor = (selector: string, styles: ResumeStyles) => {
+    return `${selector} :not(.resume-header-item) > a { color: ${styles.linkColor}; }`;
+  };
+
+  private sectionBar = (selector: string, styles: ResumeStyles) => {
+    if (!styles.sectionBarEnabled) return "";
+    const opacity = (styles.sectionBarOpacity * 100).toFixed(0);
+    return (
+      `${selector} h2 { ` +
+      `background: color-mix(in srgb, ${styles.sectionBarColor} ${opacity}%, transparent); ` +
+      `padding: 2px 8px; border-radius: 4px; border-bottom-style: none; }`
+    );
+  };
+
+  private badge = (selector: string, styles: ResumeStyles) => {
+    const opacity = (styles.badgeOpacity * 100).toFixed(0);
+    return (
+      `${selector} .resume-badge { ` +
+      `--badge-color: ${styles.badgeColor}; --badge-opacity: ${opacity}%; ` +
+      `display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; ` +
+      `border-radius: 4px; ` +
+      `background: color-mix(in srgb, var(--badge-color) var(--badge-opacity), transparent); ` +
+      `color: var(--badge-color); font-weight: bold; }` +
+      `${selector} .resume-badge-icon { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }`
     );
   };
 
@@ -88,7 +114,10 @@ export class DynamicCssService {
       this.headerLayout(selector) +
       this.fontFamily(selector, styles) +
       this.fontSize(selector, styles) +
-      this.themeColor(selector, styles) +
+      this.headingColor(selector, styles) +
+      this.linkColor(selector, styles) +
+      this.sectionBar(selector, styles) +
+      this.badge(selector, styles) +
       this.paragraphSpace(selector, styles) +
       this.lineHeight(selector, styles) +
       // We only need to set paper size for the preview view in the editor
