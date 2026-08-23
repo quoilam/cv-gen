@@ -10,6 +10,7 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
 const preferredDark = usePreferredDark();
+const baseURL = useRuntimeConfig().app.baseURL;
 
 onMounted(() => {
   // 开发模式下注销已注册的 Service Worker，避免缓存干扰
@@ -36,10 +37,10 @@ useHead({
     {
       rel: "icon",
       type: "image/svg+xml",
-      href: () => (preferredDark.value ? "/favicon-dark.svg" : "/favicon.svg")
+      href: () => `${baseURL}${preferredDark.value ? "favicon-dark.svg" : "favicon.svg"}`
     },
     ...(!import.meta.env.DEV
-      ? [{ rel: "manifest", href: "/manifest.webmanifest" }]
+      ? [{ rel: "manifest", href: `${baseURL}manifest.webmanifest` }]
       : [])
   ]
 });

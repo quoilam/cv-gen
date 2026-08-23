@@ -5,6 +5,8 @@ import { pwa } from "./configs/pwa";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const baseURL = process.env.NODE_ENV === 'production' ? '/cv-gen/' : '/';
+
 export default defineNuxtConfig({
   srcDir: "src/",
 
@@ -38,12 +40,12 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/cv-gen/' : '/',
+    baseURL,
     head: {
       viewport: "width=device-width,initial-scale=1",
       link: [
-        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
-        { rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#222" }
+        { rel: "apple-touch-icon", href: `${baseURL}apple-touch-icon.png` },
+        { rel: "mask-icon", href: `${baseURL}safari-pinned-tab.svg`, color: "#222" }
       ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
