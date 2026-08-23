@@ -15,6 +15,7 @@ export const DEFAULT_STYLES = {
   sectionBarEnabled: false,
   badgeColor: "#377bb5",
   badgeOpacity: 0.15,
+  badgeIconScale: 1,
   fontCJK: {
     name: "华康宋体",
     fontFamily: "HKST"
@@ -28,12 +29,10 @@ export const DEFAULT_STYLES = {
 
 export const DEFAULT_MD_CONTENT = `---
 name: Haha Ha
+subtitle: "Applying for: Cooking Engineer"
 photo: left
 header:
-  - text: |
-      <span style="font-size: 1.2em; font-weight: bold;">Applying for: Cooking Engineer</span>
   - text: <span class="iconify" data-icon="tabler:phone"></span> (+1) 123-456-7890
-    newLine: true
   - text: <span class="iconify" data-icon="tabler:mail"></span> icancook@email.com
     link: mailto:icancook@email.com
   - text: <span class="iconify" data-icon="tabler:brand-github"></span> quoilam
@@ -45,7 +44,7 @@ header:
 <!--
   语法说明（本注释不会渲染到预览）：
 
-  · Front-matter：顶部 --- 区块，可配置 name（姓名）、photo（left/right）、header（text/link/newLine）
+  · Front-matter：顶部 --- 区块，可配置 name（姓名）、subtitle（副标题）、photo（left/right）、header（联系方式，text/link/newLine）
   · 头像照片：在「照片」面板上传，front-matter 写 photo: left 或 photo: right
   · 标题：## 二级标题作为分节，可在「外观」面板开启彩色色条
   · 定义列表：**术语** 后接缩进的 ~ 定义
@@ -242,7 +241,18 @@ ${PREVIEW_SELECTOR} .resume-photo {
 
 /* Header */
 
+${PREVIEW_SELECTOR} .resume-top {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "identity identity"
+    "heading contact";
+  align-items: end;
+  row-gap: 4px;
+}
+
 ${PREVIEW_SELECTOR} .resume-header {
+  grid-area: identity;
   text-align: center;
 }
 
@@ -272,12 +282,29 @@ ${PREVIEW_SELECTOR} .resume-header h1 {
   margin-bottom: 8px;
 }
 
+${PREVIEW_SELECTOR} .resume-subtitle {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
 ${PREVIEW_SELECTOR} .resume-header--with-photo .resume-header h1 {
   text-align: center;
 }
 
 ${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header h1 {
   text-align: center;
+}
+
+${PREVIEW_SELECTOR} .resume-top > h2 {
+  grid-area: heading;
+  margin-top: 0;
+}
+
+${PREVIEW_SELECTOR} .resume-header-contact {
+  grid-area: contact;
+  text-align: right;
+  justify-self: end;
 }
 
 ${PREVIEW_SELECTOR} .resume-header-item:not(.no-separator)::after {

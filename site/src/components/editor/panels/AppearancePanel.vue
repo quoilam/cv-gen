@@ -69,6 +69,15 @@
         <div class="mt-2">
           <SharedUiSlider unit="%" :model-value="badgeOpacityValue" :min="0" :max="100" @update:model-value="onBadgeOpacityChange" />
         </div>
+        <div class="mt-3">
+          <div class="panel-label">
+            banner 图标大小
+            <span class="text-xs text-muted-foreground ml-1">{{ styles.badgeIconScale }}x</span>
+          </div>
+          <div class="mt-2">
+            <SharedUiSlider unit="x" :model-value="badgeIconScaleValue" :min="0.5" :max="3" :step="0.1" @update:model-value="onBadgeIconScaleChange" />
+          </div>
+        </div>
       </div>
       <div>
         <div class="panel-label">标题色条</div>
@@ -255,6 +264,14 @@ const onBadgeOpacityChange = (value: number[] | undefined) => {
   if (!value) return;
   badgeOpacityValue.value = value;
   execute("badgeOpacity", styles.badgeOpacity, value.at(0)! / 100);
+};
+
+// Badge icon scale
+const badgeIconScaleValue = ref([styles.badgeIconScale]);
+const onBadgeIconScaleChange = (value: number[] | undefined) => {
+  if (!value) return;
+  badgeIconScaleValue.value = value;
+  execute("badgeIconScale", styles.badgeIconScale, value.at(0)!);
 };
 </script>
 

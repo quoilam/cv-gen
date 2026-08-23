@@ -22,6 +22,7 @@ type ResumeHeaderItem = {
 
 type ResumeFrontMatter = {
   readonly name?: string;
+  readonly subtitle?: string;
   readonly photo?: "left" | "right";
   readonly header?: Array<ResumeHeaderItem>;
 };
@@ -115,11 +116,7 @@ export class MarkdownService {
 
     const textContent = [
       frontMatter.name ? `<h1>${frontMatter.name}</h1>\n` : "",
-      (frontMatter.header ?? [])
-        .map((item, i, array) =>
-          this._renderHeaderItem(item, i !== array.length - 1 && !array[i + 1].newLine)
-        )
-        .join("\n")
+      frontMatter.subtitle ? `<span class="resume-subtitle">${frontMatter.subtitle}</span>` : ""
     ].join("");
 
     const hasPhoto = !!photoHtml;
@@ -138,6 +135,29 @@ export class MarkdownService {
     return `<div class="${className}">${innerHtml}</div>`;
   }
 
+  public renderHeaderContact(frontMatter: ResumeFrontMatter) {
+    const items = frontMatter.header ?? [];
+    if (items.length === 0) return "";
+
+    const content = items
+      .map((item, i, array) => {
+        const normalized = i === 0 && item.newLine ? { ...item, newLine: false } : item;
+        return this._renderHeaderItem(normalized, i !== array.length - 1 && !array[i + 1].newLine);
+      })
+      .join("\n");
+
+    return `<div class="resume-header-contact">${content}</div>`;
+  }
+
+  private _splitFirstHeading(html: string) {
+    const match = /<h2[^>]*>[\s\S]*?<\/h2>/.exec(html);
+    if (!match) return { firstHeading: "", rest: html };
+
+    const firstHeading = match[0];
+    const rest = html.slice(0, match.index) + html.slice(match.index + firstHeading.length);
+    return { firstHeading, rest };
+  }
+
   public async renderResume(
     md: string,
     onResult?: (err: unknown | null) => void
@@ -147,8 +167,13 @@ export class MarkdownService {
 
     const content = this._resolveDeflist(this._renderMarkdown(body));
     const header = await this.renderHeader(frontMatter);
+    const contact = this.renderHeaderContact(frontMatter);
 
-    return header + content;
+    const { firstHeading, rest } = this._splitFirstHeading(content);
+    if (firstHeading) {
+      return `<div class="resume-top">${header}${firstHeading}${contact}</div>${rest}`;
+    }
+    return header + contact + content;
   }
 }
 

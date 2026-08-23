@@ -8,6 +8,7 @@
       <div class="panel-label">简历头信息（Front-matter）</div>
       <pre class="code-block">---
 name: 姓名
+subtitle: 求职意向
 photo: left
 header:
   - text: 电话 (+1) 123

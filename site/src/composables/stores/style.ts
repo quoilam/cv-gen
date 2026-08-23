@@ -15,6 +15,7 @@ export type ResumeStyles = {
   sectionBarEnabled: boolean;
   badgeColor: string;
   badgeOpacity: number;
+  badgeIconScale: number;
   fontCJK: Font;
   fontEN: Font;
   fontSize: number;

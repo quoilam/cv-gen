@@ -47,11 +47,13 @@ export class DynamicCssService {
     return (
       `${selector} .resume-badge { ` +
       `--badge-color: ${styles.badgeColor}; --badge-opacity: ${opacity}%; ` +
+      `--badge-icon-scale: ${styles.badgeIconScale}; ` +
       `display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; ` +
-      `border-radius: 4px; ` +
+      `border-radius: 4px; overflow: visible; ` +
       `background: color-mix(in srgb, var(--badge-color) var(--badge-opacity), transparent); ` +
       `color: var(--badge-color); font-weight: bold; }` +
-      `${selector} .resume-badge-icon { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }`
+      `${selector} .resume-badge-icon { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; ` +
+      `mix-blend-mode: multiply; transform: scale(var(--badge-icon-scale)); transform-origin: center; }`
     );
   };
 
