@@ -2,10 +2,6 @@ export const PAPER_SIZES = {
   A4: {
     h: 297 + 2,
     w: 210
-  },
-  letter: {
-    h: 279.4 + 3,
-    w: 215.9
   }
 };
 

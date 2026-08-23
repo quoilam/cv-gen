@@ -31,7 +31,16 @@ header:
     <div>
       <div class="panel-label">标题</div>
       <pre class="code-block">## 教育经历</pre>
-      <p class="desc">二级标题作为分节，可在「外观」面板开启彩色色条。</p>
+      <p class="desc">二级标题作为分节，颜色默认跟随全局主题色。</p>
+    </div>
+
+    <div>
+      <div class="panel-label">主题色</div>
+      <p class="desc">
+        全局标题、链接、经历条默认使用主题色
+        <code>#377bb5</code>。个别元素需要特殊配色时，用
+        <code>#hex</code> 前缀指定（见「彩色 banner」）。
+      </p>
     </div>
 
     <div>

@@ -2,7 +2,7 @@ import { injectCss } from "@cvgen/dynamic-css";
 import { useConstant } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 
-const { RENDER, DEFAULT } = useConstant();
+const { RENDER, DEFAULT, COLOR } = useConstant();
 
 /**
  * Service for injecting dynamic CSS into the document.
@@ -21,33 +21,23 @@ export class DynamicCssService {
     return `cvgen-${type}-${id ?? RENDER.PREVIEW_ID}`;
   };
 
-  private headingColor = (selector: string, styles: ResumeStyles) => {
+  private headingColor = (selector: string) => {
     return (
-      `${selector} h1, ${selector} h2, ${selector} h3 { color: ${styles.headingColor}; }` +
-      `${selector} h2 { border-bottom-color: ${styles.headingColor}; }`
+      `${selector} h1, ${selector} h2, ${selector} h3 { color: ${COLOR.THEME}; }` +
+      `${selector} h2 { border-bottom-color: ${COLOR.THEME}; }`
     );
   };
 
-  private linkColor = (selector: string, styles: ResumeStyles) => {
-    return `${selector} :not(.resume-header-item) > a { color: ${styles.linkColor}; }`;
+  private linkColor = (selector: string) => {
+    return `${selector} :not(.resume-header-item) > a { color: ${COLOR.THEME}; }`;
   };
 
-  private sectionBar = (selector: string, styles: ResumeStyles) => {
-    if (!styles.sectionBarEnabled) return "";
-    const opacity = (styles.sectionBarOpacity * 100).toFixed(0);
-    return (
-      `${selector} h2 { ` +
-      `background: color-mix(in srgb, ${styles.sectionBarColor} ${opacity}%, transparent); ` +
-      `padding: 2px 8px; border-radius: 4px; border-bottom-style: none; }`
-    );
-  };
-
-  private badge = (selector: string, styles: ResumeStyles) => {
-    const opacity = (styles.badgeOpacity * 100).toFixed(0);
+  private badge = (selector: string) => {
+    const opacity = (COLOR.BADGE.opacity * 100).toFixed(0);
     return (
       `${selector} .resume-badge { ` +
-      `--badge-color: ${styles.badgeColor}; --badge-opacity: ${opacity}%; ` +
-      `--badge-icon-scale: ${styles.badgeIconScale}; ` +
+      `--badge-color: ${COLOR.BADGE.color}; --badge-opacity: ${opacity}%; ` +
+      `--badge-icon-scale: ${COLOR.BADGE.iconScale}; ` +
       `display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; ` +
       `border-radius: 4px; overflow: visible; ` +
       `background: color-mix(in srgb, var(--badge-color) var(--badge-opacity), transparent); ` +
@@ -81,8 +71,8 @@ export class DynamicCssService {
     return `${selector} { font-size: ${styles.fontSize}px; }`;
   };
 
-  private paperSize = (styles: ResumeStyles) => {
-    return `@media print { @page { size: ${styles.paper}; } }`;
+  private paperSize = () => {
+    return `@media print { @page { size: A4; } }`;
   };
 
   private headerLayout = (selector: string, styles: ResumeStyles) => {
@@ -124,14 +114,13 @@ export class DynamicCssService {
       this.headerLayout(selector, styles) +
       this.fontFamily(selector, styles) +
       this.fontSize(selector, styles) +
-      this.headingColor(selector, styles) +
-      this.linkColor(selector, styles) +
-      this.sectionBar(selector, styles) +
-      this.badge(selector, styles) +
+      this.headingColor(selector) +
+      this.linkColor(selector) +
+      this.badge(selector) +
       this.paragraphSpace(selector, styles) +
       this.lineHeight(selector, styles) +
       // We only need to set paper size for the preview view in the editor
-      (id === undefined ? this.paperSize(styles) : "");
+      (id === undefined ? this.paperSize() : "");
 
     injectCss(this._injectedCssId("toolbar", id), css);
   }

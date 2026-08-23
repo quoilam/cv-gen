@@ -44,11 +44,11 @@ const { data } = useDataStore();
 const { PAPER } = useConstant();
 
 const fitWidth = () => {
-  scale.value = width.value / PAPER.sizeToPx(styles.paper, "w");
+  scale.value = width.value / PAPER.sizeToPx("A4", "w");
 };
 
 const fitHeight = () => {
-  scale.value = height.value / PAPER.sizeToPx(styles.paper, "h");
+  scale.value = height.value / PAPER.sizeToPx("A4", "h");
 };
 
 watch(width, fitWidth);

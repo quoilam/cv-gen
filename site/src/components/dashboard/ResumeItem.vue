@@ -53,7 +53,7 @@ const emit = defineEmits<{
 }>();
 
 const { PAPER } = useConstant();
-const size = PAPER.SIZES[props.resume.styles.paper];
+const size = PAPER.SIZES.A4;
 
 const renderRef = ref<InstanceType<typeof SharedResumeRender>>();
 

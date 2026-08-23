@@ -1,20 +1,5 @@
 <template>
   <div class="layout-panel space-y-4">
-    <!-- Paper Size -->
-    <div>
-      <div class="panel-label">纸张尺寸</div>
-      <div class="mt-2">
-        <SharedUiCombobox
-          id="paper-size-floating"
-          class="capitalize"
-          :items="paperItems"
-          :default-value="styles.paper"
-        />
-      </div>
-    </div>
-
-    <div class="border-t border-border/50" />
-
     <!-- Margins -->
     <div>
       <div class="panel-label">页边距</div>
@@ -24,8 +9,8 @@
           <SharedUiSlider
             unit="px"
             :model-value="marginVValue"
-            :min="20"
-            :max="80"
+            :min="0"
+            :max="30"
             @update:model-value="(v) => { marginVValue = v!; execute('marginV', styles.marginV, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginV }}px</span>
@@ -35,8 +20,8 @@
           <SharedUiSlider
             unit="px"
             :model-value="marginHValue"
-            :min="20"
-            :max="60"
+            :min="0"
+            :max="50"
             @update:model-value="(v) => { marginHValue = v!; execute('marginH', styles.marginH, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginH }}px</span>
@@ -55,8 +40,8 @@
           <SharedUiSlider
             :model-value="lineHeightValue"
             :min="1"
-            :max="2"
-            :step="0.05"
+            :max="1.5"
+            :step="0.01"
             @update:model-value="(v) => { lineHeightValue = v!; execute('lineHeight', styles.lineHeight, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.lineHeight }}</span>
@@ -66,7 +51,8 @@
           <SharedUiSlider
             unit="px"
             :model-value="paragraphSpaceValue"
-            :max="50"
+            :min="-5"
+            :max="10"
             @update:model-value="(v) => { paragraphSpaceValue = v!; execute('paragraphSpace', styles.paragraphSpace, v!.at(0)!); }"
           />
           <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.paragraphSpace }}px</span>
@@ -128,19 +114,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { ValidPaperSize } from "~/composables/constant";
 import { useSmartOnePage } from "~/composables/useSmartOnePage";
 
 const { styles } = useStyleStore();
 const { execute } = useStyleHistory();
-const { PAPER } = useConstant();
-
-// Paper
-const paperItems = Object.keys(PAPER.SIZES).map((paper) => ({
-  label: paper,
-  value: paper,
-  onSelect: () => execute("paper", styles.paper, paper as ValidPaperSize),
-}));
 
 // Slider refs (double-model pattern matches existing toolbar components)
 const marginVValue = ref([styles.marginV]);

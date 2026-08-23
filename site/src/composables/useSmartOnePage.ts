@@ -9,10 +9,10 @@ const PARAM_CONFIG: Record<
   ParamName,
   { min: number; max: number; default: number; weight: number; step: number }
 > = {
-  marginV: { min: 20, max: 70, default: 50, weight: 0.30, step: 1 },
-  paragraphSpace: { min: 0, max: 20, default: 5, weight: 0.15, step: 1 },
-  lineHeight: { min: 1.1, max: 2.0, default: 1.3, weight: 0.25, step: 0.05 },
-  fontSize: { min: 11, max: 20, default: 15, weight: 0.30, step: 0.5 },
+  marginV: { min: 0, max: 30, default: 20, weight: 0.30, step: 1 },
+  paragraphSpace: { min: -5, max: 10, default: 5, weight: 0.15, step: 1 },
+  lineHeight: { min: 1, max: 1.5, default: 1.3, weight: 0.25, step: 0.01 },
+  fontSize: { min: 11, max: 20, default: 15, weight: 0.30, step: 0.1 },
 };
 
 // Priority order: least visually intrusive first

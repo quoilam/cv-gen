@@ -22,9 +22,8 @@ describe("useStyleStore", () => {
 
   it("initializes with default styles", () => {
     const { styles } = useStyleStore();
-    expect(styles.themeColor).toBe("#377bb5");
     expect(styles.fontSize).toBe(15);
-    expect(styles.paper).toBe("A4");
+    expect(styles.marginV).toBe(20);
   });
 
   it("setStyle updates a single style field", async () => {
@@ -35,9 +34,8 @@ describe("useStyleStore", () => {
 
   it("setStyles updates multiple fields at once", async () => {
     const { styles, setStyles } = useStyleStore();
-    await setStyles({ fontSize: 20, themeColor: "#ff0000" });
+    await setStyles({ fontSize: 20 });
     expect(styles.fontSize).toBe(20);
-    expect(styles.themeColor).toBe("#ff0000");
   });
 
   it("setRecommended and clearRecommended manage recommended state", () => {

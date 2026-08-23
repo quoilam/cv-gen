@@ -1,5 +1,5 @@
 import { copy } from "@cvgen/utils";
-import type { ValidPaperSize, Font } from "~/composables/constant";
+import type { Font } from "~/composables/constant";
 
 export type ResumeStyles = {
   marginV: number;
@@ -8,19 +8,9 @@ export type ResumeStyles = {
   lineHeight: number;
   paragraphSpace: number;
   firstHeadingOverlap: number;
-  themeColor: string;
-  headingColor: string;
-  linkColor: string;
-  sectionBarColor: string;
-  sectionBarOpacity: number;
-  sectionBarEnabled: boolean;
-  badgeColor: string;
-  badgeOpacity: number;
-  badgeIconScale: number;
   fontCJK: Font;
   fontEN: Font;
   fontSize: number;
-  paper: ValidPaperSize;
 };
 
 export const useStyleStore = defineStore("style", () => {

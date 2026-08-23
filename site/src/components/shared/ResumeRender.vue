@@ -28,12 +28,12 @@ const constant = useConstant();
 const target = ref<HTMLElement>();
 
 const size = computed(() => ({
-  height: constant.PAPER.sizeToPx(props.styles.paper, "h"),
-  width: constant.PAPER.SIZES[props.styles.paper].w
+  height: constant.PAPER.sizeToPx("A4", "h"),
+  width: constant.PAPER.SIZES.A4.w
 }));
 const margins = computed(() => ({
   top: props.styles.marginV,
-  bottom: Math.max(props.styles.marginV - 10, constant.RENDER.PRINT_BOTTOM),
+  bottom: props.styles.marginV,
   left: props.styles.marginH,
   right: props.styles.marginH
 }));

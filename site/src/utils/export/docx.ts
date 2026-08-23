@@ -1,7 +1,9 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import type { ExportHandler } from "./index";
+import { useConstant } from "~/composables/constant";
 
 export const docxHandler: ExportHandler = async (ctx) => {
+  const { COLOR } = useConstant();
   const children: Paragraph[] = [];
 
   const parser = new DOMParser();
@@ -30,7 +32,7 @@ export const docxHandler: ExportHandler = async (ctx) => {
         children.push(
           new Paragraph({
             heading: HeadingLevel.HEADING_1,
-            children: [new TextRun({ text: el.textContent ?? "", color: ctx.styles.themeColor })]
+            children: [new TextRun({ text: el.textContent ?? "", color: COLOR.THEME })]
           })
         );
         break;
@@ -38,7 +40,7 @@ export const docxHandler: ExportHandler = async (ctx) => {
         children.push(
           new Paragraph({
             heading: HeadingLevel.HEADING_2,
-            children: [new TextRun({ text: el.textContent ?? "", color: ctx.styles.themeColor })]
+            children: [new TextRun({ text: el.textContent ?? "", color: COLOR.THEME })]
           })
         );
         break;
@@ -46,7 +48,7 @@ export const docxHandler: ExportHandler = async (ctx) => {
         children.push(
           new Paragraph({
             heading: HeadingLevel.HEADING_3,
-            children: [new TextRun({ text: el.textContent ?? "", color: ctx.styles.themeColor })]
+            children: [new TextRun({ text: el.textContent ?? "", color: COLOR.THEME })]
           })
         );
         break;
@@ -93,8 +95,8 @@ export const docxHandler: ExportHandler = async (ctx) => {
         properties: {
           page: {
             size: {
-              width: ctx.styles.paper === "A4" ? 11906 : 12240,
-              height: ctx.styles.paper === "A4" ? 16838 : 15840
+              width: 11906,
+              height: 16838
             },
             margin: {
               top: Math.round(ctx.styles.marginV * 15),

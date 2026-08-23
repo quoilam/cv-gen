@@ -1,7 +1,7 @@
 export const REQUIRED_DATA_TYPES = {
   v0: [
     {
-      fields: ["name", "markdown", "styles.paper", "styles.themeColor"],
+      fields: ["name", "markdown"],
       types: "string"
     },
     {
@@ -21,14 +21,7 @@ export const REQUIRED_DATA_TYPES = {
   ],
   v1: [
     {
-      fields: [
-        "name",
-        "markdown",
-        "updated_at",
-        "created_at",
-        "styles.paper",
-        "styles.themeColor"
-      ],
+      fields: ["name", "markdown", "updated_at", "created_at"],
       types: "string"
     },
     {

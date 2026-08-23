@@ -16,7 +16,7 @@ export const pdfHandler: ExportHandler = (ctx) => {
 };
 
 export const htmlHandler: ExportHandler = (ctx) => {
-  const { DEFAULT } = useConstant();
+  const { DEFAULT, COLOR } = useConstant();
   const doc = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +24,7 @@ export const htmlHandler: ExportHandler = (ctx) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${ctx.name}</title>
   <style>
-    @page { size: ${ctx.styles.paper}; margin: 0; }
+    @page { size: A4; margin: 0; }
     body {
       margin: ${ctx.styles.marginV}px ${ctx.styles.marginH}px;
       font-family: ${ctx.styles.fontEN.fontFamily || ctx.styles.fontEN.name}, ${ctx.styles.fontCJK.fontFamily || ctx.styles.fontCJK.name}, Arial, Helvetica, sans-serif;
@@ -32,9 +32,9 @@ export const htmlHandler: ExportHandler = (ctx) => {
       line-height: ${ctx.styles.lineHeight};
       color: black;
     }
-    h1, h2, h3 { color: ${ctx.styles.themeColor}; }
-    h2 { border-bottom: 1px solid ${ctx.styles.themeColor}; }
-    a { color: ${ctx.styles.themeColor}; }
+    h1, h2, h3 { color: ${COLOR.THEME}; }
+    h2 { border-bottom: 1px solid ${COLOR.THEME}; }
+    a { color: ${COLOR.THEME}; }
     ${DEFAULT.CSS_CONTENT}
   </style>
 </head>
