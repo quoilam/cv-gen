@@ -31,7 +31,9 @@ describe("DynamicCssService", () => {
   it("injects heading and link colors", () => {
     dynamicCssService.injectToolbar(baseStyles);
     const css = getCss();
-    expect(css).toContain("h1, #resume-preview h2, #resume-preview h3 { color: #111111; }");
+    expect(css).toContain(
+      "h1, #resume-preview h2, #resume-preview h3 { color: #111111; }"
+    );
     expect(css).toContain("color: #222222;");
   });
 

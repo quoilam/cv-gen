@@ -9,25 +9,83 @@
           :key="`${i}-${color}`"
           class="size-5 rounded-full flex-center text-white cursor-pointer ring-when-focus"
           :style="{ backgroundColor: color }"
-          @click="api.setValue(color)"
+          @click="themeApi.setValue(color)"
         >
-          <span v-show="toHex(api.value) === color.toUpperCase()" i-line-md:confirm class="size-3" />
+          <span v-show="toHex(themeApi.value) === color.toUpperCase()" i-line-md:confirm class="size-3" />
         </button>
       </div>
       <!-- Color picker control -->
-      <div v-bind="api.getRootProps()" class="relative mt-2">
+      <div v-bind="themeApi.getRootProps()" class="relative mt-2">
         <div
-          v-bind="api.getControlProps()"
+          v-bind="themeApi.getControlProps()"
           class="w-full h-8 hstack gap-x-2 px-2 rounded border text-sm transition-colors"
-          :class="api.open ? 'border-primary' : 'border-border'"
+          :class="themeApi.open ? 'border-primary' : 'border-border'"
         >
-          <button v-bind="api.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
-            <div class="size-full" v-bind="api.getSwatchProps({ value: api.value })" />
+          <button v-bind="themeApi.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
+            <div class="size-full" v-bind="themeApi.getSwatchProps({ value: themeApi.value })" />
           </button>
           <input
-            v-bind="api.getChannelInputProps({ channel: 'hex' })"
+            v-bind="themeApi.getChannelInputProps({ channel: 'hex' })"
             class="bg-transparent outline-none flex-1 text-xs min-w-0"
           />
+        </div>
+      </div>
+    </div>
+
+    <!-- Heading & Link Colors -->
+    <div class="space-y-3">
+      <div>
+        <div class="panel-label">标题色</div>
+        <div v-bind="headingApi.getRootProps()" class="relative mt-2">
+          <div v-bind="headingApi.getControlProps()" class="w-full h-8 hstack gap-x-2 px-2 rounded border text-sm transition-colors border-border">
+            <button v-bind="headingApi.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
+              <div class="size-full" v-bind="headingApi.getSwatchProps({ value: headingApi.value })" />
+            </button>
+            <input v-bind="headingApi.getChannelInputProps({ channel: 'hex' })" class="bg-transparent outline-none flex-1 text-xs min-w-0" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="panel-label">链接色</div>
+        <div v-bind="linkApi.getRootProps()" class="relative mt-2">
+          <div v-bind="linkApi.getControlProps()" class="w-full h-8 hstack gap-x-2 px-2 rounded border text-sm transition-colors border-border">
+            <button v-bind="linkApi.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
+              <div class="size-full" v-bind="linkApi.getSwatchProps({ value: linkApi.value })" />
+            </button>
+            <input v-bind="linkApi.getChannelInputProps({ channel: 'hex' })" class="bg-transparent outline-none flex-1 text-xs min-w-0" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="panel-label">经历条默认色</div>
+        <div v-bind="badgeApi.getRootProps()" class="relative mt-2">
+          <div v-bind="badgeApi.getControlProps()" class="w-full h-8 hstack gap-x-2 px-2 rounded border text-sm transition-colors border-border">
+            <button v-bind="badgeApi.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
+              <div class="size-full" v-bind="badgeApi.getSwatchProps({ value: badgeApi.value })" />
+            </button>
+            <input v-bind="badgeApi.getChannelInputProps({ channel: 'hex' })" class="bg-transparent outline-none flex-1 text-xs min-w-0" />
+          </div>
+        </div>
+        <div class="mt-2">
+          <SharedUiSlider unit="%" :model-value="badgeOpacityValue" :min="0" :max="100" @update:model-value="onBadgeOpacityChange" />
+        </div>
+      </div>
+      <div>
+        <div class="panel-label">标题色条</div>
+        <label class="flex items-center gap-2 text-sm mt-2 cursor-pointer">
+          <input type="checkbox" :checked="styles.sectionBarEnabled" @change="onSectionBarToggle" />
+          显示标题色条
+        </label>
+        <div v-bind="sectionBarApi.getRootProps()" class="relative mt-2">
+          <div v-bind="sectionBarApi.getControlProps()" class="w-full h-8 hstack gap-x-2 px-2 rounded border text-sm transition-colors border-border">
+            <button v-bind="sectionBarApi.getTriggerProps()" class="size-3.5 rounded-full overflow-hidden shrink-0">
+              <div class="size-full" v-bind="sectionBarApi.getSwatchProps({ value: sectionBarApi.value })" />
+            </button>
+            <input v-bind="sectionBarApi.getChannelInputProps({ channel: 'hex' })" class="bg-transparent outline-none flex-1 text-xs min-w-0" />
+          </div>
+        </div>
+        <div class="mt-2">
+          <SharedUiSlider unit="%" :model-value="sectionBarOpacityValue" :min="0" :max="100" @update:model-value="onSectionBarOpacityChange" />
         </div>
       </div>
     </div>
@@ -95,18 +153,30 @@ const { execute } = useStyleHistory();
 const { COLOR, FONT } = useConstant();
 
 // Theme color
-const [state, send] = useMachine(
-  colorPicker.machine({
-    id: "theme-color-floating",
-    value: colorPicker.parse(styles.themeColor),
-    onValueChange: (details) => {
-      execute("themeColor", styles.themeColor, toHex(details.value));
-    },
-  })
-);
-const api = computed(() => colorPicker.connect(state.value, send, normalizeProps));
+type ColorKey = "themeColor" | "headingColor" | "linkColor" | "sectionBarColor" | "badgeColor";
+
 const toHex = (value: colorPicker.Color) =>
   "#" + value.toHexInt().toString(16).toUpperCase().padStart(6, "0");
+
+const createColorField = (key: ColorKey) => {
+  const [state, send] = useMachine(
+    colorPicker.machine({
+      id: `${key}-floating`,
+      value: colorPicker.parse(styles[key]),
+      onValueChange: (details) => {
+        execute(key, styles[key], toHex(details.value));
+      },
+    })
+  );
+  const api = computed(() => colorPicker.connect(state.value, send, normalizeProps));
+  return api;
+};
+
+const themeApi = createColorField("themeColor");
+const headingApi = createColorField("headingColor");
+const linkApi = createColorField("linkColor");
+const sectionBarApi = createColorField("sectionBarColor");
+const badgeApi = createColorField("badgeColor");
 
 // Fonts
 const makeItem = (
@@ -164,6 +234,27 @@ const onFontSizeChange = (value: number[] | undefined) => {
   if (!value) return;
   fontSizeValue.value = value;
   execute("fontSize", styles.fontSize, value.at(0)!);
+};
+
+// Section bar opacity + toggle
+const sectionBarOpacityValue = ref([styles.sectionBarOpacity * 100]);
+const onSectionBarOpacityChange = (value: number[] | undefined) => {
+  if (!value) return;
+  sectionBarOpacityValue.value = value;
+  execute("sectionBarOpacity", styles.sectionBarOpacity, value.at(0)! / 100);
+};
+
+const onSectionBarToggle = (e: Event) => {
+  const checked = (e.target as HTMLInputElement).checked;
+  execute("sectionBarEnabled", styles.sectionBarEnabled, checked);
+};
+
+// Badge opacity
+const badgeOpacityValue = ref([styles.badgeOpacity * 100]);
+const onBadgeOpacityChange = (value: number[] | undefined) => {
+  if (!value) return;
+  badgeOpacityValue.value = value;
+  execute("badgeOpacity", styles.badgeOpacity, value.at(0)! / 100);
 };
 </script>
 
