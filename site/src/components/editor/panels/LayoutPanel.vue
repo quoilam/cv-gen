@@ -76,6 +76,25 @@
 
     <div class="border-t border-border/50" />
 
+    <!-- First heading upward overlap -->
+    <div>
+      <div class="panel-label">
+        标题上移
+        <span class="text-xs text-muted-foreground ml-1">{{ styles.firstHeadingOverlap }}px</span>
+      </div>
+      <div class="mt-2">
+        <SharedUiSlider
+          unit="px"
+          :model-value="firstHeadingOverlapValue"
+          :min="0"
+          :max="60"
+          @update:model-value="(v) => { firstHeadingOverlapValue = v!; execute('firstHeadingOverlap', styles.firstHeadingOverlap, v!.at(0)!); }"
+        />
+      </div>
+    </div>
+
+    <div class="border-t border-border/50" />
+
     <!-- Smart One Page -->
     <div>
       <div class="panel-label">智能一页</div>
@@ -128,6 +147,7 @@ const marginVValue = ref([styles.marginV]);
 const marginHValue = ref([styles.marginH]);
 const lineHeightValue = ref([styles.lineHeight]);
 const paragraphSpaceValue = ref([styles.paragraphSpace]);
+const firstHeadingOverlapValue = ref([styles.firstHeadingOverlap]);
 
 // Smart one page
 const {

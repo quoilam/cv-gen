@@ -85,15 +85,15 @@ export class DynamicCssService {
     return `@media print { @page { size: ${styles.paper}; } }`;
   };
 
-  private headerLayout = (selector: string) => {
+  private headerLayout = (selector: string, styles: ResumeStyles) => {
     return (
       // Stacked top: header (name + subtitle + contact) on the first row, first
       // heading full-width below. Negative margin pulls the heading up so the
-      // header's bottom edge dips slightly below the heading's top.
+      // header's bottom edge dips below the heading's top.
       `${selector} .resume-top { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "identity identity" "heading heading"; row-gap: 0; }` +
       `${selector} .resume-header { grid-area: identity; }` +
       `${selector} .resume-subtitle { display: block; font-weight: bold; font-size: 1.2em; }` +
-      `${selector} .resume-top > h2 { grid-area: heading; margin-top: -4px; }` +
+      `${selector} .resume-top > h2 { grid-area: heading; margin-top: ${-styles.firstHeadingOverlap}px; }` +
       `${selector} .resume-header-contact { margin-top: 2px; }` +
       // Flexbox header when photo is present — center text vertically with photo
       `${selector} .resume-header--with-photo { display: flex; align-items: center; gap: 18px; }` +
@@ -121,7 +121,7 @@ export class DynamicCssService {
     const selector = this._selector(id);
 
     const css =
-      this.headerLayout(selector) +
+      this.headerLayout(selector, styles) +
       this.fontFamily(selector, styles) +
       this.fontSize(selector, styles) +
       this.headingColor(selector, styles) +

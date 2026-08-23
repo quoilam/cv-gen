@@ -8,6 +8,7 @@ const baseStyles: ResumeStyles = {
   contentWidth: 100,
   lineHeight: 1.3,
   paragraphSpace: 5,
+  firstHeadingOverlap: 4,
   themeColor: "#377bb5",
   headingColor: "#111111",
   linkColor: "#222222",
@@ -67,5 +68,11 @@ describe("DynamicCssService", () => {
     // contact moved inside the header, no longer a right-hand grid cell
     expect(css).toContain(".resume-header-contact { margin-top: 2px; }");
     expect(css).not.toContain("grid-area: contact");
+  });
+
+  it("pulls the first heading up by the configured overlap", () => {
+    dynamicCssService.injectToolbar({ ...baseStyles, firstHeadingOverlap: 10 });
+    const css = getCss();
+    expect(css).toContain(".resume-top > h2 { grid-area: heading; margin-top: -10px; }");
   });
 });

@@ -7,6 +7,7 @@ export type ResumeStyles = {
   contentWidth: number;
   lineHeight: number;
   paragraphSpace: number;
+  firstHeadingOverlap: number;
   themeColor: string;
   headingColor: string;
   linkColor: string;

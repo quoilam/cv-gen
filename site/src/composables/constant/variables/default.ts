@@ -7,6 +7,7 @@ export const DEFAULT_STYLES = {
   contentWidth: 100,
   lineHeight: 1.3,
   paragraphSpace: 5,
+  firstHeadingOverlap: 4,
   themeColor: "#377bb5",
   headingColor: "#377bb5",
   linkColor: "#377bb5",
