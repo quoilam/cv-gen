@@ -10,6 +10,10 @@ const baseURL = process.env.NODE_ENV === "production" ? "/cv-gen/" : "/";
 export default defineNuxtConfig({
   srcDir: "src/",
 
+  imports: {
+    dirs: ["composables/stores", "composables/constant"]
+  },
+
   modules: [
     "@vueuse/nuxt",
     [
