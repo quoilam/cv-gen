@@ -4,10 +4,7 @@
       <div class="group/card relative mx-auto">
         <nuxt-link
           :to="`/editor/${props.resume.id}`"
-          class="block rounded-lg overflow-hidden ring-when-focus
-                 border border-border/60 bg-card
-                 shadow-sm hover:shadow-lg hover:-translate-y-1
-                 transition-all duration-300"
+          class="block rounded-lg overflow-hidden ring-when-focus border border-border/60 bg-card shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           :style="{
             width: `${size.w}px`,
             height: `${size.h}px`
@@ -26,8 +23,7 @@
         </nuxt-link>
 
         <DashboardResumeOptions
-          class="opacity-0 group-hover/card:opacity-100 peer-focus-within:opacity-100 focus-within:opacity-100
-                 transition-opacity duration-200"
+          class="opacity-0 group-hover/card:opacity-100 peer-focus-within:opacity-100 focus-within:opacity-100 transition-opacity duration-200"
           pos="absolute right-2 top-2"
           :resume="resume"
           @update="emit('update')"

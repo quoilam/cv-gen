@@ -5,17 +5,20 @@ import { pwa } from "./configs/pwa";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const baseURL = process.env.NODE_ENV === 'production' ? '/cv-gen/' : '/';
+const baseURL = process.env.NODE_ENV === "production" ? "/cv-gen/" : "/";
 
 export default defineNuxtConfig({
   srcDir: "src/",
 
   modules: [
     "@vueuse/nuxt",
-    ["@unocss/nuxt", { content: { pipeline: { include: [/\/src\/.*\.(vue|ts|js|tsx|jsx)$/] } } }],
+    [
+      "@unocss/nuxt",
+      { content: { pipeline: { include: [/\/src\/.*\.(vue|ts|js|tsx|jsx)$/] } } }
+    ],
     "@pinia/nuxt",
     "@nuxtjs/color-mode",
-    ...(process.env.NODE_ENV === 'production' ? ["@vite-pwa/nuxt"] : []),
+    ...(process.env.NODE_ENV === "production" ? ["@vite-pwa/nuxt"] : []),
     "radix-vue/nuxt",
     "shadcn-nuxt"
   ],
@@ -58,7 +61,7 @@ export default defineNuxtConfig({
     }
   },
 
-  ...(process.env.NODE_ENV === 'production' ? { pwa } : {}),
+  ...(process.env.NODE_ENV === "production" ? { pwa } : {}),
   compatibilityDate: "2026-05-23",
 
   vite: {
@@ -67,10 +70,16 @@ export default defineNuxtConfig({
         "@cvgen/case-police": resolve(__dirname, "src/internal/case-police"),
         "@cvgen/dynamic-css": resolve(__dirname, "src/internal/dynamic-css"),
         "@cvgen/front-matter": resolve(__dirname, "src/internal/front-matter"),
-        "@cvgen/markdown-it-cross-ref": resolve(__dirname, "src/internal/markdown-it-cross-ref"),
+        "@cvgen/markdown-it-cross-ref": resolve(
+          __dirname,
+          "src/internal/markdown-it-cross-ref"
+        ),
         "@cvgen/markdown-it-badge": resolve(__dirname, "src/internal/markdown-it-badge"),
         "@cvgen/markdown-it-katex": resolve(__dirname, "src/internal/markdown-it-katex"),
-        "@cvgen/markdown-it-latex-cmds": resolve(__dirname, "src/internal/markdown-it-latex-cmds"),
+        "@cvgen/markdown-it-latex-cmds": resolve(
+          __dirname,
+          "src/internal/markdown-it-latex-cmds"
+        ),
         "@cvgen/utils": resolve(__dirname, "src/internal/utils"),
         "@cvgen/vue-shortcuts": resolve(__dirname, "src/internal/vue-shortcuts"),
         "@cvgen/vue-smart-pages": resolve(__dirname, "src/internal/vue-smart-pages"),

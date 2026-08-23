@@ -3,15 +3,15 @@ import { setActivePinia, createPinia } from "pinia";
 
 vi.mock("@cvgen/dynamic-css", () => ({
   dynamicCssService: {
-    injectToolbar: vi.fn(),
-  },
+    injectToolbar: vi.fn()
+  }
 }));
 
 const mockFontResolve = vi.fn();
 vi.mock("~/composables/icon", () => ({
   fontService: {
-    resolve: mockFontResolve,
-  },
+    resolve: mockFontResolve
+  }
 }));
 
 describe("useStyleStore", () => {

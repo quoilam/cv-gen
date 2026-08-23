@@ -1,8 +1,6 @@
 <template>
   <header
-    class="hstack justify-between pl-5 pr-2 sticky top-0 z-50
-           bg-background/80 backdrop-blur-md
-           border-b border-border/60"
+    class="hstack justify-between pl-5 pr-2 sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/60"
   >
     <nuxt-link class="hstack gap-x-2.5 group" to="/">
       <SharedLogo text-base />
@@ -12,9 +10,9 @@
     </nuxt-link>
 
     <div class="hstack gap-x-0.5">
-<slot name="tail" />
+      <slot name="tail" />
 
-<SharedToggleDark />
+      <SharedToggleDark />
 
       <UiButton
         as="a"
@@ -31,5 +29,4 @@
   </header>
 </template>
 
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>

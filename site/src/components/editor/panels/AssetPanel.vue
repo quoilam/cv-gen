@@ -9,7 +9,13 @@
         >
           <span i-lucide:upload class="size-3.5 shrink-0" />
           <span>{{ hasPhoto ? "更换照片" : "上传照片" }}</span>
-          <input ref="fileInput" type="file" accept="image/*" class="hidden" @change="onUpload" />
+          <input
+            ref="fileInput"
+            type="file"
+            accept="image/*"
+            class="hidden"
+            @change="onUpload"
+          />
         </label>
         <button
           v-if="hasPhoto"
@@ -29,12 +35,22 @@
         >
           <span i-lucide:upload class="size-3.5 shrink-0" />
           <span>上传图标</span>
-          <input ref="iconInput" type="file" accept="image/*,.ico" class="hidden" @change="onIconUpload" />
+          <input
+            ref="iconInput"
+            type="file"
+            accept="image/*,.ico"
+            class="hidden"
+            @change="onIconUpload"
+          />
         </label>
       </div>
       <div v-if="icons.length" class="flex flex-wrap gap-2 mt-2">
         <div v-for="icon in icons" :key="icon.id" class="group relative">
-          <img :src="icon.url" class="size-10 object-contain rounded border border-border cursor-pointer" @click="onIconClick(icon.url)" />
+          <img
+            :src="icon.url"
+            class="size-10 object-contain rounded border border-border cursor-pointer"
+            @click="onIconClick(icon.url)"
+          />
           <button
             class="absolute -top-1 -right-1 hidden group-hover:block size-4 rounded-full bg-destructive text-white text-[10px] leading-none"
             @click.stop="onIconRemove(icon.id)"
@@ -44,7 +60,8 @@
         </div>
       </div>
       <p class="text-xs text-muted-foreground mt-1">
-        点击图标复制引用，在 markdown 中用 <code>**![](data:...)公司名**</code> 或外链 <code>**![](https://...)公司名**</code>。
+        点击图标复制引用，在 markdown 中用 <code>**![](data:...)公司名**</code> 或外链
+        <code>**![](https://...)公司名**</code>。
       </p>
     </div>
   </div>
@@ -58,7 +75,13 @@ import { toast } from "vue-sonner";
 const { photo, init, uploadPhoto, removePhoto } = usePhoto();
 const hasPhoto = computed(() => photo.value !== null);
 
-const { icons, init: initIcons, upload: uploadIcon, remove: removeIcon, insert } = useBadgeIcon();
+const {
+  icons,
+  init: initIcons,
+  upload: uploadIcon,
+  remove: removeIcon,
+  insert
+} = useBadgeIcon();
 const iconInput = ref<HTMLInputElement>();
 
 onMounted(() => {

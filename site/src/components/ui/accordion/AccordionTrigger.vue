@@ -23,7 +23,9 @@ const delegatedProps = computed(() => {
       "
     >
       <slot />
-      <span class="chevron shrink-0 text-muted-foreground transition-transform duration-200">
+      <span
+        class="chevron shrink-0 text-muted-foreground transition-transform duration-200"
+      >
         <span class="i-lucide:chevron-down size-4" />
       </span>
     </AccordionTrigger>

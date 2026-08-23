@@ -16,10 +16,6 @@ test.describe("Dashboard", () => {
     await expect(brandLink).toBeVisible();
   });
 
-  test("navigates to settings page", async ({ page }) => {
-    // Settings page navigation - placeholder
-  });
-
   test("dashboard page is functional after load", async ({ page }) => {
     await expect(page.locator("header")).toBeVisible({ timeout: 10000 });
     await expect(page.locator(".workspace")).toBeVisible();

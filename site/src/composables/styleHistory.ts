@@ -37,7 +37,13 @@ export const useStyleHistory = () => {
     redoStack.length = 0;
   };
 
-  const executeBatch = async (changes: { key: keyof ResumeStyles; oldValue: ResumeStyles[keyof ResumeStyles]; newValue: ResumeStyles[keyof ResumeStyles] }[]) => {
+  const executeBatch = async (
+    changes: {
+      key: keyof ResumeStyles;
+      oldValue: ResumeStyles[keyof ResumeStyles];
+      newValue: ResumeStyles[keyof ResumeStyles];
+    }[]
+  ) => {
     const cmds = changes.map(
       (c) => new StyleChangeCommand(c.key, c.oldValue, c.newValue)
     );

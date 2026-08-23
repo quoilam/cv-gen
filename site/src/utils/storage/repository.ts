@@ -56,7 +56,6 @@ export class ResumeRepository {
     if (error) return { data: null, error };
     if (!data) return { data: null, error: `Resume ${id} not found` };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id: _id, updated_at: _ua, created_at: _ca, ...rest } = data;
     const { data: dup, error: createError } = await this._db.create({
       ...rest,

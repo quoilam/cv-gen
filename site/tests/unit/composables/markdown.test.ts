@@ -6,8 +6,8 @@ vi.mock("localforage", () => {
     setItem: vi.fn(() => Promise.resolve()),
     createInstance: vi.fn(() => ({
       getItem: vi.fn(() => Promise.resolve(null)),
-      setItem: vi.fn(),
-    })),
+      setItem: vi.fn()
+    }))
   };
   return { ...instance, default: instance, __esModule: true };
 });
@@ -24,7 +24,7 @@ name: Test User
 ## Skills
 
 - Cooking
-- Baking`,
+- Baking`
     );
     expect(result).toContain("Test User");
     expect(result).toContain("<h2>Skills</h2>");
@@ -37,7 +37,7 @@ name: Test User
 name: Math Test
 ---
 
-$E = mc^2$`,
+$E = mc^2$`
     );
     expect(result).toContain("katex");
     expect(result).toContain("E = mc^2");
@@ -50,7 +50,7 @@ name: Deflist Test
 ---
 
 Term
-: Definition text here`,
+: Definition text here`
     );
     expect(result).toContain("<dt>Term</dt>");
     expect(result).toContain("<dd>Definition text here</dd>");
@@ -65,7 +65,7 @@ name: Ref Test
 [~P1]: **Paper Title**
 : Citation detail
 
-See [~P1] for more.`,
+See [~P1] for more.`
     );
     expect(result).toContain("Paper Title");
     expect(result).toContain("cross-ref");
@@ -77,7 +77,7 @@ See [~P1] for more.`,
 name: Link Test
 ---
 
-[External](https://example.com)`,
+[External](https://example.com)`
     );
     expect(result).toContain('target="_blank"');
     expect(result).toContain('rel="noopener"');
@@ -88,7 +88,7 @@ name: Link Test
     const result = await markdownService.renderResume(
       `---
 name: Empty
----`,
+---`
     );
     expect(result).toContain("Empty");
     expect(result).toContain("resume-header");
@@ -103,7 +103,7 @@ header:
     link: mailto:john@email.com
 ---
 
-Content here.`,
+Content here.`
     );
     expect(result).toContain("John Doe");
     expect(result).toContain("resume-header");
@@ -133,7 +133,7 @@ name: Test User
 Content`,
       (err) => {
         result = err;
-      },
+      }
     );
     expect(result).toBeNull();
   });
@@ -145,6 +145,9 @@ name: Good Name
 
 Content`);
 
+    // The parser logs the expected YAML error; silence it to keep test output clean.
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
     let result: unknown = "unset";
     const html = await markdownService.renderResume(
       `---
@@ -154,8 +157,9 @@ name: "Bad
 Content`,
       (err) => {
         result = err;
-      },
+      }
     );
+    errorSpy.mockRestore();
     expect(result).not.toBeNull();
     // errorBehavior "last": falls back to the previously parsed front matter
     expect(html).toContain("Good Name");
@@ -181,7 +185,7 @@ name: Badge Test
 
 **#377bb5 Microwavesoft**
   ~ 2021`);
-    expect(result).toContain('--badge-color: #377bb5');
+    expect(result).toContain("--badge-color: #377bb5");
     expect(result).toContain("Microwavesoft");
     expect(result).not.toContain("#377bb5 Microwavesoft");
   });

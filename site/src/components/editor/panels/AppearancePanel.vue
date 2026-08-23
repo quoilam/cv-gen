@@ -67,7 +67,7 @@ const makeItem = (
   label: font.name,
   value: font.fontFamily || font.name,
   onSelect: () =>
-    execute(key, styles[key], { name: font.name, fontFamily: font.fontFamily }),
+    execute(key, styles[key], { name: font.name, fontFamily: font.fontFamily })
 });
 
 const localEn = FONT.LOCAL.EN.map((f) => makeItem(f, "fontEN"));
@@ -89,14 +89,14 @@ onMounted(async () => {
       onSelect: () =>
         execute("fontEN", styles.fontEN, {
           name: f.name,
-          fontFamily: f.fontFamily,
-        }),
+          fontFamily: f.fontFamily
+        })
     };
     if (isCJKFont(f.name, f.fontFamily)) {
       item.onSelect = () =>
         execute("fontCJK", styles.fontCJK, {
           name: f.name,
-          fontFamily: f.fontFamily,
+          fontFamily: f.fontFamily
         });
       cjk.push(item);
     } else {
