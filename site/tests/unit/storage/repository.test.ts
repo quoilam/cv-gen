@@ -2,21 +2,21 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { setActivePinia, createPinia } from "pinia";
 
 const { mockStorage } = vi.hoisted(() => {
-  const mockStorage = new Map<string, any>();
+  const mockStorage = new Map<string, unknown>();
   return { mockStorage };
 });
 
 vi.mock("localforage", () => {
   const instance = {
     getItem: vi.fn((key: string) => Promise.resolve(mockStorage.get(key) ?? null)),
-    setItem: vi.fn((key: string, value: any) => {
+    setItem: vi.fn((key: string, value: unknown) => {
       mockStorage.set(key, value);
       return Promise.resolve(value);
     }),
     createInstance: vi.fn(() => ({
       getItem: vi.fn(() => Promise.resolve(null)),
-      setItem: vi.fn(),
-    })),
+      setItem: vi.fn()
+    }))
   };
   return { ...instance, default: instance, __esModule: true };
 });
@@ -25,15 +25,16 @@ vi.mock("@cvgen/utils", () => {
   let tick = 0;
   return {
     isClient: true,
-    copy: (obj: any) => JSON.parse(JSON.stringify(obj)),
+    copy: (obj: unknown) => JSON.parse(JSON.stringify(obj)),
     now: () => {
       tick++;
       return 1717000000000 + tick;
     },
     downloadFile: vi.fn(),
-    isObject: (v: any) => typeof v === "object" && v !== null,
-    isInteger: (v: any) => Number.isInteger(v) || /^\d+$/.test(String(v)),
-    arrayify: (v: any) => (Array.isArray(v) ? v : [v]),
+    isObject: (v: unknown) => typeof v === "object" && v !== null,
+    isInteger: (v: unknown) =>
+      typeof v === "number" ? Number.isInteger(v) : /^\d+$/.test(String(v)),
+    arrayify: (v: unknown) => (Array.isArray(v) ? v : [v])
   };
 });
 
@@ -78,7 +79,7 @@ describe("ResumeRepository", () => {
     const { data: created } = await repo.createResume();
     const { data: updated } = await repo.updateResume({
       id: created!.id,
-      name: "Updated Name",
+      name: "Updated Name"
     });
     expect(updated!.name).toBe("Updated Name");
     const { data: reRead } = await repo.getResume(created!.id);
@@ -109,7 +110,7 @@ describe("ResumeRepository", () => {
     await repo.updateResume({
       id,
       name: "My CV",
-      markdown: "# Custom MD",
+      markdown: "# Custom MD"
     });
 
     const { data: loaded } = await repo.getResume(id);

@@ -100,9 +100,6 @@ export const useResume = () => {
     switchToResume,
     duplicateResume,
     exportToJSON,
-    importFromJson,
-    setSyncProvider: (provider: import("~/utils/storage/repository").SyncProvider) => {
-      _getRepo().setRemote(provider);
-    },
+    importFromJson
   };
 };

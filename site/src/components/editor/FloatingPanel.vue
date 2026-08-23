@@ -108,7 +108,9 @@ onClickOutside(panelRef, () => {
   background: transparent;
   color: hsl(var(--muted-foreground));
   cursor: pointer;
-  transition: background 100ms, color 100ms;
+  transition:
+    background 100ms,
+    color 100ms;
 }
 
 .tab-btn:hover {

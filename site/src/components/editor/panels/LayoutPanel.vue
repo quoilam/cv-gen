@@ -11,9 +11,16 @@
             :model-value="marginVValue"
             :min="0"
             :max="30"
-            @update:model-value="(v) => { marginVValue = v!; execute('marginV', styles.marginV, v!.at(0)!); }"
+            @update:model-value="
+              (v) => {
+                marginVValue = v!;
+                execute('marginV', styles.marginV, v!.at(0)!);
+              }
+            "
           />
-          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginV }}px</span>
+          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right"
+            >{{ styles.marginV }}px</span
+          >
         </div>
         <div class="flex items-center gap-x-2">
           <span class="text-xs text-muted-foreground w-8 shrink-0">左右</span>
@@ -22,9 +29,16 @@
             :model-value="marginHValue"
             :min="0"
             :max="50"
-            @update:model-value="(v) => { marginHValue = v!; execute('marginH', styles.marginH, v!.at(0)!); }"
+            @update:model-value="
+              (v) => {
+                marginHValue = v!;
+                execute('marginH', styles.marginH, v!.at(0)!);
+              }
+            "
           />
-          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.marginH }}px</span>
+          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right"
+            >{{ styles.marginH }}px</span
+          >
         </div>
       </div>
     </div>
@@ -42,9 +56,16 @@
             :min="1"
             :max="1.5"
             :step="0.01"
-            @update:model-value="(v) => { lineHeightValue = v!; execute('lineHeight', styles.lineHeight, v!.at(0)!); }"
+            @update:model-value="
+              (v) => {
+                lineHeightValue = v!;
+                execute('lineHeight', styles.lineHeight, v!.at(0)!);
+              }
+            "
           />
-          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.lineHeight }}</span>
+          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{
+            styles.lineHeight
+          }}</span>
         </div>
         <div class="flex items-center gap-x-2">
           <span class="text-xs text-muted-foreground w-8 shrink-0">段距</span>
@@ -53,9 +74,16 @@
             :model-value="paragraphSpaceValue"
             :min="-5"
             :max="10"
-            @update:model-value="(v) => { paragraphSpaceValue = v!; execute('paragraphSpace', styles.paragraphSpace, v!.at(0)!); }"
+            @update:model-value="
+              (v) => {
+                paragraphSpaceValue = v!;
+                execute('paragraphSpace', styles.paragraphSpace, v!.at(0)!);
+              }
+            "
           />
-          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right">{{ styles.paragraphSpace }}px</span>
+          <span class="text-xs text-muted-foreground w-10 shrink-0 text-right"
+            >{{ styles.paragraphSpace }}px</span
+          >
         </div>
       </div>
     </div>
@@ -66,7 +94,9 @@
     <div>
       <div class="panel-label">
         标题上移
-        <span class="text-xs text-muted-foreground ml-1">{{ styles.firstHeadingOverlap }}px</span>
+        <span class="text-xs text-muted-foreground ml-1"
+          >{{ styles.firstHeadingOverlap }}px</span
+        >
       </div>
       <div class="mt-2">
         <SharedUiSlider
@@ -74,7 +104,12 @@
           :model-value="firstHeadingOverlapValue"
           :min="0"
           :max="60"
-          @update:model-value="(v) => { firstHeadingOverlapValue = v!; execute('firstHeadingOverlap', styles.firstHeadingOverlap, v!.at(0)!); }"
+          @update:model-value="
+            (v) => {
+              firstHeadingOverlapValue = v!;
+              execute('firstHeadingOverlap', styles.firstHeadingOverlap, v!.at(0)!);
+            }
+          "
         />
       </div>
     </div>
@@ -127,13 +162,8 @@ const paragraphSpaceValue = ref([styles.paragraphSpace]);
 const firstHeadingOverlapValue = ref([styles.firstHeadingOverlap]);
 
 // Smart one page
-const {
-  fillRatio,
-  status,
-  hasRecommendation,
-  fitToOnePage,
-  resetToRecommended,
-} = useSmartOnePage("preview");
+const { fillRatio, status, hasRecommendation, fitToOnePage, resetToRecommended } =
+  useSmartOnePage("preview");
 
 const fillPercent = computed(() => Math.round(Math.min(fillRatio.value, 1) * 100));
 const overflowPercent = computed(() => Math.round((fillRatio.value - 1) * 100));

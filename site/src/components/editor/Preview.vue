@@ -4,11 +4,7 @@
     border="4 secondary"
   >
     <VueZoom ref="zoom" :scale="scale">
-      <SharedResumeRender
-        id="preview"
-        :markdown="data.markdown"
-        :styles="styles"
-      />
+      <SharedResumeRender id="preview" :markdown="data.markdown" :styles="styles" />
     </VueZoom>
 
     <div

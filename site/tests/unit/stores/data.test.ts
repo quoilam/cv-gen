@@ -3,8 +3,8 @@ import { setActivePinia, createPinia } from "pinia";
 
 vi.mock("@cvgen/dynamic-css", () => ({
   dynamicCssService: {
-    injectToolbar: vi.fn(),
-  },
+    injectToolbar: vi.fn()
+  }
 }));
 
 vi.mock("~/composables/constant", () => ({
@@ -13,10 +13,10 @@ vi.mock("~/composables/constant", () => ({
       RESUME_NAME: "New Resume",
       STYLES: {},
       MD_CONTENT: "",
-      CSS_CONTENT: "",
+      CSS_CONTENT: ""
     },
-    VERSION: { CURRENT: "v1" },
-  }),
+    VERSION: { CURRENT: "v1" }
+  })
 }));
 
 describe("useDataStore", () => {

@@ -74,8 +74,18 @@
             <UiSeparator flex-1 bg="primary/40" />
           </div>
           <div class="flex gap-x-2">
-            <UiInput v-model="pastedURL" placeholder="粘贴文件 URL" @keyup.enter="uploadFileFromURL" />
-            <UiButton type="submit" size="icon" class="shrink-0" @click="uploadFileFromURL" :disabled="pastedURL === ''">
+            <UiInput
+              v-model="pastedURL"
+              placeholder="粘贴文件 URL"
+              @keyup.enter="uploadFileFromURL"
+            />
+            <UiButton
+              type="submit"
+              size="icon"
+              class="shrink-0"
+              @click="uploadFileFromURL"
+              :disabled="pastedURL === ''"
+            >
               <span i-line-md:confirm class="size-4" />
             </UiButton>
           </div>
@@ -106,7 +116,7 @@ const handleSave = async () => {
     id: data.resumeId,
     name: data.resumeName,
     markdown: data.markdown,
-    styles: toRaw(styles),
+    styles: toRaw(styles)
   });
 };
 
@@ -125,7 +135,7 @@ const ctx = computed<ExportContext>(() => ({
   name: saveName.value,
   html: markdownService.renderResume(data.markdown, (err) => {
     if (err) toastFrontMatter(err);
-  }),
+  })
 }));
 const doExport = (format: string) => {
   exportService.export(format, ctx.value);
@@ -148,7 +158,7 @@ const [state, send] = useMachine(
       reader.readAsText(files[0]);
       localFile.value = files[0].name;
       pastedURL.value = "";
-    },
+    }
   })
 );
 const importApi = computed(() => fileUpload.connect(state.value, send, normalizeProps));

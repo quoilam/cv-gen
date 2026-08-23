@@ -37,16 +37,18 @@ export const setResume = async (data: DbResume) => {
   dynamicCssService.injectBackbone();
 };
 
-const _checkType = (value: any, required: string | string[]) => {
+const _checkType = (value: unknown, required: string | string[]) => {
   return arrayify(required).includes(typeof value);
 };
 
-const _getNestedValue = (object: any, path: string) => {
-  return path.split(".").reduce((o, p) => (o ? o[p] : undefined), object);
+const _getNestedValue = (object: unknown, path: string): unknown => {
+  return path.split(".").reduce<unknown>((o, p) => {
+    return o && typeof o === "object" ? (o as Record<string, unknown>)[p] : undefined;
+  }, object);
 };
 
 const _checkObject = (
-  obj: any,
+  obj: unknown,
   fields: Array<{ fields: string | string[]; types: string | string[] }>
 ): boolean => {
   return fields.every(({ fields, types }) =>
@@ -55,12 +57,15 @@ const _checkObject = (
 };
 
 export class IsValid {
-  static font = (font: any) =>
-    isObject(font) &&
-    typeof font.name === "string" &&
-    ["string", "undefined"].includes(typeof font.fontFamily);
+  static font = (font: unknown) => {
+    if (!isObject(font)) return false;
+    const f = font as Record<string, unknown>;
+    return (
+      typeof f.name === "string" && ["string", "undefined"].includes(typeof f.fontFamily)
+    );
+  };
 
-  static importedData = (data: any, version: any) => {
+  static importedData = (data: unknown, version: unknown) => {
     const { VERSION } = useConstant();
 
     return (
@@ -69,7 +74,7 @@ export class IsValid {
       VERSION.isVersionValid(version) &&
       // Check data
       isObject(data) &&
-      Object.entries(data).every(
+      Object.entries(data as Record<string, unknown>).every(
         ([id, item]) =>
           isInteger(id, { allowString: true }) &&
           _checkObject(item, VERSION.REQUIRED_DATA_TYPES[version as ValidVersion])
@@ -78,17 +83,19 @@ export class IsValid {
   };
 
   static importedJson(
-    json: any
+    json: unknown
   ): false | { version: ValidVersion; data: ValidStorageJsonData } {
     const { VERSION } = useConstant();
 
     if (!isObject(json)) return false;
 
-    if (this.importedData(json.data, json.version)) {
-      return json;
-    } else if (this.importedData(json, VERSION.EMPTY_FALLBACK)) {
+    const obj = json as Record<string, unknown>;
+
+    if (this.importedData(obj.data, obj.version)) {
+      return obj as { version: ValidVersion; data: ValidStorageJsonData };
+    } else if (this.importedData(obj, VERSION.EMPTY_FALLBACK)) {
       return {
-        data: json,
+        data: obj as ValidStorageJsonData,
         version: VERSION.EMPTY_FALLBACK
       };
     }

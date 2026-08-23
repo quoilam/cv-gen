@@ -6,7 +6,8 @@
 
     <div>
       <div class="panel-label">简历头信息（Front-matter）</div>
-      <pre class="code-block">---
+      <pre class="code-block">
+---
 name: 姓名
 subtitle: 求职意向
 photo: left
@@ -17,7 +18,8 @@ header:
   - text: 主页
     link: https://example.com
     newLine: true
----</pre>
+---</pre
+      >
     </div>
 
     <div>
@@ -45,34 +47,47 @@ header:
 
     <div>
       <div class="panel-label">定义列表</div>
-      <pre class="code-block">**职位名称**
+      <pre class="code-block">
+**职位名称**
   ~ 公司名称
-  ~ 2020 - 2024</pre>
+  ~ 2020 - 2024</pre
+      >
     </div>
 
     <div>
       <div class="panel-label">彩色 banner（经历条）</div>
-      <pre class="code-block">**公司名称**
+      <pre class="code-block">
+**公司名称**
 **#377bb5 公司名称**
-**![](图标地址)公司名称**</pre>
-      <p class="desc">加粗的职位/项目名自动变成 banner；可用 <code>#hex</code> 指定颜色，用 <code>![](图标)</code> 加图标。</p>
+**![](图标地址)公司名称**</pre
+      >
+      <p class="desc">
+        加粗的职位/项目名自动变成 banner；可用 <code>#hex</code> 指定颜色，用
+        <code>![](图标)</code> 加图标。
+      </p>
     </div>
 
     <div>
       <div class="panel-label">交叉引用</div>
-      <pre class="code-block">[~P1]: 论文标题
-正文引用 [~P1]</pre>
+      <pre class="code-block">
+[~P1]: 论文标题
+正文引用 [~P1]</pre
+      >
     </div>
 
     <div>
       <div class="panel-label">公式（KaTeX）</div>
-      <pre class="code-block">行内：$E = mc^2$
-块级：$$E = mc^2$$</pre>
+      <pre class="code-block">
+行内：$E = mc^2$
+块级：$$E = mc^2$$</pre
+      >
     </div>
 
     <div>
       <div class="panel-label">图标（iconify）</div>
-      <pre class="code-block">&lt;span class="iconify" data-icon="tabler:phone"&gt;&lt;/span&gt;</pre>
+      <pre class="code-block">
+&lt;span class="iconify" data-icon="tabler:phone"&gt;&lt;/span&gt;</pre
+      >
     </div>
 
     <div>
@@ -82,8 +97,7 @@ header:
   </div>
 </template>
 
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 .panel-label {

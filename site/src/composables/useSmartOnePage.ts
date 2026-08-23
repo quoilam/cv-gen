@@ -9,26 +9,21 @@ const PARAM_CONFIG: Record<
   ParamName,
   { min: number; max: number; default: number; weight: number; step: number }
 > = {
-  marginV: { min: 0, max: 30, default: 20, weight: 0.30, step: 1 },
+  marginV: { min: 0, max: 30, default: 20, weight: 0.3, step: 1 },
   paragraphSpace: { min: -5, max: 10, default: 5, weight: 0.15, step: 1 },
   lineHeight: { min: 1, max: 1.5, default: 1.3, weight: 0.25, step: 0.01 },
-  fontSize: { min: 11, max: 20, default: 15, weight: 0.30, step: 0.1 },
+  fontSize: { min: 11, max: 20, default: 15, weight: 0.3, step: 0.1 }
 };
 
 // Priority order: least visually intrusive first
-const PARAMS: ParamName[] = [
-  "paragraphSpace",
-  "marginV",
-  "lineHeight",
-  "fontSize",
-];
+const PARAMS: ParamName[] = ["paragraphSpace", "marginV", "lineHeight", "fontSize"];
 
 // Approximate ratio change per unit of each param (will be adapted by feedback)
 const INITIAL_SENSITIVITY: Record<ParamName, number> = {
   marginV: 0.003,
   paragraphSpace: 0.012,
   lineHeight: 0.5,
-  fontSize: 0.06,
+  fontSize: 0.06
 };
 
 const THRESHOLD = 0.015; // ±1.5% tolerance
@@ -50,9 +45,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
   const _sensitivity = { ...INITIAL_SENSITIVITY };
 
   function measureFillRatio(): { pages: number; ratio: number } {
-    const pages = document.querySelectorAll(
-      `#resume-${resumeId} [data-part="page"]`,
-    );
+    const pages = document.querySelectorAll(`#resume-${resumeId} [data-part="page"]`);
     if (pages.length === 0) return { pages: 1, ratio: 1 };
 
     let totalHeight = 0;
@@ -82,7 +75,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
     return {
       key: key as keyof ResumeStyles,
       oldValue: oldValue as ResumeStyles[keyof ResumeStyles],
-      newValue: newValue as ResumeStyles[keyof ResumeStyles],
+      newValue: newValue as ResumeStyles[keyof ResumeStyles]
     };
   }
 
@@ -94,7 +87,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
   function calcAdjustment(
     current: ResumeStyles,
     deviation: number,
-    direction: Direction,
+    direction: Direction
   ): Partial<ResumeStyles> {
     const result: Partial<ResumeStyles> = {};
     const sign = direction === "compress" ? -1 : 1;
@@ -124,7 +117,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
     for (const { param, headroom } of entries) {
       const val = current[param] as number;
       const cfg = PARAM_CONFIG[param];
-      const share = deviation * (cfg.weight * headroom / totalScore);
+      const share = deviation * ((cfg.weight * headroom) / totalScore);
       const sens = _sensitivity[param];
       let delta = sens > 0 ? share / sens : 0;
 
@@ -152,7 +145,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
     prevRatio: number,
     newRatio: number,
     applied: Partial<ResumeStyles>,
-    prevStyles: ResumeStyles,
+    prevStyles: ResumeStyles
   ): void {
     const actualChange = Math.abs(prevRatio - newRatio);
     if (actualChange < 0.001) return;
@@ -184,7 +177,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
   function allAtBounds(
     applied: Partial<ResumeStyles>,
     baseline: ResumeStyles,
-    direction: Direction,
+    direction: Direction
   ): boolean {
     return PARAMS.every((p) => {
       const val = (applied[p] ?? baseline[p]) as number;
@@ -207,7 +200,11 @@ export const useSmartOnePage = (resumeId: string | number) => {
 
       // Ensure preview is rendered — if no pages found, wait and retry
       let initial = await measureCurrent();
-      for (let retry = 0; retry < 3 && initial.pages === 1 && Math.abs(initial.ratio - 1.0) <= THRESHOLD; retry++) {
+      for (
+        let retry = 0;
+        retry < 3 && initial.pages === 1 && Math.abs(initial.ratio - 1.0) <= THRESHOLD;
+        retry++
+      ) {
         await new Promise((r) => setTimeout(r, 500));
         initial = await measureCurrent();
       }
@@ -220,110 +217,107 @@ export const useSmartOnePage = (resumeId: string | number) => {
         return;
       }
 
-    const direction: Direction =
-      initial.ratio > 1.0 + THRESHOLD ? "compress" : "expand";
-    let applied: Partial<ResumeStyles> = {};
-    let prevRatio = initial.ratio;
-    let overshootCount = 0;
+      const direction: Direction =
+        initial.ratio > 1.0 + THRESHOLD ? "compress" : "expand";
+      const applied: Partial<ResumeStyles> = {};
+      let prevRatio = initial.ratio;
+      let overshootCount = 0;
 
-    for (let round = 0; round < MAX_ROUNDS; round++) {
-      const current = await measureCurrent();
-      const deviation = Math.abs(current.ratio - 1.0);
+      for (let round = 0; round < MAX_ROUNDS; round++) {
+        const current = await measureCurrent();
+        const deviation = Math.abs(current.ratio - 1.0);
 
-      if (deviation <= THRESHOLD) {
-        status.value = "success";
-        break;
-      }
+        if (deviation <= THRESHOLD) {
+          status.value = "success";
+          break;
+        }
 
-      const adj = calcAdjustment(store.styles, deviation, direction);
-      if (Object.keys(adj).length === 0) {
-        // No more parameters to adjust
-        status.value = "warn";
-        break;
-      }
-
-      // Check if we're going the wrong way (overshoot)
-      const goingRight =
-        direction === "compress"
-          ? current.ratio > 1.0
-          : current.ratio < 1.0;
-
-      if (!goingRight) {
-        overshootCount++;
-        if (overshootCount > 3) {
+        const adj = calcAdjustment(store.styles, deviation, direction);
+        if (Object.keys(adj).length === 0) {
+          // No more parameters to adjust
           status.value = "warn";
           break;
         }
-        // Reduce aggressiveness and try smaller adjustments
-        for (const param of PARAMS) {
-          _sensitivity[param] *= 1.5;
+
+        // Check if we're going the wrong way (overshoot)
+        const goingRight =
+          direction === "compress" ? current.ratio > 1.0 : current.ratio < 1.0;
+
+        if (!goingRight) {
+          overshootCount++;
+          if (overshootCount > 3) {
+            status.value = "warn";
+            break;
+          }
+          // Reduce aggressiveness and try smaller adjustments
+          for (const param of PARAMS) {
+            _sensitivity[param] *= 1.5;
+          }
+          continue;
         }
-        continue;
-      }
 
-      const changes = Object.entries(adj).map(([key, value]) =>
-        makeChange(key, (store.styles as Record<string, unknown>)[key], value),
-      );
+        const changes = Object.entries(adj).map(([key, value]) =>
+          makeChange(key, (store.styles as Record<string, unknown>)[key], value)
+        );
 
-      // Dampen when close to target to avoid oscillation
-      if (deviation < 0.05) {
-        for (const c of changes) {
-          const oldVal = c.oldValue as number;
-          const newVal = c.newValue as number;
-          (c as Record<string, unknown>).newValue =
-            Math.round((oldVal + (newVal - oldVal) * DAMPING) * 100) / 100;
+        // Dampen when close to target to avoid oscillation
+        if (deviation < 0.05) {
+          for (const c of changes) {
+            const oldVal = c.oldValue as number;
+            const newVal = c.newValue as number;
+            (c as Record<string, unknown>).newValue =
+              Math.round((oldVal + (newVal - oldVal) * DAMPING) * 100) / 100;
+          }
+        }
+
+        // Capture pre-adjustment state for sensitivity calibration
+        const beforeStyles = { ...store.styles };
+        await executeBatch(changes);
+        Object.assign(applied, adj);
+
+        // Measure and update sensitivity using actual delta
+        const measured = await measureCurrent();
+        updateSensitivity(prevRatio, measured.ratio, adj, beforeStyles);
+        prevRatio = measured.ratio;
+
+        if (Math.abs(measured.ratio - 1.0) <= THRESHOLD) {
+          status.value = "success";
+          break;
+        }
+
+        if (allAtBounds(applied, baseline, direction)) {
+          status.value = "warn";
+          break;
         }
       }
 
-      // Capture pre-adjustment state for sensitivity calibration
-      const beforeStyles = { ...store.styles };
-      await executeBatch(changes);
-      Object.assign(applied, adj);
+      const final = await measureCurrent();
 
-      // Measure and update sensitivity using actual delta
-      const measured = await measureCurrent();
-      updateSensitivity(prevRatio, measured.ratio, adj, beforeStyles);
-      prevRatio = measured.ratio;
-
-      if (Math.abs(measured.ratio - 1.0) <= THRESHOLD) {
-        status.value = "success";
-        break;
+      // Save the applied changes as recommended (for undo/reset purposes)
+      const recommended: Partial<ResumeStyles> = {};
+      for (const param of PARAMS) {
+        const val = store.styles[param];
+        if (val !== baseline[param]) {
+          (recommended as Record<string, number>)[param] = val as number;
+        }
       }
+      store.setRecommended(recommended);
+      hasRecommendation.value = true;
 
-      if (allAtBounds(applied, baseline, direction)) {
-        status.value = "warn";
-        break;
+      if (status.value === "fitting") {
+        status.value = Math.abs(final.ratio - 1.0) <= THRESHOLD ? "success" : "warn";
       }
+    } catch (err) {
+      console.error("[SmartOnePage] fitToOnePage error:", err);
+      status.value = "idle";
     }
-
-    const final = await measureCurrent();
-
-    // Save the applied changes as recommended (for undo/reset purposes)
-    const recommended: Partial<ResumeStyles> = {};
-    for (const param of PARAMS) {
-      const val = store.styles[param];
-      if (val !== baseline[param]) {
-        (recommended as Record<string, number>)[param] = val as number;
-      }
-    }
-    store.setRecommended(recommended);
-    hasRecommendation.value = true;
-
-    if (status.value === "fitting") {
-      status.value =
-        Math.abs(final.ratio - 1.0) <= THRESHOLD ? "success" : "warn";
-    }
-  } catch (err) {
-    console.error("[SmartOnePage] fitToOnePage error:", err);
-    status.value = "idle";
-  }
   }
 
   function resetToRecommended() {
     if (!hasRecommendation.value) return;
     const rec = { ...store.recommended };
     const changes = Object.entries(rec).map(([key, value]) =>
-      makeChange(key, (store.styles as Record<string, unknown>)[key], value),
+      makeChange(key, (store.styles as Record<string, unknown>)[key], value)
     );
     executeBatch(changes);
   }
@@ -336,10 +330,7 @@ export const useSmartOnePage = (resumeId: string | number) => {
       hasRecommendation.value
     ) {
       status.value = "success";
-    } else if (
-      Math.abs(result.ratio - 1.0) > THRESHOLD &&
-      !hasRecommendation.value
-    ) {
+    } else if (Math.abs(result.ratio - 1.0) > THRESHOLD && !hasRecommendation.value) {
       status.value = "idle";
     }
   }
@@ -352,6 +343,6 @@ export const useSmartOnePage = (resumeId: string | number) => {
     fitToOnePage,
     resetToRecommended,
     refresh,
-    BOUNDS: PARAM_CONFIG,
+    BOUNDS: PARAM_CONFIG
   };
 };

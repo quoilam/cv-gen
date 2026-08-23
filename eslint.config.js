@@ -1,3 +1,10 @@
-import { renovamen } from "@renovamen/eslint-config";
+import { renovamen, tseslint } from "@renovamen/eslint-config";
 
-export default renovamen();
+export default renovamen({
+  plugins: {
+    "@typescript-eslint": tseslint.plugin
+  },
+  rules: {
+    "@typescript-eslint/no-unused-vars": ["error", { ignoreRestSiblings: true }]
+  }
+});

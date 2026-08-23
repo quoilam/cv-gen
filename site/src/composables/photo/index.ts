@@ -47,7 +47,7 @@ function compressPhoto(file: File): Promise<string> {
 export const usePhoto = () => {
   const init = async () => {
     try {
-      photo.value = await _getPhotoStore().getItem<string>(PHOTO_KEY) ?? null;
+      photo.value = (await _getPhotoStore().getItem<string>(PHOTO_KEY)) ?? null;
     } catch (error) {
       console.error("Failed to load photo:", error);
       photo.value = null;

@@ -9,7 +9,7 @@ export type IsAny<T> = IfAny<T, true, false>;
 
 export type Callback<T> =
   IsAny<T> extends true
-    ? (param: any) => void
+    ? (param: any) => void // eslint-disable-line @typescript-eslint/no-explicit-any -- any is the type being detected
     : [T] extends [void]
       ? () => void
       : (param: T) => void;

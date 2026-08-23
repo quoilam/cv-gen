@@ -47,7 +47,7 @@ export interface FrontMatterOptions {
   errorBehavior?: "last" | "empty" | "error";
 }
 
-export class FrontMatterParser<T = { [key: string]: any }> {
+export class FrontMatterParser<T = { [key: string]: unknown }> {
   private options: FrontMatterOptions;
   private _lastFrontMatter: T = {} as T;
   private _lastError: unknown | null = null;
@@ -108,12 +108,10 @@ export class FrontMatterParser<T = { [key: string]: any }> {
     return fmString.replace(
       /^(\s+- text:)\s+(?!['">|])(.+)$/gm,
       (match, prefix, value) => {
-        if (/: / .test(value)) {
+        if (/: /.test(value)) {
           const trimmed = value.trimEnd();
           const trailing = value.slice(trimmed.length);
-          const escaped = trimmed.includes('"')
-            ? trimmed.replace(/"/g, '\\"')
-            : trimmed;
+          const escaped = trimmed.includes('"') ? trimmed.replace(/"/g, '\\"') : trimmed;
           return `${prefix} "${escaped}"${trailing}`;
         }
         return match;

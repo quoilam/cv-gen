@@ -9,20 +9,20 @@ export default defineConfig({
   reporter: "html",
   use: {
     baseURL: "http://localhost:3000",
-    trace: "on-first-retry",
+    trace: "on-first-retry"
   },
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
+      use: { ...devices["Desktop Chrome"] }
+    }
   ],
   webServer: {
     command: "pnpm --filter=site dev",
     port: 3000,
     timeout: 120_000,
     reuseExistingServer: !process.env.CI,
-    cwd: "../..",
+    cwd: "../.."
   },
-  timeout: 30_000,
+  timeout: 30_000
 });

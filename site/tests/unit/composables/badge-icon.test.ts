@@ -15,7 +15,7 @@ vi.mock("localforage", () => {
     keys: vi.fn(() => Promise.resolve([...storeItems.keys()])),
     createInstance: vi.fn(function () {
       return instance;
-    }),
+    })
   };
   return { ...instance, default: instance, __esModule: true };
 });

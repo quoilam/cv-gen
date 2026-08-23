@@ -127,7 +127,7 @@ export default defineConfig({
     "i-ic:baseline-save",
     "i-material-symbols:edit-square-outline-rounded",
     "i-ph:sun-bold",
-    "i-ph:moon-bold",
+    "i-ph:moon-bold"
   ],
   transformers: [transformerDirectives(), transformerVariantGroup()],
   content: {
@@ -135,5 +135,5 @@ export default defineConfig({
       // https://github.com/fisand/unocss-preset-shadcn
       include: [/\.ts/, /\.vue$/, /\.vue\?vue/]
     }
-  },
+  }
 });

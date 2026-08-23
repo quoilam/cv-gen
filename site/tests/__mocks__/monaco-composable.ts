@@ -5,7 +5,7 @@ export const useMonaco = () => ({
   setup: vi.fn(),
   dispose: vi.fn(),
   activateModel: vi.fn(),
-  loading: { value: false },
+  loading: { value: false }
 });
 
 export const useMonacoState = () => ({});
