@@ -50,6 +50,7 @@ export interface FrontMatterOptions {
 export class FrontMatterParser<T = { [key: string]: any }> {
   private options: FrontMatterOptions;
   private _lastFrontMatter: T = {} as T;
+  private _lastError: unknown | null = null;
 
   constructor(options: FrontMatterOptions = {}) {
     this.options = options;
@@ -129,9 +130,11 @@ export class FrontMatterParser<T = { [key: string]: any }> {
       const sanitized = this._sanitizeYaml(split.frontMatterString);
       const frontMatter = (yamlParser.load(sanitized) || {}) as T;
       this._lastFrontMatter = frontMatter;
+      this._lastError = null;
 
       return { ...split, frontMatter };
     } catch (e) {
+      this._lastError = e;
       console.error("[FrontMatterParser] YAML parse error:", e);
       const frontMatter =
         this.options.errorBehavior === "error"
@@ -159,6 +162,13 @@ export class FrontMatterParser<T = { [key: string]: any }> {
    * @returns `{ body, bodyBegin, frontMatter, frontMatterString }`
    * @see {@link FrontMatterResults}
    */
+  /**
+   * Error of the most recent parse attempt, or `null` if it succeeded.
+   */
+  get lastError(): unknown | null {
+    return this._lastError;
+  }
+
   public parse(content: string): FrontMatterResults<T> {
     // Trim leading whitespace (including accidental newlines from editor)
     // so that front matter is still detected if the content starts with an

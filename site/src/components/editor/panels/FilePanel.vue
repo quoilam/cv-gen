@@ -97,6 +97,7 @@ registerExportHandlers();
 const { data, setAndSyncToMonaco } = useDataStore();
 const { styles } = useStyleStore();
 const { updateResume } = useResume();
+const { frontMatter: toastFrontMatter } = useToast();
 
 // Save
 const handleSave = async () => {
@@ -124,7 +125,9 @@ const ctx = computed<ExportContext>(() => ({
   css: data.css,
   styles: toRaw(styles),
   name: saveName.value,
-  html: markdownService.renderResume(data.markdown),
+  html: markdownService.renderResume(data.markdown, (err) => {
+    if (err) toastFrontMatter(err);
+  }),
 }));
 const doExport = (format: string) => {
   exportService.export(format, ctx.value);

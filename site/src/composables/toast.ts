@@ -1,6 +1,15 @@
 import { toast } from "vue-sonner";
 import type { ChangedCase } from "@cvgen/case-police";
 
+function formatFrontMatterError(err: unknown): string {
+  const mark = (err as { mark?: { line?: number; column?: number } })?.mark;
+  if (mark && typeof mark.line === "number") {
+    const column = typeof mark.column === "number" ? mark.column + 1 : 1;
+    return `，错误位于第 ${mark.line + 1} 行第 ${column} 列`;
+  }
+  return "";
+}
+
 export const useToast = () => {
   const save = () => {
     toast.success("保存成功");
@@ -61,6 +70,12 @@ export const useToast = () => {
     toast.error(errorMessages[key]);
   };
 
+  const frontMatter = (err: unknown) => {
+    toast.error("简历头信息格式错误", {
+      description: `已显示上一次正确的内容${formatFrontMatterError(err)}。`
+    });
+  };
+
   return {
     save,
     switch: onSwitch,
@@ -69,6 +84,7 @@ export const useToast = () => {
     duplicate,
     correct,
     import: onImport,
-    error: onError
+    error: onError,
+    frontMatter
   };
 };

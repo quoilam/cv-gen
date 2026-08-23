@@ -41,17 +41,29 @@ const margins = computed(() => ({
 
 const html = ref("");
 const { photo } = usePhoto();
+const { frontMatter: toastFrontMatter } = useToast();
+const frontMatterError = ref<unknown | null>(null);
 
 watch(
   () => [props.markdown, photo.value] as const,
   async ([md]) => {
     try {
-      html.value = await markdownService.renderResume(md);
+      html.value = await markdownService.renderResume(md, (err) => {
+        frontMatterError.value = err;
+      });
     } catch (error) {
       console.error("Failed to render resume:", error);
     }
   },
   { immediate: true }
+);
+
+watchDebounced(
+  frontMatterError,
+  (err) => {
+    if (err) toastFrontMatter(err);
+  },
+  { debounce: 1500 }
 );
 
 const { render } = useSmartPages(target, html, size, margins, {
