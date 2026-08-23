@@ -241,18 +241,7 @@ ${PREVIEW_SELECTOR} .resume-photo {
 
 /* Header */
 
-${PREVIEW_SELECTOR} .resume-top {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "identity identity"
-    "heading contact";
-  align-items: end;
-  row-gap: 4px;
-}
-
 ${PREVIEW_SELECTOR} .resume-header {
-  grid-area: identity;
   text-align: center;
 }
 
@@ -282,29 +271,12 @@ ${PREVIEW_SELECTOR} .resume-header h1 {
   margin-bottom: 8px;
 }
 
-${PREVIEW_SELECTOR} .resume-subtitle {
-  display: block;
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
 ${PREVIEW_SELECTOR} .resume-header--with-photo .resume-header h1 {
   text-align: center;
 }
 
 ${PREVIEW_SELECTOR} .resume-header--photo-right .resume-header h1 {
   text-align: center;
-}
-
-${PREVIEW_SELECTOR} .resume-top > h2 {
-  grid-area: heading;
-  margin-top: 0;
-}
-
-${PREVIEW_SELECTOR} .resume-header-contact {
-  grid-area: contact;
-  text-align: right;
-  justify-self: end;
 }
 
 ${PREVIEW_SELECTOR} .resume-header-item:not(.no-separator)::after {

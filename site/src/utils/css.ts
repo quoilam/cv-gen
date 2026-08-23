@@ -87,6 +87,12 @@ export class DynamicCssService {
 
   private headerLayout = (selector: string) => {
     return (
+      // Two-column top: identity full-width, first heading + contact on second row
+      `${selector} .resume-top { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "identity identity" "heading contact"; align-items: end; row-gap: 4px; }` +
+      `${selector} .resume-header { grid-area: identity; }` +
+      `${selector} .resume-subtitle { display: block; font-weight: bold; font-size: 1.2em; }` +
+      `${selector} .resume-top > h2 { grid-area: heading; margin-top: 0; }` +
+      `${selector} .resume-header-contact { grid-area: contact; text-align: right; justify-self: end; }` +
       // Flexbox header when photo is present — center text vertically with photo
       `${selector} .resume-header--with-photo { display: flex; align-items: center; gap: 18px; }` +
       `${selector} .resume-header--with-photo.resume-header--photo-right { flex-direction: row-reverse; }` +
