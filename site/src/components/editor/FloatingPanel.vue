@@ -37,6 +37,14 @@
           >
             <span class="i-tabler:layout size-4" />
           </button>
+          <button
+            class="tab-btn"
+            :class="{ active: activeTab === 'info' }"
+            aria-label="语法说明"
+            @click="activeTab = 'info'"
+          >
+            <span class="i-tabler:info-circle size-4" />
+          </button>
         </div>
 
         <div class="tab-divider" />
@@ -47,6 +55,7 @@
           <EditorPanelsAppearancePanel v-else-if="activeTab === 'appearance'" />
           <EditorPanelsAssetPanel v-else-if="activeTab === 'asset'" />
           <EditorPanelsLayoutPanel v-else-if="activeTab === 'layout'" />
+          <EditorPanelsInfoPanel v-else-if="activeTab === 'info'" />
         </div>
       </div>
     </Transition>

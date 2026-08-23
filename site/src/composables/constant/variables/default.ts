@@ -42,6 +42,20 @@ header:
     link: https://zxh.me
 ---
 
+<!--
+  语法说明（本注释不会渲染到预览）：
+
+  · Front-matter：顶部 --- 区块，可配置 name（姓名）、photo（left/right）、header（text/link/newLine）
+  · 头像照片：在「照片」面板上传，front-matter 写 photo: left 或 photo: right
+  · 标题：## 二级标题作为分节，可在「外观」面板开启彩色色条
+  · 定义列表：**术语** 后接缩进的 ~ 定义
+  · 彩色 banner：加粗的职位/项目名自动变 banner；**#hex 名称** 指定颜色；**![](图标)名称** 加图标
+  · 交叉引用：[~P1]: 论文定义，正文用 [~P1] 引用
+  · 公式：行内 $E=mc^2$，块级 $$E=mc^2$$
+  · 图标：<span class="iconify" data-icon="tabler:phone"></span>
+  · 图片：![](图片地址)
+-->
+
 <!-- Important: Replace all template content, especially contact details, with your own information. -->
 
 <!-- Important: When updating your email address, remember to change both the "text" (visible text) and the "link" (underlying hyperlink) fields. -->
