@@ -99,16 +99,16 @@ export class FrontMatterParser<T = { [key: string]: unknown }> {
   }
 
   /**
-   * Auto-quote plain scalar values that contain ": " (colon + space)
-   * to prevent the YAML parser from misinterpreting them as mapping entries.
-   * Example: `- text: <span>生日: 2004.07.24</span>` would fail because
-   * ": " in "生日: 2004.07.24" looks like a YAML key-value separator.
+   * Auto-quote plain scalar values that the YAML parser would misinterpret:
+   * - contains ": " (colon + space), e.g. `生日: 2004.07.24`
+   * - starts with "[" or "{", e.g. icon syntax `[:tabler:phone] (+1) 123`,
+   *   which would otherwise be parsed as a flow collection
    */
   private _sanitizeYaml(fmString: string): string {
     return fmString.replace(
       /^(\s+- text:)\s+(?!['">|])(.+)$/gm,
       (match, prefix, value) => {
-        if (/: /.test(value)) {
+        if (/: /.test(value) || /^[\[{]/.test(value)) {
           const trimmed = value.trimEnd();
           const trailing = value.slice(trimmed.length);
           const escaped = trimmed.includes('"') ? trimmed.replace(/"/g, '\\"') : trimmed;

@@ -251,6 +251,21 @@ Content`);
     expect(result).toContain("(+1) 123");
   });
 
+  it("parses header icon syntax without quotes (auto-sanitize flow sequence)", async () => {
+    const result = await markdownService.renderResume(`---
+name: John Doe
+header:
+  - text: [:tabler:phone] (+1) 123
+  - text: [:tabler:mail] john@email.com
+    link: mailto:john@email.com
+---
+
+Content`);
+    expect(result).toContain('data-icon="tabler:phone"');
+    expect(result).toContain('data-icon="tabler:mail"');
+    expect(result).toContain("(+1) 123");
+  });
+
   it("renders default template with new icon syntax", async () => {
     const result = await markdownService.renderResume(DEFAULT_MD_CONTENT);
     expect(result).toContain('data-icon="tabler:phone"');

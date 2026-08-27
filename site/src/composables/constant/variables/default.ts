@@ -42,7 +42,7 @@ header:
   · 彩色 banner：加粗的职位/项目名自动变 banner；**#hex 名称** 指定颜色（如 **#ff0000 公司名**）；**![](图标)名称** 加图标；**职位** 后带普通文字时不生成 banner
   · 交叉引用：[~P1]: 论文定义，正文用 [~P1] 引用
   · 公式：行内 $E=mc^2$，块级 $$E=mc^2$$
-  · 图标：[:tabler:phone]（如 [:vscode-icons:file-type-go]；header 中需加引号写 "[:tabler:phone]"）
+  · 图标：[:tabler:phone]（如 [:vscode-icons:file-type-go]；header 中直接写 [:tabler:phone] 即可）
   · 图片：![](图片地址)
 -->
 
