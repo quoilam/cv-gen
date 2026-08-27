@@ -88,6 +88,7 @@ export default defineNuxtConfig({
           "src/internal/markdown-it-cross-ref"
         ),
         "@cvgen/markdown-it-badge": resolve(__dirname, "src/internal/markdown-it-badge"),
+        "@cvgen/markdown-it-icon": resolve(__dirname, "src/internal/markdown-it-icon"),
         "@cvgen/markdown-it-katex": resolve(__dirname, "src/internal/markdown-it-katex"),
         "@cvgen/markdown-it-latex-cmds": resolve(
           __dirname,

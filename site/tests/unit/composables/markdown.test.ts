@@ -201,6 +201,40 @@ name: Badge Test
     expect(result).toContain('src="logo.png"');
   });
 
+  it("renders [:name] inline icon syntax as iconify span", async () => {
+    const result = await markdownService.renderResume(`---
+name: Icon Test
+---
+
+[:vscode-icons:file-type-go] Golang`);
+    expect(result).toContain(
+      '<span class="iconify" data-icon="vscode-icons:file-type-go"></span>'
+    );
+    expect(result).toContain("Golang");
+  });
+
+  it("renders multiple icons on one line", async () => {
+    const result = await markdownService.renderResume(`---
+name: Icon Test
+---
+
+[:vscode-icons:file-type-go] Go | [:devicon:redis] Redis | [:prime:database] DB`);
+    expect(result).toContain('data-icon="vscode-icons:file-type-go"');
+    expect(result).toContain('data-icon="devicon:redis"');
+    expect(result).toContain('data-icon="prime:database"');
+  });
+
+  it("keeps surrounding text around inline icons", async () => {
+    const result = await markdownService.renderResume(`---
+name: Icon Test
+---
+
+使用 [:devicon:redis] Redis 作为缓存`);
+    expect(result).toContain("使用 ");
+    expect(result).toContain('data-icon="devicon:redis"');
+    expect(result).toContain(" Redis 作为缓存");
+  });
+
   it("does not badge bold text outside dt", async () => {
     const result = await markdownService.renderResume(`---
 name: Badge Test

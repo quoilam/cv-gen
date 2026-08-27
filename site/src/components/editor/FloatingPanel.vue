@@ -31,6 +31,14 @@
           </button>
           <button
             class="tab-btn"
+            :class="{ active: activeTab === 'icon' }"
+            aria-label="图标"
+            @click="activeTab = 'icon'"
+          >
+            <span class="i-tabler:icons size-4" />
+          </button>
+          <button
+            class="tab-btn"
             :class="{ active: activeTab === 'layout' }"
             aria-label="排版"
             @click="activeTab = 'layout'"
@@ -54,6 +62,7 @@
           <EditorPanelsFilePanel v-if="activeTab === 'file'" />
           <EditorPanelsAppearancePanel v-else-if="activeTab === 'appearance'" />
           <EditorPanelsAssetPanel v-else-if="activeTab === 'asset'" />
+          <EditorPanelsIconPanel v-else-if="activeTab === 'icon'" />
           <EditorPanelsLayoutPanel v-else-if="activeTab === 'layout'" />
           <EditorPanelsInfoPanel v-else-if="activeTab === 'info'" />
         </div>

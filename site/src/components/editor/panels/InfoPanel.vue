@@ -52,7 +52,9 @@ header:
 
     <div>
       <div class="panel-label">彩色 banner（经历条）</div>
-      <p class="desc">加粗内容<strong>独占一行</strong>会自动变成彩色 banner，可加颜色 / 图标：</p>
+      <p class="desc">
+        加粗内容<strong>独占一行</strong>会自动变成彩色 banner，可加颜色 / 图标：
+      </p>
       <pre class="code-block">
 **公司名称**
 **#377bb5 公司名称**
@@ -81,8 +83,14 @@ header:
     <div>
       <div class="panel-label">图标（iconify）</div>
       <pre class="code-block">
-&lt;span class="iconify" data-icon="tabler:phone"&gt;&lt;/span&gt;</pre
+[:vscode-icons:file-type-go] Golang
+[:devicon:redis] Redis | [:prime:database] DB</pre
       >
+      <p class="desc">
+        用 <code>[:iconify图标名]</code> 插入行内图标，在「图标」面板搜索后点击即可
+        插入。技术栈示例：<code>[:vscode-icons:file-type-go]</code>、
+        <code>[:devicon:redis]</code>、<code>[:prime:database]</code>。
+      </p>
     </div>
 
     <div>

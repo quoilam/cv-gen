@@ -11,6 +11,7 @@ import LinkAttributes from "markdown-it-link-attributes";
 import MarkdownItKatex from "@cvgen/markdown-it-katex";
 import MarkdownItCite from "@cvgen/markdown-it-cross-ref";
 import MarkdownItBadge from "@cvgen/markdown-it-badge";
+import MarkdownItIcon from "@cvgen/markdown-it-icon";
 import MarkdownItLatexCmds from "@cvgen/markdown-it-latex-cmds";
 import { FrontMatterParser } from "@cvgen/front-matter";
 
@@ -182,6 +183,7 @@ export const markdownService = new MarkdownService({
   plugins: [
     MarkdownItDeflist,
     MarkdownItBadge,
+    MarkdownItIcon,
     MarkdownItKatex,
     MarkdownItCite,
     MarkdownItLatexCmds,

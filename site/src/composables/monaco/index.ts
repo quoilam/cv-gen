@@ -50,10 +50,33 @@ export const useMonaco = () => {
     states.value?.[model].get().setValue(content);
   };
 
+  const insertText = (text: string) => {
+    const state = states.value;
+    if (!state) return;
+    const { editor, markdown } = state;
+    const model = markdown.get();
+    const selection =
+      editor.getSelection() ??
+      (() => {
+        const position = model.getPositionAt(model.getValueLength());
+        return {
+          startLineNumber: position.lineNumber,
+          startColumn: position.column,
+          endLineNumber: position.lineNumber,
+          endColumn: position.column
+        };
+      })();
+    editor.executeEdits("icon-panel", [
+      { range: selection, text, forceMoveMarkers: true }
+    ]);
+    editor.focus();
+  };
+
   return {
     setup,
     dispose,
     setContent,
+    insertText,
     loading
   };
 };
