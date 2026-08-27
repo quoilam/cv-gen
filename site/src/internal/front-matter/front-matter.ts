@@ -103,6 +103,9 @@ export class FrontMatterParser<T = { [key: string]: unknown }> {
    * - contains ": " (colon + space), e.g. `生日: 2004.07.24`
    * - starts with "[" or "{", e.g. icon syntax `[:tabler:phone] (+1) 123`,
    *   which would otherwise be parsed as a flow collection
+   *
+   * Uses single quotes so that backslashes and double quotes stay literal
+   * (only a single quote needs to be doubled).
    */
   private _sanitizeYaml(fmString: string): string {
     return fmString.replace(
@@ -111,8 +114,8 @@ export class FrontMatterParser<T = { [key: string]: unknown }> {
         if (/: /.test(value) || /^[\[{]/.test(value)) {
           const trimmed = value.trimEnd();
           const trailing = value.slice(trimmed.length);
-          const escaped = trimmed.includes('"') ? trimmed.replace(/"/g, '\\"') : trimmed;
-          return `${prefix} "${escaped}"${trailing}`;
+          const quoted = `'${trimmed.replace(/'/g, "''")}'`;
+          return `${prefix} ${quoted}${trailing}`;
         }
         return match;
       }
