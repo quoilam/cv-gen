@@ -52,16 +52,14 @@ header:
 
     <div>
       <div class="panel-label">彩色 banner（经历条）</div>
+      <p class="desc">加粗内容<strong>独占一行</strong>会自动变成彩色 banner，可加颜色 / 图标：</p>
       <pre class="code-block">
 **公司名称**
 **#377bb5 公司名称**
 **![](图标地址)公司名称**</pre
       >
-      <p class="desc">
-        加粗的职位/项目名自动变成 banner；可用 <code>#hex</code> 指定颜色，用
-        <code>![](图标)</code> 加图标。若加粗内容后还有普通文字（如
-        <code>**职位** 备注</code>），则保持普通加粗，不生成 banner。
-      </p>
+      <p class="desc">加粗后跟了普通文字则<strong>不生成</strong>，保持普通加粗：</p>
+      <pre class="code-block">**职位名称** 备注说明</pre>
     </div>
 
     <div>
