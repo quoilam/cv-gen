@@ -66,6 +66,15 @@ export default defineNuxtConfig({
   },
 
   ...(process.env.NODE_ENV === "production" ? { pwa } : {}),
+
+  // Drop modulepreload links from rendered HTML via a nitro runtime plugin.
+  // On static hosting the preloaded links don't match the service-worker
+  // precache manifest, causing noisy console warnings ("service worker
+  // resource mismatch", "preloaded but not used"). Chunks then load on demand.
+  nitro: {
+    plugins: [resolve(__dirname, "src/server/plugins/remove-modulepreload.ts")]
+  },
+
   compatibilityDate: "2026-05-23",
 
   vite: {
