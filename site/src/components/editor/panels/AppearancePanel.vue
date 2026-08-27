@@ -53,7 +53,6 @@
 
 <script lang="ts" setup>
 import type { ComboboxItem } from "~/components/shared/ui/Combobox.vue";
-import { isCJKFont } from "~/utils/font";
 
 const { styles } = useStyleStore();
 const { execute } = useStyleHistory();

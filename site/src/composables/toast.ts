@@ -1,5 +1,4 @@
 import { toast } from "vue-sonner";
-import type { ChangedCase } from "@cvgen/case-police";
 
 function formatFrontMatterError(err: unknown): string {
   const mark = (err as { mark?: { line?: number; column?: number } })?.mark;
@@ -29,26 +28,6 @@ export const useToast = () => {
 
   const duplicate = (msg: string) => {
     toast.success(`已创建简历 "${msg}" 的副本 "${msg} Copy"`);
-  };
-
-  const correct = (msg?: ChangedCase[]) => {
-    if (msg?.length) {
-      const groups = msg.reduce<Record<string, number>>((acc, { from, to }) => {
-        const key = `${from} → ${to}`;
-        acc[key] = (acc[key] ?? 0) + 1;
-        return acc;
-      }, {});
-
-      const description = Object.entries(groups)
-        .map(([key, count]) => `${key}${count > 1 ? ` (x${count})` : ""}`)
-        .join(", ");
-
-      toast.success(`成功修正 ${msg.length} 个单词`, {
-        description
-      });
-    } else {
-      toast.info("您的所有拼写都是正确的！");
-    }
   };
 
   const onImport = (msg: boolean) => {
@@ -82,7 +61,6 @@ export const useToast = () => {
     delete: onDelete,
     new: onNew,
     duplicate,
-    correct,
     import: onImport,
     error: onError,
     frontMatter

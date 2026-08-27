@@ -13,15 +13,10 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@isomorphic-git/lightning-fs": "^4.6.2",
     "@renovamen/utils": "^0.1.1",
     "@vueuse/core": "^10.11.0",
-    "@zag-js/color-picker": "^0.60.0",
     "@zag-js/combobox": "^0.60.0",
-    "@zag-js/file-upload": "^0.60.0",
     "@zag-js/vue": "^0.60.0",
-    "caniuse-lite": "^1.0.30001793",
-    "case-police": "^0.6.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "docx": "^9.6.1",

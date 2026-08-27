@@ -1,6 +1,5 @@
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import type { ExportHandler } from "./index";
-import { useConstant } from "~/composables/constant";
 
 export const docxHandler: ExportHandler = async (ctx) => {
   const { COLOR } = useConstant();

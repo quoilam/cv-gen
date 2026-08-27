@@ -1,6 +1,5 @@
 import localforage from "localforage";
-import { ResumeRepository } from "~/utils/storage/repository";
-import { LocalForageDbService } from "~/utils/storage/localForage";
+import { ResumeRepository, LocalForageDbService } from "~/utils/storage";
 
 const BACKUP_FILENAME = "cvgen-backup.json";
 const DIR_KEY = "backup-dir-handle";

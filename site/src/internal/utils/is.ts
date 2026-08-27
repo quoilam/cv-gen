@@ -3,11 +3,6 @@ export const isClient = typeof window !== "undefined" && typeof document !== "un
 export const isMac =
   isClient && typeof navigator !== "undefined" && /Macintosh/.test(navigator.userAgent);
 
-export const isExternal = (path: string) => {
-  const outboundRE = /^(https?:|mailto:|tel:)/;
-  return outboundRE.test(path);
-};
-
 export const isObject = (v: unknown) => toString.call(v) === "[object Object]";
 
 export const isInteger = (v: unknown, { allowString = false } = {}): boolean => {

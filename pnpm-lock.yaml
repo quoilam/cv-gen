@@ -29,33 +29,18 @@ importers:
 
   site:
     dependencies:
-      '@isomorphic-git/lightning-fs':
-        specifier: ^4.6.2
-        version: 4.6.2
       '@renovamen/utils':
         specifier: ^0.1.1
         version: 0.1.1
       '@vueuse/core':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.31(typescript@5.5.3))
-      '@zag-js/color-picker':
-        specifier: ^0.60.0
-        version: 0.60.0
       '@zag-js/combobox':
-        specifier: ^0.60.0
-        version: 0.60.0
-      '@zag-js/file-upload':
         specifier: ^0.60.0
         version: 0.60.0
       '@zag-js/vue':
         specifier: ^0.60.0
         version: 0.60.0(vue@3.4.31(typescript@5.5.3))
-      caniuse-lite:
-        specifier: ^1.0.30001793
-        version: 1.0.30001793
-      case-police:
-        specifier: ^0.6.1
-        version: 0.6.1
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1408,13 +1393,6 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
-  '@isomorphic-git/idb-keyval@3.3.2':
-    resolution: {integrity: sha512-r8/AdpiS0/WJCNR/t/gsgL+M8NMVj/ek7s60uz3LmpCaTF2mEVlZJlB01ZzalgYzRLXwSPC92o+pdzjM7PN/pA==}
-
-  '@isomorphic-git/lightning-fs@4.6.2':
-    resolution: {integrity: sha512-RS/oa1UBnoUFe56bsjOEgoUUReYKQzYUlQnbERRRNv9s9KmjyWuuylPV+YgsWirR2oONKaipWYMebVQ8SAe55Q==}
-    hasBin: true
-
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -2346,12 +2324,6 @@ packages:
   '@zag-js/collection@0.60.0':
     resolution: {integrity: sha512-gXu3FBTpkLDtlT1P8iHOt6lLDfs7Gfq7fqeY6rxi9LJ8udUVQVks9d3zExa1cmsu5fWe1LoPhjMcDlaFs7YeWQ==}
 
-  '@zag-js/color-picker@0.60.0':
-    resolution: {integrity: sha512-lePb00xDdhuvpePAjJ3bWt0nCp7DGTcYl5vdiIByf0gHRxlf2mnbrI6jg8N+Eyb0xfZmGl/Wp65/PRU+Glv5NQ==}
-
-  '@zag-js/color-utils@0.60.0':
-    resolution: {integrity: sha512-h5vsps6zZTU0/zmKceVIpA+nslkEdTxKNFeclT4PjK25n/sYkDSNf52yPWnPLdktDRY0q8b78bE1CufzS7WUcw==}
-
   '@zag-js/combobox@0.60.0':
     resolution: {integrity: sha512-SQqfn24Khk0dO4bESg4D9CgWpX8ogfTwREgl5NnL99jDA+G6T1RPD7mbdyPinbDTYmEg0RFu7RnkwHyjr9/IQA==}
 
@@ -2367,23 +2339,8 @@ packages:
   '@zag-js/dom-query@0.60.0':
     resolution: {integrity: sha512-d7ecLbw3Dqq3glsj4Wmp6Gw6ggjSTCzqF2RbuuOBKVRxGDivlq78E9438uKvkySt3t4mPefaHuwhQp1VfYdDSQ==}
 
-  '@zag-js/file-upload@0.60.0':
-    resolution: {integrity: sha512-EIUOud7qi5KjQypoEYlMATG0Ljt4kfVyI67QFXjFibbUvbi+pgR9fxUHvpHFGoNnZpFHRyMFGOd/H31MXnZJHg==}
-
-  '@zag-js/file-utils@0.60.0':
-    resolution: {integrity: sha512-rslt515K0c1N9/3bCOq10E1asfoeW4SooRN61vA85YJibyFqtiRw+89mlCwfg6KDpugP9rm2y859wSylqIRX9g==}
-
-  '@zag-js/form-utils@0.60.0':
-    resolution: {integrity: sha512-FVPXhNB3aDv0lCc0hub7le4Ujyvwl9Uo74DKXMcXVNsc/DuCUYDGaxx9oZ1vezqKOI7XVEyXedPtFtCYjC8wRw==}
-
-  '@zag-js/i18n-utils@0.60.0':
-    resolution: {integrity: sha512-nORdCVBCpM5Su4maTgJ/RH4J/5VLdzFM6PHecntrF0hY/NmhdGSEjGrw+kM0JSfvUO9C8jrFmbQbbY6d2klDbw==}
-
   '@zag-js/interact-outside@0.60.0':
     resolution: {integrity: sha512-uYn1C/vOiFEhUa3E7w9lhYCEzKwINnuLLLEodSNYlZdDX5bgWHPmoQIGn6l3Xy7fj8/wPoFmU7TTC3WuO8TaAQ==}
-
-  '@zag-js/numeric-range@0.60.0':
-    resolution: {integrity: sha512-fOGh5dEs2zFVNoan7T+1peuiTMOofvyZFcN1WKoi55S1kSaX4leb/apiHiDUezpQ8zUMg/wkoJRNNpH6xtNPyQ==}
 
   '@zag-js/popper@0.60.0':
     resolution: {integrity: sha512-ny5SPNVowJH8UYlBICmqwVUY+YDivOV7S+EInAPzQ76yIQNLsfOMQpp9PvXjRpRywRyE72JysKMWBekYdU58Ow==}
@@ -2752,10 +2709,6 @@ packages:
 
   caniuse-lite@1.0.30001793:
     resolution: {integrity: sha512-iwSsYWaCOoh26cV8NwNRViHlrfUvYsHDfRVcbtmw0Kg6PJIZZXwMkj1442FYLBGkeUf1juAsU3DTfxW579mrPA==}
-
-  case-police@0.6.1:
-    resolution: {integrity: sha512-tOgkG3HhtzNVHU+HVHqbpVJ3CICPDihtlgoM2C4dx0RLeo6qcNVeBgiYJN5Bln+stxKrnKrw89CFgqYQDqwZQg==}
-    hasBin: true
 
   chai@5.3.3:
     resolution: {integrity: sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==}
@@ -3530,9 +3483,6 @@ packages:
   fast-npm-meta@0.2.2:
     resolution: {integrity: sha512-E+fdxeaOQGo/CMWc9f4uHFfgUPJRAu7N3uB8GBvB3SDPAIWJK4GKyYhkAGFq+GYrcbKNfQIz5VVQyJnDuPPCrg==}
 
-  fast-text-encoding@1.0.6:
-    resolution: {integrity: sha512-VhXlQgj9ioXCqGstD37E/HBeqEGV/qOD/kmbVG8h5xKBYvM1L3lR1Zn4555cQ8GkYbJa8aJSipLPndE1k6zK2w==}
-
   fast-uri@3.1.2:
     resolution: {integrity: sha512-rVjf7ArG3LTk+FS6Yw81V1DLuZl1bRbNrev6Tmd/9RaroeeRRJhAt7jg/6YFxbvAQXUCavSoZhPPj6oOx+5KjQ==}
 
@@ -4180,9 +4130,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  isomorphic-textencoder@1.0.1:
-    resolution: {integrity: sha512-676hESgHullDdHDsj469hr+7t3i/neBKU9J7q1T4RHaWwLAsaQnywC0D1dIUId0YZ+JtVrShzuBk1soo0+GVcQ==}
-
   iterator.prototype@1.1.2:
     resolution: {integrity: sha512-DR33HMMr8EzwuRL8Y9D3u2BMj8+RqSE850jfGu59kS7tbmPLzGkZmVSfyCFSDxuZiEY6Rzt3T2NA/qU+NwVj1w==}
 
@@ -4275,12 +4222,6 @@ packages:
 
   jszip@3.10.1:
     resolution: {integrity: sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==}
-
-  just-debounce-it@1.1.0:
-    resolution: {integrity: sha512-87Nnc0qZKgBZuhFZjYVjSraic0x7zwjhaTMrCKlj0QYKH6lh0KbFzVnfu6LHan03NO7J8ygjeBeD0epejn5Zcg==}
-
-  just-once@1.1.0:
-    resolution: {integrity: sha512-+rZVpl+6VyTilK7vB/svlMPil4pxqIJZkbnN7DKZTOzyXfun6ZiFeq2Pk4EtCEHZ0VU4EkdFzG8ZK5F3PErcDw==}
 
   katex@0.16.11:
     resolution: {integrity: sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==}
@@ -7784,15 +7725,6 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
-  '@isomorphic-git/idb-keyval@3.3.2': {}
-
-  '@isomorphic-git/lightning-fs@4.6.2':
-    dependencies:
-      '@isomorphic-git/idb-keyval': 3.3.2
-      isomorphic-textencoder: 1.0.1
-      just-debounce-it: 1.1.0
-      just-once: 1.1.0
-
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -9178,24 +9110,6 @@ snapshots:
     dependencies:
       '@zag-js/utils': 0.60.0
 
-  '@zag-js/color-picker@0.60.0':
-    dependencies:
-      '@zag-js/anatomy': 0.60.0
-      '@zag-js/color-utils': 0.60.0
-      '@zag-js/core': 0.60.0
-      '@zag-js/dismissable': 0.60.0
-      '@zag-js/dom-event': 0.60.0
-      '@zag-js/dom-query': 0.60.0
-      '@zag-js/form-utils': 0.60.0
-      '@zag-js/popper': 0.60.0
-      '@zag-js/text-selection': 0.60.0
-      '@zag-js/types': 0.60.0
-      '@zag-js/utils': 0.60.0
-
-  '@zag-js/color-utils@0.60.0':
-    dependencies:
-      '@zag-js/numeric-range': 0.60.0
-
   '@zag-js/combobox@0.60.0':
     dependencies:
       '@zag-js/anatomy': 0.60.0
@@ -9229,33 +9143,11 @@ snapshots:
 
   '@zag-js/dom-query@0.60.0': {}
 
-  '@zag-js/file-upload@0.60.0':
-    dependencies:
-      '@zag-js/anatomy': 0.60.0
-      '@zag-js/core': 0.60.0
-      '@zag-js/dom-query': 0.60.0
-      '@zag-js/file-utils': 0.60.0
-      '@zag-js/i18n-utils': 0.60.0
-      '@zag-js/types': 0.60.0
-      '@zag-js/utils': 0.60.0
-
-  '@zag-js/file-utils@0.60.0':
-    dependencies:
-      '@zag-js/i18n-utils': 0.60.0
-
-  '@zag-js/form-utils@0.60.0': {}
-
-  '@zag-js/i18n-utils@0.60.0':
-    dependencies:
-      '@zag-js/dom-query': 0.60.0
-
   '@zag-js/interact-outside@0.60.0':
     dependencies:
       '@zag-js/dom-event': 0.60.0
       '@zag-js/dom-query': 0.60.0
       '@zag-js/utils': 0.60.0
-
-  '@zag-js/numeric-range@0.60.0': {}
 
   '@zag-js/popper@0.60.0':
     dependencies:
@@ -9704,8 +9596,6 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001793: {}
-
-  case-police@0.6.1: {}
 
   chai@5.3.3:
     dependencies:
@@ -10688,8 +10578,6 @@ snapshots:
 
   fast-npm-meta@0.2.2: {}
 
-  fast-text-encoding@1.0.6: {}
-
   fast-uri@3.1.2: {}
 
   fastq@1.17.1:
@@ -11360,10 +11248,6 @@ snapshots:
       sha.js: 2.4.12
       simple-get: 4.0.1
 
-  isomorphic-textencoder@1.0.1:
-    dependencies:
-      fast-text-encoding: 1.0.6
-
   iterator.prototype@1.1.2:
     dependencies:
       define-properties: 1.2.1
@@ -11457,10 +11341,6 @@ snapshots:
       pako: 1.0.11
       readable-stream: 2.3.8
       setimmediate: 1.0.5
-
-  just-debounce-it@1.1.0: {}
-
-  just-once@1.1.0: {}
 
   katex@0.16.11:
     dependencies:

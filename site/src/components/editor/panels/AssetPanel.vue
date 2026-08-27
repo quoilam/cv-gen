@@ -68,8 +68,6 @@
 </template>
 
 <script lang="ts" setup>
-import { usePhoto } from "~/composables/photo";
-import { useBadgeIcon } from "~/composables/badge-icon";
 import { toast } from "vue-sonner";
 
 const { photo, init, uploadPhoto, removePhoto } = usePhoto();

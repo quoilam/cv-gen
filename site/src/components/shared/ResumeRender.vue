@@ -5,7 +5,6 @@
 <script lang="ts" setup>
 import { useSmartPages } from "@cvgen/vue-smart-pages";
 import type { ResumeStyles } from "~/composables/stores/style";
-import { usePhoto } from "~/composables/photo";
 
 // Lazy load Iconify for rendering resume icons (only when preview renders)
 onMounted(() => {

@@ -27,17 +27,3 @@ export const injectCss = (id: string, content: string) => {
 
   sheetsMap.set(id, style);
 };
-
-/**
- * Remove the CSS from the document.
- *
- * @param id The ID of the CSS to remove.
- */
-export const removeCss = (id: string) => {
-  const style = sheetsMap.get(id);
-
-  if (style) {
-    document.head.removeChild(style);
-    sheetsMap.delete(id);
-  }
-};

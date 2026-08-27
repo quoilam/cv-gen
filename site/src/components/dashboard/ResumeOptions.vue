@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import type { DbResume } from "~/utils/storage";
 
 const props = defineProps<{

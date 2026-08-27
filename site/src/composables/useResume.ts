@@ -1,7 +1,5 @@
-import type { DbResumeUpdate } from "~/utils/storage/db";
-import { ResumeRepository } from "~/utils/storage/repository";
-import { LocalForageDbService } from "~/utils/storage/localForage";
-import { setResume } from "~/utils/storage/utils";
+import type { DbResumeUpdate } from "~/utils/storage";
+import { ResumeRepository, LocalForageDbService, setResume } from "~/utils/storage";
 
 let _repo: ResumeRepository | null = null;
 

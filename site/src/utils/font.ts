@@ -1,4 +1,4 @@
-import { useConstant, type Font } from "~/composables/constant";
+import type { Font } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 
 const CJK_RE = /[㐀-䶿一-鿿豈-﫿぀-ゟ゠-ヿ가-힯＀-￯]/;

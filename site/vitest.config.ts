@@ -47,7 +47,6 @@ export default defineConfig({
         __dirname,
         "src/internal/markdown-it-latex-cmds"
       ),
-      "@cvgen/case-police": resolve(__dirname, "src/internal/case-police"),
       "@cvgen/vue-shortcuts": resolve(__dirname, "src/internal/vue-shortcuts"),
       "@cvgen/vue-smart-pages": resolve(__dirname, "src/internal/vue-smart-pages"),
       "@cvgen/vue-zoom": resolve(__dirname, "src/internal/vue-zoom")

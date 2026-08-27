@@ -34,7 +34,6 @@
 <script lang="ts" setup>
 import { useShortcuts } from "@cvgen/vue-shortcuts";
 import { useFileDialog, readFile } from "@cvgen/utils";
-import { useStorageBackup } from "~/composables/useStorageBackup";
 
 const emits = defineEmits<{
   (e: "update"): void;

@@ -11,7 +11,13 @@ export default defineNuxtConfig({
   srcDir: "src/",
 
   imports: {
-    dirs: ["composables/stores", "composables/constant", "composables/monaco"]
+    dirs: [
+      "composables/stores",
+      "composables/constant",
+      "composables/monaco",
+      "composables/photo",
+      "composables/badge-icon"
+    ]
   },
 
   modules: [
@@ -80,7 +86,6 @@ export default defineNuxtConfig({
   vite: {
     resolve: {
       alias: {
-        "@cvgen/case-police": resolve(__dirname, "src/internal/case-police"),
         "@cvgen/dynamic-css": resolve(__dirname, "src/internal/dynamic-css"),
         "@cvgen/front-matter": resolve(__dirname, "src/internal/front-matter"),
         "@cvgen/markdown-it-cross-ref": resolve(

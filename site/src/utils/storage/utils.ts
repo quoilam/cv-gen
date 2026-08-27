@@ -4,7 +4,6 @@ import type { ValidVersion } from "~/composables/constant";
 import type { ResumeStyles } from "~/composables/stores/style";
 import type { DbResume } from "./db";
 import type { ValidStorageJsonData } from "./migrate";
-import { dynamicCssService } from "~/utils/css";
 
 /**
  * Write resume styles from local storage to the store
