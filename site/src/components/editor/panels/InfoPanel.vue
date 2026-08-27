@@ -89,7 +89,8 @@ header:
       <p class="desc">
         用 <code>[:iconify图标名]</code> 插入行内图标，在「图标」面板搜索后点击即可
         插入。技术栈示例：<code>[:vscode-icons:file-type-go]</code>、
-        <code>[:devicon:redis]</code>、<code>[:prime:database]</code>。
+        <code>[:devicon:redis]</code>、<code>[:prime:database]</code>。header
+        联系方式的图标需加引号，如 <code>"[:tabler:phone]"</code>。
       </p>
     </div>
 

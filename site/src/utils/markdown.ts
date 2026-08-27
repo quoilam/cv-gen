@@ -93,10 +93,17 @@ export class MarkdownService {
     );
   }
 
+  private _renderHeaderIcons(text: string) {
+    return text.replace(
+      /\[:([^\[\]]+)\]/g,
+      '<span class="iconify" data-icon="$1"></span>'
+    );
+  }
+
   private _renderHeaderItem(item: ResumeHeaderItem, hasSeparator: boolean) {
     const content = item.link
-      ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.text}</a>`
-      : item.text;
+      ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${this._renderHeaderIcons(item.text)}</a>`
+      : this._renderHeaderIcons(item.text);
 
     const element = `<span class="resume-header-item ${hasSeparator ? "" : "no-separator"}">
       ${content}

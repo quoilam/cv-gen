@@ -23,12 +23,12 @@ export const DEFAULT_MD_CONTENT = `---
 name: Haha Ha
 subtitle: "Applying for: Cooking Engineer"
 header:
-  - text: <span class="iconify" data-icon="tabler:phone"></span> (+1) 123-456-7890
-  - text: <span class="iconify" data-icon="tabler:mail"></span> icancook@email.com
+  - text: "[:tabler:phone] (+1) 123-456-7890"
+  - text: "[:tabler:mail] icancook@email.com"
     link: mailto:icancook@email.com
-  - text: <span class="iconify" data-icon="tabler:brand-github"></span> quoilam
+  - text: "[:tabler:brand-github] quoilam"
     link: https://github.com/quoilam
-  - text: <span class="iconify" data-icon="charm:person"></span> zxh.me
+  - text: "[:charm:person] zxh.me"
     link: https://zxh.me
 ---
 
@@ -42,7 +42,7 @@ header:
   · 彩色 banner：加粗的职位/项目名自动变 banner；**#hex 名称** 指定颜色（如 **#ff0000 公司名**）；**![](图标)名称** 加图标；**职位** 后带普通文字时不生成 banner
   · 交叉引用：[~P1]: 论文定义，正文用 [~P1] 引用
   · 公式：行内 $E=mc^2$，块级 $$E=mc^2$$
-  · 图标：<span class="iconify" data-icon="tabler:phone"></span>
+  · 图标：[:tabler:phone]（如 [:vscode-icons:file-type-go]；header 中需加引号写 "[:tabler:phone]"）
   · 图片：![](图片地址)
 -->
 
@@ -131,9 +131,9 @@ B.Eng. in Salad Engineering
 
 ## Skills
 
-**Programming Languages:** <span class="iconify" data-icon="vscode-icons:file-type-python"></span> Frython, <span class="iconify" data-icon="vscode-icons:file-type-js-official"></span> JavaSauce / <span class="iconify" data-icon="vscode-icons:file-type-typescript-official"></span> TypeSauce, <span class="iconify" data-icon="vscode-icons:file-type-cpp2"></span> Cheese++, <span class="iconify" data-icon="logos:java" data-inline="false"></span> Java Bean
+**Programming Languages:** [:vscode-icons:file-type-go] Go | [:vscode-icons:file-type-rust] Rust | [:vscode-icons:file-type-cpp] C++ | [:vscode-icons:file-type-python] Python
 
-**Tools and Frameworks:** GrillHub, PanFlow, TensorFork, SpiceNet, $\\LaTeX$
+**Backend & Middleware:** [:prime:database] DB | [:devicon:redis] Redis | [:logos:rabbitmq] MQ | [:simple-icons:minio] OSS
 
 **Languages:** Chinese (native), English (proficient)
 `;

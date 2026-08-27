@@ -13,6 +13,7 @@ vi.mock("localforage", () => {
 });
 
 import { MarkdownService, markdownService } from "~/utils/markdown";
+import { DEFAULT_MD_CONTENT } from "~/composables/constant/variables/default";
 
 describe("MarkdownService", () => {
   it("renders basic markdown to HTML", async () => {
@@ -233,6 +234,31 @@ name: Icon Test
     expect(result).toContain("使用 ");
     expect(result).toContain('data-icon="devicon:redis"');
     expect(result).toContain(" Redis 作为缓存");
+  });
+
+  it("renders [:name] syntax inside header contact text", async () => {
+    const result = await markdownService.renderResume(`---
+name: John Doe
+header:
+  - text: "[:tabler:phone] (+1) 123"
+  - text: "[:tabler:mail] john@email.com"
+    link: mailto:john@email.com
+---
+
+Content`);
+    expect(result).toContain('<span class="iconify" data-icon="tabler:phone"></span>');
+    expect(result).toContain('data-icon="tabler:mail"');
+    expect(result).toContain("(+1) 123");
+  });
+
+  it("renders default template with new icon syntax", async () => {
+    const result = await markdownService.renderResume(DEFAULT_MD_CONTENT);
+    expect(result).toContain('data-icon="tabler:phone"');
+    expect(result).toContain('data-icon="vscode-icons:file-type-go"');
+    expect(result).toContain('data-icon="devicon:redis"');
+    expect(result).toContain('data-icon="logos:rabbitmq"');
+    expect(result).toContain('data-icon="simple-icons:minio"');
+    expect(result).toContain("Backend &amp; Middleware");
   });
 
   it("does not badge bold text outside dt", async () => {
